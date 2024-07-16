@@ -6,12 +6,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/**This class is for the categories of vehicles
+/**This class is for the models of vehicles
  * 
  */
 @Entity
-@Table(name = "CATEGORY")
-public class Category {
+@Table(name = "MODEL")
+public class Model {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
@@ -20,14 +20,14 @@ public class Category {
 	/** Constructor
 	 * @param name
 	 */
-	public Category(String name) {
+	public Model(String name) {
 		this.name = name;
 	}
 
 	/** Constructor jpa
 	 * 
 	 */
-	public Category() {
+	public Model() {
 	}
 
 	/** Getter pour name
@@ -50,4 +50,5 @@ public class Category {
 	public int getId() {
 		return id;
 	}
+		
 }
