@@ -1,11 +1,18 @@
 package covoit.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**This class is for the addresses
+ * 
+ */
 @Entity
 @Table(name = "ADDRESS")
 public class Address {
@@ -15,6 +22,8 @@ public class Address {
 	protected String detail;
 	protected String city;
 	protected String country;
+	@OneToMany(mappedBy = "ADDRESS")
+	private Set<Route> route = new HashSet<>();
 
 	/**
 	 * Constructor
