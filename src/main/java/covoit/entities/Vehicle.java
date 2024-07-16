@@ -1,5 +1,8 @@
 package covoit.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -31,6 +36,10 @@ public class Vehicle {
 	@ManyToOne
 	@JoinColumn(name = "ID_CATEGORY")
 	protected Category category;
+	@ManyToMany
+	@JoinTable(name="DRIVER_VEHICULE", joinColumns = { @JoinColumn(name = "id_vehicle") }, 
+    inverseJoinColumns = { @JoinColumn(name = "id_driver") } )
+	private Set<Driver> drivers = new HashSet<>();
 	
 	/** Constructor
 	 * @param registration
@@ -129,4 +138,19 @@ public class Vehicle {
 	public int getId() {
 		return id;
 	}
+
+	/** Getter pour drivers
+	 * @return drivers
+	 */
+	public Set<Driver> getDrivers() {
+		return drivers;
+	}
+
+	/**Setter pour drivers
+	 * @param drivers drivers 
+	 */
+	public void setDrivers(Set<Driver> drivers) {
+		this.drivers = drivers;
+	}
+	
 }
