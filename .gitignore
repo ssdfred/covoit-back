@@ -6,3 +6,4 @@
 /bin/
 /target/
 mylog.log
+application.properties
