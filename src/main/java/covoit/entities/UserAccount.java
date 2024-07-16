@@ -17,12 +17,32 @@ public class UserAccount {
 	private Long id;
 	private String name;
 	private String lastName;
-	private boolean permis;
+	private boolean driverLicence;
 	private String password;
 	
+	
+	
+	
+	/** Constructor
+	 * @param name
+	 * @param lastName
+	 * @param driverLicence
+	 * @param password
+	 */
+	public UserAccount(String name, String lastName, boolean driverLicence, String password) {
+		super();
+		this.name = name;
+		this.lastName = lastName;
+		this.driverLicence = driverLicence;
+		this.password = password;
+	}
+	/**Constructor jpa
+     * 
+     */
 	public UserAccount() {
 		
 	}
+	
     /**
      * Gets the unique identifier of the user.
      * 
@@ -71,23 +91,7 @@ public class UserAccount {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-    /**
-     * Sets the password of the user.
-     * 
-     * @param password the password of the user
-     */
-	public boolean isPermis() {
-		return permis;
-	}
-
-    /**
-     * Sets the driving license status of the user.
-     * 
-     * @param permis true if the user has a driving license, false otherwise
-     */
-	public void setPermis(boolean permis) {
-		this.permis = permis;
-	}
+   
 	  /**
      * Obtient le mot de passe de l'utilisateur.
      * 
@@ -103,6 +107,12 @@ public class UserAccount {
      */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public boolean isDriverLicence() {
+		return driverLicence;
+	}
+	public void setDriverLicence(boolean driverLicence) {
+		this.driverLicence = driverLicence;
 	}
 
 	
