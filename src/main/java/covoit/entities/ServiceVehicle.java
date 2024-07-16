@@ -25,7 +25,7 @@ public class ServiceVehicle extends Vehicle{
 	 * @param motorization
 	 * @param co2Km
 	 */
-	public ServiceVehicle(String registration, int nbSeat, Brand brand, Model model, Category category, String state,
+	public ServiceVehicle(String registration, int nbSeat, Brand brand, VehicleModel model, Category category, String state,
 			String picture, String motorization, double co2Km) {
 		super(registration, nbSeat, brand, model, category);
 		this.state = state;

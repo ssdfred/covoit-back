@@ -27,7 +27,7 @@ public class Vehicle {
 	protected Brand brand;
 	@ManyToOne
 	@JoinColumn(name = "ID_MODEL")
-	protected Model model;
+	protected VehicleModel model;
 	@ManyToOne
 	@JoinColumn(name = "ID_CATEGORY")
 	protected Category category;
@@ -39,7 +39,7 @@ public class Vehicle {
 	 * @param model
 	 * @param category
 	 */
-	public Vehicle(String registration, int nbSeat, Brand brand, Model model, Category category) {
+	public Vehicle(String registration, int nbSeat, Brand brand, VehicleModel model, Category category) {
 		this.registration = registration;
 		this.nbSeat = nbSeat;
 		this.brand = brand;
@@ -98,14 +98,14 @@ public class Vehicle {
 	/** Getter pour model
 	 * @return model
 	 */
-	public Model getModel() {
+	public VehicleModel getModel() {
 		return model;
 	}
 
 	/**Setter pour model
 	 * @param model model 
 	 */
-	public void setModel(Model model) {
+	public void setModel(VehicleModel model) {
 		this.model = model;
 	}
 
