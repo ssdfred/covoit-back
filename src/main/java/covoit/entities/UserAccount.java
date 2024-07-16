@@ -20,9 +20,6 @@ public class UserAccount {
 	private boolean driverLicence;
 	private String password;
 	
-	
-	
-	
 	/** Constructor
 	 * @param name
 	 * @param lastName
