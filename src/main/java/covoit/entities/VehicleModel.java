@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "MODEL")
-public class Model {
+public class VehicleModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
@@ -26,14 +26,14 @@ public class Model {
 	/** Constructor
 	 * @param name
 	 */
-	public Model(String name) {
+	public VehicleModel(String name) {
 		this.name = name;
 	}
 
 	/** Constructor jpa
 	 * 
 	 */
-	public Model() {
+	public VehicleModel() {
 	}
 
 	/** Getter pour name
