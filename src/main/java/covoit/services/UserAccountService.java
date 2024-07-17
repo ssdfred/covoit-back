@@ -1,57 +1,27 @@
 package covoit.services;
 
 
+import covoit.dtos.CarpoolDTO;
+import covoit.entities.ServiceVehicle;
 import covoit.entities.UserAccount;
+import covoit.repository.UserAccountRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Service interface for managing user accounts.
  */
 public interface UserAccountService {
-
-    /**
-     * Registers a new user account.
-     * 
-     * @param userAccountDTO the user data transfer object
-     */
-    void registerUser(UserAccount userAccount);
-
-    /**
-     * Updates an existing user account.
-     * 
-     * @param userDTO the user data transfer object
-     */
-    void updateUser(UserAccount userAccount);
-
-    /**s
-     * Finds a user by their unique identifier.
-     * 
-     * @param id the unique identifier of the user
-     * @return the user data transfer object
-     */
-    UserAccount findById(Long id);
-
-    /**
-     * Deletes a user by their unique identifier.
-     * 
-     * @param id the unique identifier of the user
-     */
-    void deleteUser(Long id);
-
-    /**
-     * Finds all users.
-     * 
-     * @return a list of user data transfer objects
-     */
-    List<UserAccount> findAllUsers();
-    
-    /**
-     * Authenticates a user with the provided credentials.
-     * 
-     * @param name the username of the user
-     * @param password the password of the user
-     * @return the authenticated user data transfer object
-     */
-    UserAccount authenticateUser(String name, String password);
+    List<CarpoolDTO> getCarpoolInfo(Long userId);
+    void bookCarpool(Long carpoolId, Long userId);
+    void deleteBookingCarpool(Long carpoolId, Long userId);
+    void updateBookingCarpool(Long carpoolId, CarpoolDTO carpoolDTO);
+    void logout(Long id);
+    void login(String email, String password);
 }
