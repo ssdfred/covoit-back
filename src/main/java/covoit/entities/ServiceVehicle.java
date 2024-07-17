@@ -1,6 +1,10 @@
 package covoit.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**This class is for the service vehicles
@@ -13,6 +17,8 @@ public class ServiceVehicle extends Vehicle{
 	protected String picture;
 	protected String motorization;
 	protected double co2Km;
+	@OneToMany(mappedBy = "SERVICE_VEHICLE")
+	private Set<Booking> bookings = new HashSet<>();
 	
 	/** Constructor
 	 * @param registration
@@ -95,4 +101,19 @@ public class ServiceVehicle extends Vehicle{
 	public void setCo2Km(double co2Km) {
 		this.co2Km = co2Km;
 	}
+
+	/** Getter pour bookings
+	 * @return bookings
+	 */
+	public Set<Booking> getBookings() {
+		return bookings;
+	}
+
+	/**Setter pour bookings
+	 * @param bookings bookings 
+	 */
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
+	}
+	
 }
