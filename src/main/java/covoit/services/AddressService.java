@@ -34,10 +34,15 @@ public class AddressService {
 
 	/**Update the address corresponding to the id given
 	 * @param id : Id given
+	 * @param address : modified address
 	 * @return A confirmation message
 	 */
-	public String updateAddress(Address address) {
-		repository.save(address);
+	public String updateAddress(int id, Address address) {
+		Address addressToChange = getAddress(id);
+		addressToChange.setDetail(address.getDetail());
+		addressToChange.setCity(address.getCity());
+		addressToChange.setCountry(address.getCountry());
+		repository.save(addressToChange);
 		return "L'adresse a été modifiée";
 	}
 
