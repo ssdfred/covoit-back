@@ -10,7 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/**This class is for the booking
+/**
+ * This class is for the booking
  * 
  */
 @Entity
@@ -26,88 +27,109 @@ public class Booking {
 	protected ServiceVehicle serviceVehicle;
 	@ManyToOne
 	@JoinColumn(name = "ID_DRIVER")
-	protected Driver driver;
-	
-	/** Constructor
+	protected UserAccount driver;
+
+	/**
+	 * Constructor
+	 * 
 	 * @param startDate
 	 * @param endDate
 	 * @param serviceVehicle
 	 * @param driver
 	 */
-	public Booking(LocalDateTime startDate, LocalDateTime endDate, ServiceVehicle serviceVehicle, Driver driver) {
+	public Booking(LocalDateTime startDate, LocalDateTime endDate, ServiceVehicle serviceVehicle, UserAccount driver) {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.serviceVehicle = serviceVehicle;
 		this.driver = driver;
 	}
 
-	/** Constructor jpa
+	/**
+	 * Constructor jpa
 	 * 
 	 */
 	public Booking() {
 	}
 
-	/** Getter pour startDate
+	/**
+	 * Getter pour startDate
+	 * 
 	 * @return startDate
 	 */
 	public LocalDateTime getStartDate() {
 		return startDate;
 	}
 
-	/**Setter pour startDate
-	 * @param startDate startDate 
+	/**
+	 * Setter pour startDate
+	 * 
+	 * @param startDate startDate
 	 */
 	public void setStartDate(LocalDateTime startDate) {
 		this.startDate = startDate;
 	}
 
-	/** Getter pour endDate
+	/**
+	 * Getter pour endDate
+	 * 
 	 * @return endDate
 	 */
 	public LocalDateTime getEndDate() {
 		return endDate;
 	}
 
-	/**Setter pour endDate
-	 * @param endDate endDate 
+	/**
+	 * Setter pour endDate
+	 * 
+	 * @param endDate endDate
 	 */
 	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
 	}
 
-	/** Getter pour serviceVehicle
+	/**
+	 * Getter pour serviceVehicle
+	 * 
 	 * @return serviceVehicle
 	 */
 	public ServiceVehicle getServiceVehicle() {
 		return serviceVehicle;
 	}
 
-	/**Setter pour serviceVehicle
-	 * @param serviceVehicle serviceVehicle 
+	/**
+	 * Setter pour serviceVehicle
+	 * 
+	 * @param serviceVehicle serviceVehicle
 	 */
 	public void setServiceVehicle(ServiceVehicle serviceVehicle) {
 		this.serviceVehicle = serviceVehicle;
 	}
 
-	/** Getter pour driver
+	/**
+	 * Getter pour driver
+	 * 
 	 * @return driver
 	 */
-	public Driver getDriver() {
+	public UserAccount getDriver() {
 		return driver;
 	}
 
-	/**Setter pour driver
-	 * @param driver driver 
+	/**
+	 * Setter pour driver
+	 * 
+	 * @param driver driver
 	 */
-	public void setDriver(Driver driver) {
+	public void setDriver(UserAccount driver) {
 		this.driver = driver;
 	}
 
-	/** Getter pour id
+	/**
+	 * Getter pour id
+	 * 
 	 * @return id
 	 */
 	public int getId() {
 		return id;
 	}
-	
+
 }
