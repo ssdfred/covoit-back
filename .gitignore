@@ -7,3 +7,4 @@
 /target/
 mylog.log
 application.properties
+.metadata/.log
