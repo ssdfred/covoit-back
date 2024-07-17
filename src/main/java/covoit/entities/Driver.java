@@ -62,8 +62,4 @@ public class Driver extends UserAccount{
 	public void setVehicles(Set<Vehicle> vehicles) {
 		this.vehicles = vehicles;
 	}
-	
-	
-	
-	
 }
