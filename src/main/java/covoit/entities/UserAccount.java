@@ -1,4 +1,18 @@
-@Id
+package covoit.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+
+/**
+ * Represents a user account in the carpooling system.
+ */
+@Entity
+public class UserAccount {
+	
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
