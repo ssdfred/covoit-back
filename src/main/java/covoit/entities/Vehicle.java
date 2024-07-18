@@ -28,7 +28,7 @@ public class Vehicle {
 	protected String registration;
 	protected int nbSeat;
 	@ManyToOne
-	@JoinColumn(name = "ID_BRAND")
+	@JoinColumn(name = "ID_BRAND") 
 	protected Brand brand;
 	@ManyToOne
 	@JoinColumn(name = "ID_MODEL")
@@ -39,7 +39,7 @@ public class Vehicle {
 	@ManyToMany
 	@JoinTable(name="DRIVER_VEHICULE", joinColumns = { @JoinColumn(name = "id_vehicle") }, 
     inverseJoinColumns = { @JoinColumn(name = "id_driver") } )
-	private Set<Driver> drivers = new HashSet<>();
+	private Set<UserAccount> drivers = new HashSet<>();
 	
 	/** Constructor
 	 * @param registration
@@ -142,14 +142,14 @@ public class Vehicle {
 	/** Getter pour drivers
 	 * @return drivers
 	 */
-	public Set<Driver> getDrivers() {
+	public Set<UserAccount> getDrivers() {
 		return drivers;
 	}
 
 	/**Setter pour drivers
 	 * @param drivers drivers 
 	 */
-	public void setDrivers(Set<Driver> drivers) {
+	public void setDrivers(Set<UserAccount> drivers) {
 		this.drivers = drivers;
 	}
 	
