@@ -1,6 +1,7 @@
 package covoit.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,40 @@ public class ServiceVehicleService {
 	
 	public List<ServiceVehicle> findAll() {
 		return (List<ServiceVehicle>) serviceVehicleRepository.findAll();
+	}
+	/**get the ServiceVehicle corresponding to the id given
+	 * 
+	 * @param id : Id given
+	 * @return Brand
+	 */
+	public Optional<ServiceVehicle> findById(int id) {
+		return serviceVehicleRepository.findById(id);
+	}
+
+	/**Update the ServiceVehicle corresponding to the id given
+	 * @param id : Id given
+	 * @return A confirmation message
+	 */
+	public String update(ServiceVehicle object) {
+		serviceVehicleRepository.save(object);
+		return "ServiceVehicle a été modifiée";
+	}
+
+	/**Create an ServiceVehicle 
+	 * @param address : the new address
+	 * @return A confirmation message
+	 */
+	public String create(ServiceVehicle object) {
+		serviceVehicleRepository.save(object);
+		return "ServiceVehicle a été créée";
+	}
+	
+	/**Delete the ServiceVehicle corresponding to the id given
+	 *  @param id : Id given
+	 * @return A confirmation message
+	 */
+	public String delete(int id) {
+		serviceVehicleRepository.deleteById(id);
+		return "ServiceVehicle a été supprimée";
 	}
 }
