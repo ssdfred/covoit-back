@@ -14,7 +14,7 @@ public class RouteService {
 	@Autowired
 	private RouteRepository routeRepository;
 	
-	public List<Route> getRoutes() {
+	public List<Route> findAll() {
 		return (List<Route>) routeRepository.findAll();
 	}
 	/**get the Route corresponding to the id given

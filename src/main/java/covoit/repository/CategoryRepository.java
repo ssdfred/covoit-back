@@ -10,6 +10,7 @@ import covoit.entities.Category;
  */
 public interface CategoryRepository extends CrudRepository<Category, Integer>{
 
-	Category getById(int id);
-
+	Category findById(int id);
+	
+	Category findByName(String name);
 }
