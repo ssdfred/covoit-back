@@ -37,7 +37,7 @@ public class BrandService {
 	}
 
 	/**Create an Brand 
-	 * @param address : the new address
+	 * @param Brand : the new Brand
 	 * @return A confirmation message
 	 */
 	public String create(Brand object) {

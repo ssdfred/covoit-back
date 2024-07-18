@@ -6,6 +6,7 @@ import covoit.dtos.CarpoolDTO;
 import covoit.dtos.UserAccountDTO;
 
 
+
 public interface UserAccountService {
 
     void registerUser(UserAccountDTO userDTO);
@@ -18,4 +19,6 @@ public interface UserAccountService {
     List<CarpoolDTO> getCarpoolInfo(Long userId);
     void bookCarpool(Long carpoolId, Long userId);
     void deleteBookingCarpool(Long carpoolId, Long userId);
+
+
 }
