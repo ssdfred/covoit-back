@@ -1,7 +1,6 @@
 package covoit.RESTcontroller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import covoit.entities.Category;
+import covoit.exception.AnomalieException;
 import covoit.services.CategoryService;
 import jakarta.validation.Valid;
 
@@ -50,9 +50,9 @@ public class CategoryController {
 	 */
 	//TODO EXCEPTION ANOMALIE
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updateById(@PathVariable int id, @Valid @RequestBody Category category, BindingResult result )	 {
+	public ResponseEntity<String> updateById(@PathVariable int id, @Valid @RequestBody Category category, BindingResult result ) throws AnomalieException	 {
 		if(result.hasErrors()) {
-			return ResponseEntity.badRequest().body("Une erreur c'est produite");
+			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
 		service.update(id, category );
 		return ResponseEntity.ok("L'update est un succes");
@@ -63,9 +63,9 @@ public class CategoryController {
 	 * @return A confirmation message
 	 */
 	@PostMapping
-	public ResponseEntity<String> create(@Valid @RequestBody Category category, BindingResult result ) {
+	public ResponseEntity<String> create(@Valid @RequestBody Category category, BindingResult result )throws AnomalieException {
 		if(!service.create(category)) {
-			return ResponseEntity.badRequest().body("La creation n'a pas reussi !");
+			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
 		return ResponseEntity.ok("Creation reussi");
 	}
@@ -75,9 +75,9 @@ public class CategoryController {
 	 * @return A confirmation message
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteById(int id) {
+	public ResponseEntity<String> deleteById(int id, BindingResult result)throws AnomalieException {
 		if(!service.delete(id)) {
-			return ResponseEntity.badRequest().body("La suppression a echoue !");
+			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
 		
 		return ResponseEntity.ok("Suppression reussi>");
