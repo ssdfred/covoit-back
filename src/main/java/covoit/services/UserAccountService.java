@@ -1,22 +1,21 @@
 package covoit.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import covoit.entities.UserAccount;
-import covoit.repository.UserAccountRepository;
+import covoit.dtos.CarpoolDTO;
+import covoit.dtos.UserAccountDTO;
 
-@Service
-public class UserAccountService {
-@Autowired
-private UserAccountRepository userAccountRepository;
 
-@Autowired
-private PasswordEncoder passwordEncoder;
+public interface UserAccountService {
 
-public void save(UserAccount user) {
-	user.setPassword(passwordEncoder.encode(user.getPassword()));
-	userAccountRepository.save(user);
-}
+    void registerUser(UserAccountDTO userDTO);
+    void updateUser(UserAccountDTO userDTO);
+    UserAccountDTO findById(Long id);
+    void deleteUser(Long id);
+    List<UserAccountDTO> findAllUsers();
+    void login(String name, String password);
+    void logout(Long userId);
+    List<CarpoolDTO> getCarpoolInfo(Long userId);
+    void bookCarpool(Long carpoolId, Long userId);
+    void deleteBookingCarpool(Long carpoolId, Long userId);
 }
