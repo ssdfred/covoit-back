@@ -1,10 +1,11 @@
 package covoit.services;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import covoit.entities.VehicleModel;
 import covoit.repository.VehicleModelRepository;
 
@@ -12,43 +13,57 @@ import covoit.repository.VehicleModelRepository;
 public class VehicleModelService {
 	@Autowired
 	private VehicleModelRepository vehicleModelRepository;
-	
-	public List<VehicleModel> findAll() {
-		return (List<VehicleModel>) vehicleModelRepository.findAll();
+
+	public List<VehicleModel> getVehicleModels() {
+		Iterable<VehicleModel> iterable = vehicleModelRepository.findAll();
+		List<VehicleModel> models = new ArrayList<>();
+		iterable.forEach(models::add);
+		return models;
 	}
-	/**get the VehicleModel corresponding to the id given
+
+	/**
+	 * get the VehicleModel corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return VehicleModel
 	 */
-	public Optional<VehicleModel> findById(int id) {
-		return vehicleModelRepository.findById(id);
+	public VehicleModel getVehicleModel(int id) {
+		return vehicleModelRepository.getById(id);
 	}
 
-	/**Update the VehicleModel corresponding to the id given
+	/**
+	 * Update the VehicleModel corresponding to the id given
+	 * 
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String update(VehicleModel object) {
-		vehicleModelRepository.save(object);
-		return "VehicleModel a été modifiée";
+	public String updateVehicleModel(int id, VehicleModel object) {
+		VehicleModel modelDB = getVehicleModel(id);
+		modelDB.setName(object.getName());
+		modelDB.setVehicles(object.getVehicles());
+		vehicleModelRepository.save(modelDB);
+		return "Le modèle a été modifié";
 	}
 
-	/**Create an VehicleModel 
+	/**
+	 * Create an VehicleModel
+	 * 
 	 * @param VehicleModel : the new VehicleModel
 	 * @return A confirmation message
 	 */
-	public String create(VehicleModel object) {
+	public String createVehicleModel(VehicleModel object) {
 		vehicleModelRepository.save(object);
-		return "VehicleModel a été créée";
+		return "Le modèle a été créé";
 	}
-	
-	/**Delete the VehicleModel corresponding to the id given
-	 *  @param id : Id given
+
+	/**
+	 * Delete the VehicleModel corresponding to the id given
+	 * 
+	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String delete(int id) {
+	public String deleteVehicleModel(int id) {
 		vehicleModelRepository.deleteById(id);
-		return "VehicleModel a été supprimée";
+		return "Le modèle a été supprimé";
 	}
 }
