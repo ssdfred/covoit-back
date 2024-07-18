@@ -6,4 +6,6 @@ import covoit.entities.Booking;
 
 public interface BookingRepository extends CrudRepository<Booking, Integer> {
 
+	Booking getById(int id);
+
 }
