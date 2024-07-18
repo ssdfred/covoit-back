@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import covoit.entities.Vehicle;
-import covoit.entities.VehicleModel;
 import covoit.repository.VehicleRepository;
 
 @Service
@@ -37,7 +36,7 @@ public class VehicleService {
 	}
 
 	/**Create an Vehicle 
-	 * @param address : the new address
+	 * @param Vehicle : the new Vehicle
 	 * @return A confirmation message
 	 */
 	public String create(Vehicle object) {

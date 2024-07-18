@@ -20,7 +20,7 @@ public class BookingService {
 	/**get the Booking corresponding to the id given
 	 * 
 	 * @param id : Id given
-	 * @return administrator
+	 * @return Booking
 	 */
 	public Optional<Booking> findById(int id) {
 		return bookingRepository.findById(id);
@@ -36,7 +36,7 @@ public class BookingService {
 	}
 
 	/**Create an Booking 
-	 * @param address : the new address
+	 * @param Booking : the new Booking
 	 * @return A confirmation message
 	 */
 	public String create(Booking admin) {

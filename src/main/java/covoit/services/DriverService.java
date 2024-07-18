@@ -18,16 +18,16 @@ public class DriverService {
 	public List<Driver> findAll() {
 		return (List<Driver>) driverRepository.findAll();
 	}
-	/**get the Brand corresponding to the id given
+	/**get the Driver corresponding to the id given
 	 * 
 	 * @param id : Id given
-	 * @return Brand
+	 * @return Driver
 	 */
 	public Optional<Driver> findById(int id) {
 		return driverRepository.findById(id);
 	}
 
-	/**Update the Brand corresponding to the id given
+	/**Update the Driver corresponding to the id given
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
@@ -36,8 +36,8 @@ public class DriverService {
 		return "Driver a été modifiée";
 	}
 
-	/**Create an Brand 
-	 * @param address : the new address
+	/**Create an Driver 
+	 * @param Driver : the new Driver
 	 * @return A confirmation message
 	 */
 	public String create(Driver object) {
@@ -45,7 +45,7 @@ public class DriverService {
 		return "Driver a été créée";
 	}
 	
-	/**Delete the Brand corresponding to the id given
+	/**Delete the Driver corresponding to the id given
 	 *  @param id : Id given
 	 * @return A confirmation message
 	 */

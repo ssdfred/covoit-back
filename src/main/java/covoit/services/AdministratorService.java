@@ -39,16 +39,16 @@ public class AdministratorService {
 	 */
 	public String update(Administrator admin) {
 		administratorRepository.save(admin);
-		return "L'adresse a été modifiée";
+		return "L'admin a été modifiée";
 	}
 
 	/**Create an admin 
-	 * @param address : the new address
+	 * @param Administrator : the new Administrator
 	 * @return A confirmation message
 	 */
 	public String create(Administrator admin) {
 		administratorRepository.save(admin);
-		return "L'adresse a été créée";
+		return "L'admin a été créée";
 	}
 	
 	/**Delete the admin corresponding to the id given
@@ -57,7 +57,7 @@ public class AdministratorService {
 	 */
 	public String delete(int id) {
 		administratorRepository.deleteById(id);
-		return "L'adresse a été supprimée";
+		return "L'admin a été supprimée";
 
 	}
 }

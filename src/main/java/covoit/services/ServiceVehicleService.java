@@ -20,7 +20,7 @@ public class ServiceVehicleService {
 	/**get the ServiceVehicle corresponding to the id given
 	 * 
 	 * @param id : Id given
-	 * @return Brand
+	 * @return ServiceVehicle
 	 */
 	public Optional<ServiceVehicle> findById(int id) {
 		return serviceVehicleRepository.findById(id);
@@ -36,7 +36,7 @@ public class ServiceVehicleService {
 	}
 
 	/**Create an ServiceVehicle 
-	 * @param address : the new address
+	 * @param ServiceVehicle : the new ServiceVehicle
 	 * @return A confirmation message
 	 */
 	public String create(ServiceVehicle object) {
