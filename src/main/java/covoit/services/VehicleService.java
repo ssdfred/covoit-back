@@ -1,7 +1,7 @@
 package covoit.services;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,43 +13,61 @@ import covoit.repository.VehicleRepository;
 public class VehicleService {
 	@Autowired
 	private VehicleRepository vehicleRepository;
-	
-	public List<Vehicle> findAll() {
-		return (List<Vehicle>) vehicleRepository.findAll();
+
+	public List<Vehicle> getVehicles() {
+		Iterable<Vehicle> iterable = vehicleRepository.findAll();
+		List<Vehicle> vehicles = new ArrayList<>();
+		iterable.forEach(vehicles::add);
+		return vehicles;
 	}
-	/**get the Vehicle corresponding to the id given
+
+	/**
+	 * get the Vehicle corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return Vehicle
 	 */
-	public Optional<Vehicle> findById(int id) {
-		return vehicleRepository.findById(id);
+	public Vehicle getVehicle(int id) {
+		return vehicleRepository.getById(id);
 	}
 
-	/**Update the Vehicle corresponding to the id given
+	/**
+	 * Update the Vehicle corresponding to the id given
+	 * 
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String update(Vehicle object) {
-		vehicleRepository.save(object);
-		return "Vehicle a été modifiée";
+	public String updateVehicle(int id, Vehicle object) {
+		Vehicle vehicleDB = getVehicle(id);
+		vehicleDB.setBrand(object.getBrand());
+		vehicleDB.setModel(object.getModel());
+		vehicleDB.setCategory(object.getCategory());
+		vehicleDB.setRegistration(object.getRegistration());
+		vehicleDB.setNbSeat(object.getNbSeat());
+		vehicleDB.setDrivers(object.getDrivers());
+		vehicleRepository.save(vehicleDB);
+		return "Le véhicule a été modifié";
 	}
 
-	/**Create an Vehicle 
+	/**
+	 * Create an Vehicle
+	 * 
 	 * @param Vehicle : the new Vehicle
 	 * @return A confirmation message
 	 */
-	public String create(Vehicle object) {
+	public String createVehicle(Vehicle object) {
 		vehicleRepository.save(object);
-		return "Vehicle a été créée";
+		return "Le véhicule a été créé";
 	}
-	
-	/**Delete the Vehicle corresponding to the id given
-	 *  @param id : Id given
+
+	/**
+	 * Delete the Vehicle corresponding to the id given
+	 * 
+	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String delete(int id) {
+	public String deleteVehicle(int id) {
 		vehicleRepository.deleteById(id);
-		return "Vehicle a été supprimée";
+		return "Le véhicule a été supprimé";
 	}
 }
