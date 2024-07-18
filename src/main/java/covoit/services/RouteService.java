@@ -13,7 +13,7 @@ public class RouteService {
 	@Autowired
 	private RouteRepository routeRepository;
 	
-	public List<Route> findAll() {
+	public List<Route> getRoutes() {
 		return (List<Route>) routeRepository.findAll();
 	}
 }
