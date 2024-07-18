@@ -17,26 +17,26 @@ public class RouteService {
 	public List<Route> findAll() {
 		return (List<Route>) routeRepository.findAll();
 	}
-	/**get the Brand corresponding to the id given
+	/**get the Route corresponding to the id given
 	 * 
 	 * @param id : Id given
-	 * @return Brand
+	 * @return Route
 	 */
 	public Optional<Route> findById(int id) {
 		return routeRepository.findById(id);
 	}
 
-	/**Update the Brand corresponding to the id given
+	/**Update the Route corresponding to the id given
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
 	public String update(Route object) {
 		routeRepository.save(object);
-		return "Driver a été modifiée";
+		return "Route a été modifiée";
 	}
 
-	/**Create an Brand 
-	 * @param address : the new address
+	/**Create an Route 
+	 * @param Route : the new Route
 	 * @return A confirmation message
 	 */
 	public String create(Route object) {
@@ -44,7 +44,7 @@ public class RouteService {
 		return "Route a été créée";
 	}
 	
-	/**Delete the Brand corresponding to the id given
+	/**Delete the Route corresponding to the id given
 	 *  @param id : Id given
 	 * @return A confirmation message
 	 */

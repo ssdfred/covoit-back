@@ -16,10 +16,10 @@ public class VehicleModelService {
 	public List<VehicleModel> findAll() {
 		return (List<VehicleModel>) vehicleModelRepository.findAll();
 	}
-	/**get the ServiceVehicle corresponding to the id given
+	/**get the VehicleModel corresponding to the id given
 	 * 
 	 * @param id : Id given
-	 * @return ServiceVehicle
+	 * @return VehicleModel
 	 */
 	public Optional<VehicleModel> findById(int id) {
 		return vehicleModelRepository.findById(id);
@@ -35,7 +35,7 @@ public class VehicleModelService {
 	}
 
 	/**Create an VehicleModel 
-	 * @param address : the new address
+	 * @param VehicleModel : the new VehicleModel
 	 * @return A confirmation message
 	 */
 	public String create(VehicleModel object) {

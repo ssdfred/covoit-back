@@ -9,14 +9,14 @@ import covoit.repository.UserAccountRepository;
 
 @Service
 public class UserAccountService {
-@Autowired
-private UserAccountRepository userAccountRepository;
+	@Autowired
+	private UserAccountRepository userAccountRepository;
 
-@Autowired
-private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-public void save(UserAccount user) {
-	user.setPassword(passwordEncoder.encode(user.getPassword()));
-	userAccountRepository.save(user);
-}
+	public void save(UserAccount user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userAccountRepository.save(user);
+	}
 }
