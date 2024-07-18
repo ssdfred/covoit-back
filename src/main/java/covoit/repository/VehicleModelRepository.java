@@ -6,4 +6,6 @@ import covoit.entities.VehicleModel;
 
 public interface VehicleModelRepository extends CrudRepository<VehicleModel, Integer> {
 
+	VehicleModel getById(int id);
+
 }
