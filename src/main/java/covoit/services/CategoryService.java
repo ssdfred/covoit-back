@@ -22,7 +22,7 @@ public class CategoryService {
 	 * @return An iterable object including all the categories
 	 */
 	public List<Category> findAll() {
-		return (List<Category>) repository.findAll();
+		return repository.findAll();
 
 	}
 	
