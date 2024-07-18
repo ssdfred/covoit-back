@@ -1,12 +1,11 @@
 package covoit.services;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import covoit.entities.Booking;
 import covoit.entities.Brand;
 import covoit.repository.BrandRepository;
 
@@ -14,42 +13,56 @@ import covoit.repository.BrandRepository;
 public class BrandService {
 	@Autowired
 	private BrandRepository brandRepository;
-	
-	public List<Brand> findAll() {
-		return (List<Brand>) brandRepository.findAll();
+
+	public List<Brand> getBookings() {
+		Iterable<Brand> iterable = brandRepository.findAll();
+		List<Brand> brands = new ArrayList<>();
+		iterable.forEach(brands::add);
+		return brands;
 	}
-	/**get the Brand corresponding to the id given
+
+	/**
+	 * get the Brand corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return Brand
 	 */
-	public Optional<Brand> findById(int id) {
-		return brandRepository.findById(id);
+	public Brand getBrand(int id) {
+		return brandRepository.getById(id);
 	}
 
-	/**Update the Brand corresponding to the id given
+	/**
+	 * Update the Brand corresponding to the id given
+	 * 
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String update(Brand object) {
-		brandRepository.save(object);
-		return "Brand a été modifiée";
+	public String updateBrand(int id,Brand object) {
+		Brand brandDB = getBrand(id);
+		brandDB.setName(object.getName());
+		brandDB.setVehicles(object.getVehicles());
+		brandRepository.save(brandDB);
+		return "La marque a été modifiée";
 	}
 
-	/**Create an Brand 
+	/**
+	 * Create a Brand
+	 * 
 	 * @param Brand : the new Brand
 	 * @return A confirmation message
 	 */
-	public String create(Brand object) {
+	public String createBrand(Brand object) {
 		brandRepository.save(object);
-		return "Brand a été créée";
+		return "La marque a été créée";
 	}
-	
-	/**Delete the Brand corresponding to the id given
-	 *  @param id : Id given
+
+	/**
+	 * Delete the Brand corresponding to the id given
+	 * 
+	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String delete(int id) {
+	public String deleteBrand(int id) {
 		brandRepository.deleteById(id);
 		return "Brand a été supprimée";
 	}
