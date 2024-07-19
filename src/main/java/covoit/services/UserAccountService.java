@@ -1,6 +1,3 @@
-package covoit.services;
-
-
 import covoit.dtos.CarpoolDTO;
 import covoit.entities.ServiceVehicle;
 import covoit.entities.UserAccount;

@@ -105,12 +105,13 @@ public class UserAccount {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean isDriverLicence() {
-		return driverLicence;
-	}
-	public void setDriverLicence(boolean driverLicence) {
-		this.driverLicence = driverLicence;
-	}
+    public boolean isDriverLicence() {
+        return driverLicence;
+    }
+    public void setDriverLicence(boolean driverLicence) {
+        this.driverLicence = driverLicence;
+    }
+
 
 	
 

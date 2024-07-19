@@ -1,5 +1,8 @@
 package covoit.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import covoit.entities.Address;
@@ -18,8 +21,11 @@ public class AddressService {
 	 * 
 	 * @return An iterable object including all the addresses
 	 */
-	public Iterable<Address> getAdresses() {
-		return repository.findAll();
+	public List<Address> getAdresses() {
+		Iterable<Address> itAddresses = repository.findAll();
+		List<Address> addresses = new ArrayList<>();
+		itAddresses.forEach(addresses::add);
+		return addresses;
 
 	}
 
@@ -34,10 +40,15 @@ public class AddressService {
 
 	/**Update the address corresponding to the id given
 	 * @param id : Id given
+	 * @param address : modified address
 	 * @return A confirmation message
 	 */
-	public String updateAddress(Address address) {
-		repository.save(address);
+	public String updateAddress(int id, Address address) {
+		Address addressToChange = getAddress(id);
+		addressToChange.setDetail(address.getDetail());
+		addressToChange.setCity(address.getCity());
+		addressToChange.setCountry(address.getCountry());
+		repository.save(addressToChange);
 		return "L'adresse a été modifiée";
 	}
 
