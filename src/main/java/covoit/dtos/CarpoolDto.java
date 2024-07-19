@@ -7,17 +7,17 @@ import covoit.entities.Carpool;
 import covoit.entities.Route;
 import covoit.entities.Vehicle;
 
-public class CarpoolDTO {
+public class CarpoolDto {
 	private int id;
 	private int availableSeat;
 	private LocalDate startDate;
 	private Vehicle vehicle;
 	private Route route;
-	private List<UserAccountDTO> userAccounts;
+	private List<UserAccountDto> userAccounts;
 
-	public CarpoolDTO toDTO(Carpool object) {
-		CarpoolDTO carpoolDTO = new CarpoolDTO();
-		carpoolDTO.setStartDate(object.getStartDate());
+	public CarpoolDto toDTO(Carpool object) {
+		CarpoolDto carpoolDTO = new CarpoolDto();
+		carpoolDTO.setStartDate(object.getStarDate());
 		carpoolDTO.setRoute(object.getRoute());
 		carpoolDTO.setVehicle(object.getVehicle());
 		carpoolDTO.setAvailableSeat(object.getAvailableSeat());
@@ -26,12 +26,14 @@ public class CarpoolDTO {
 		return carpoolDTO;
 	}
 
-	public Carpool toBean(CarpoolDTO object) {
-		Carpool carpool = new CarpoolDTO();
-		carpool.setStartDate(object.getStartDate());
+	public Carpool toBean(CarpoolDto object) {
+		Carpool carpool = new Carpool();
+		carpool.setStarDate(object.getStartDate());
 		carpool.setRoute(object.getRoute());
 		carpool.setVehicle(object.getVehicle());
 		carpool.setAvailableSeat(object.getAvailableSeat());
+		
+		return carpool;
 		//TODO : See how contradiction between CarpoolDTO and Carpool should be handled
 		//carpool.setUserAccounts(object.getUserAccounts());		return null;
 	}
@@ -78,11 +80,11 @@ public class CarpoolDTO {
 		this.route = route;
 	}
 
-	public List<UserAccountDTO> getUserAccounts() {
+	public List<UserAccountDto> getUserAccounts() {
 		return userAccounts;
 	}
 
-	public void setUserAccounts(List<UserAccountDTO> userAccounts) {
+	public void setUserAccounts(List<UserAccountDto> userAccounts) {
 		this.userAccounts = userAccounts;
 	}
 

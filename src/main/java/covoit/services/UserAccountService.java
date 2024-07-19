@@ -1,4 +1,4 @@
-import covoit.dtos.CarpoolDTO;
+import covoit.dtos.CarpoolDto;
 import covoit.entities.ServiceVehicle;
 import covoit.entities.UserAccount;
 import covoit.repository.UserAccountRepository;
@@ -15,10 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * Service interface for managing user accounts.
  */
 public interface UserAccountService {
-    List<CarpoolDTO> getCarpoolInfo(Long userId);
+    List<CarpoolDto> getCarpoolInfo(Long userId);
     void bookCarpool(Long carpoolId, Long userId);
     void deleteBookingCarpool(Long carpoolId, Long userId);
-    void updateBookingCarpool(Long carpoolId, CarpoolDTO carpoolDTO);
+    void updateBookingCarpool(Long carpoolId, CarpoolDto carpoolDTO);
     void logout(Long id);
     void login(String email, String password);
 }

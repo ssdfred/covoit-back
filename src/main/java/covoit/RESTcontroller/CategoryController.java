@@ -80,6 +80,6 @@ public class CategoryController {
 			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
 		
-		return ResponseEntity.ok("Suppression reussi>");
+		return ResponseEntity.ok("Suppression reussi");
 	}
 }
