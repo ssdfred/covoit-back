@@ -1,5 +1,7 @@
 package covoit.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import covoit.entities.Category;
@@ -10,6 +12,7 @@ import covoit.entities.Category;
  */
 public interface CategoryRepository extends CrudRepository<Category, Integer>{
 
-	Category getById(int id);
-
+	Category findById(int id);
+	List<Category> findAll();
+	Category findByName(String name);
 }

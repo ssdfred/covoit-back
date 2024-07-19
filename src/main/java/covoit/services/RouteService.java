@@ -13,12 +13,9 @@ import covoit.repository.RouteRepository;
 public class RouteService {
 	@Autowired
 	private RouteRepository routeRepository;
-
-	public List<Route> getRoutes() {
-		Iterable<Route> itRoutes = routeRepository.findAll();
-		List<Route> listeRoutes = new ArrayList<>();
-		itRoutes.forEach(listeRoutes::add);
-		return listeRoutes;
+	
+	public List<Route> findAll() {
+		return (List<Route>) routeRepository.findAll();
 	}
 
 	/**

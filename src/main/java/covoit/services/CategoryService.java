@@ -1,5 +1,8 @@
 package covoit.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import covoit.entities.Category;
@@ -18,7 +21,7 @@ public class CategoryService {
 	 * 
 	 * @return An iterable object including all the categories
 	 */
-	public Iterable<Category> getCategories() {
+	public List<Category> findAll() {
 		return repository.findAll();
 
 	}
@@ -28,35 +31,45 @@ public class CategoryService {
 	 * @param id : Id given
 	 * @return The category
 	 */
-	public Category getCategory(int id) {
-		return repository.getById(id);
+	public Category findById(int id) {
+		return repository.findById(id);
 	}
 
 	/**Update the category corresponding to the id given
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String updateAddress(Category category) {
-		repository.save(category);
-		return "La categorie a été modifiée";
+	public void update(int id, Category category) {
+		Category categoryDb = repository.findById(id);
+		categoryDb.setName(category.getName());
+		categoryDb.setVehicles(category.getVehicles());
+		
+		repository.save(categoryDb);
 	}
 	
 	/**Create a category 
 	 * @param category : the new category
 	 * @return A confirmation message
 	 */
-	public String createCategory(Category category) {
+	public boolean create(Category category) {
+		Category categoryDb = repository.findByName(category.getName());
+		if(categoryDb.equals(category)) {
+			return false;
+		}
 		repository.save(category);
-		return "La catégorie a été créée";
+		return true;
 	}
 
 	/**Delete the category corresponding to the id given
 	 *  @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String deleteCategory(int id) {
-		repository.delete(repository.getById(id));
-		return "La categorie a été supprimée";
-
+	public boolean delete(int id) {
+		Category categoryDb = repository.findById(id);
+		if(categoryDb == null) {
+			return false;
+		}
+		repository.deleteById(id);
+		return true;
 	}
 }

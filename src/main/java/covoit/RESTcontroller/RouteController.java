@@ -28,7 +28,7 @@ public class RouteController {
 	 */
 	@GetMapping("/")
 	public Iterable<Route> getRoutes() {
-		return service.getRoutes();
+		return service.findAll();
 	}
 
 	/**
