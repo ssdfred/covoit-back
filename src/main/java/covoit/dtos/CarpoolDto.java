@@ -32,7 +32,6 @@ public class CarpoolDto {
 		carpool.setRoute(object.getRoute());
 		carpool.setVehicle(object.getVehicle());
 		carpool.setAvailableSeat(object.getAvailableSeat());
-		
 		return carpool;
 		//TODO : See how contradiction between CarpoolDTO and Carpool should be handled
 		//carpool.setUserAccounts(object.getUserAccounts());		return null;

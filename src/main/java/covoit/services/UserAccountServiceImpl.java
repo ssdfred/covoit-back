@@ -1,14 +1,17 @@
 package covoit.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import covoit.dtos.CarpoolDTO;
+import covoit.dtos.CarpoolDto;
+import covoit.dtos.UserAccountDto;
 import covoit.entities.Carpool;
 import covoit.entities.UserAccount;
+import covoit.entities.Vehicle;
 import covoit.repository.CarpoolRepository;
 import covoit.repository.UserAccountRepository;
 
@@ -29,13 +32,13 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 
     @Override
-    public void registerUser(UserAccountDTO userDTO) {
+    public void registerUser(UserAccountDto userDTO) {
         UserAccount user = convertToEntity(userDTO);
         userRepository.save(user);
     }
 
     @Override
-    public void updateUser(UserAccountDTO userDTO) {
+    public void updateUser(UserAccountDto userDTO) {
         UserAccount user = userRepository.findById(userDTO.getId()).orElse(null);
         if (user != null) {
             user.setName(userDTO.getName());
@@ -60,7 +63,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public List<UserAccountDTO> findAllUsers() {
+    public List<UserAccountDto> findAllUsers() {
         return userRepository.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
     }
     
@@ -81,13 +84,13 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 
     @Override
-    public List<CarpoolDTO> getCarpoolInfo(Long userId) {
+    public List<CarpoolDto> getCarpoolInfo(Long userId) {
         List<Carpool> carpools = carpoolRepository.findByUserAccounts_Id(userId);
         return carpools.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
 
-    private UserAccount convertToEntity(UserAccountDTO userDTO) {
+    private UserAccount convertToEntity(UserAccountDto userDTO) {
         UserAccount user = new UserAccount();
         user.setId(userDTO.getId());
         user.setName(userDTO.getName());
