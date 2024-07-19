@@ -1,24 +1,24 @@
-package covoit.services;
+import covoit.dtos.CarpoolDTO;
+import covoit.entities.ServiceVehicle;
+import covoit.entities.UserAccount;
+import covoit.repository.UserAccountRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import covoit.dtos.CarpoolDTO;
-import covoit.dtos.UserAccountDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-
-
+/**
+ * Service interface for managing user accounts.
+ */
 public interface UserAccountService {
-
-    void registerUser(UserAccountDTO userDTO);
-    void updateUser(UserAccountDTO userDTO);
-    UserAccountDTO findById(Long id);
-    void deleteUser(Long id);
-    List<UserAccountDTO> findAllUsers();
-    void login(String name, String password);
-    void logout(Long userId);
     List<CarpoolDTO> getCarpoolInfo(Long userId);
     void bookCarpool(Long carpoolId, Long userId);
     void deleteBookingCarpool(Long carpoolId, Long userId);
-
-
+    void updateBookingCarpool(Long carpoolId, CarpoolDTO carpoolDTO);
+    void logout(Long id);
+    void login(String email, String password);
 }

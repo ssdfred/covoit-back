@@ -23,11 +23,11 @@ public class Carpool {
     private Long id;
     private int availableSeat;
     private LocalDate starDate;
+    
 
 
-
-//    @ManyToOne
-//    private Vehicule vehicule;
+    @ManyToOne
+    private Vehicle vehicule;
 
     @ManyToOne
     private Route route;
@@ -120,22 +120,24 @@ public class Carpool {
 
 
 
-//    /**
-//     * Gets the vehicle associated with the reservation.
-//     * 
-//     * @return the vehicle associated with the reservation
-//     */
-//    public Vehicule getVehicule() {
-//	return vehicule;
-//    }
-//
-//    /**
-//     * Sets the vehicle associated with the reservation.
-//     * 
-//     * @param vehicle the vehicle associated with the reservation
-//     */
-//    public void setVehicule(Vehicule vehicule) {
-//	this.vehicule = vehicule;
-//    }
+    /**
+     * Gets the vehicle associated with the reservation.
+     * 
+     * @return the vehicle associated with the reservation
+     */
+    public Vehicle getVehicle() {
+	return vehicule;
+    }
+
+    /**
+     * Sets the vehicle associated with the reservation.
+     * 
+     * @param vehicle the vehicle associated with the reservation
+     */
+    public void setVehicle(Vehicle vehicule) {
+	this.vehicule = vehicule;
+    }
+
+
 
 }

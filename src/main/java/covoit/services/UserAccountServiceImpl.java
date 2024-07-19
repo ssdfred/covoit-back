@@ -1,20 +1,16 @@
 package covoit.services;
 
-
-import covoit.dtos.CarpoolDTO;
-import covoit.dtos.UserAccountDTO;
-import covoit.entities.Carpool;
-import covoit.entities.UserAccount;
-import covoit.entities.Vehicle;
-import covoit.repository.CarpoolRepositorry;
-import covoit.repository.UserAccountRepository;
-import covoit.services.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import covoit.dtos.CarpoolDTO;
+import covoit.entities.Carpool;
+import covoit.entities.UserAccount;
+import covoit.repository.CarpoolRepository;
+import covoit.repository.UserAccountRepository;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
@@ -23,7 +19,10 @@ public class UserAccountServiceImpl implements UserAccountService {
     private UserAccountRepository userRepository;
 
     @Autowired
-    private CarpoolRepositorry carpoolRepository;
+    private CarpoolRepository carpoolRepository;
+
+//    @Autowired
+//    private VehicleServiceReservationRepository vehicleServiceReservationRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -64,21 +63,22 @@ public class UserAccountServiceImpl implements UserAccountService {
     public List<UserAccountDTO> findAllUsers() {
         return userRepository.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
     }
-
-    @Override
-    public void login(String name, String password) {
-        UserAccount user = userRepository.findByName(name);
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            // Logique de connexion
-        } else {
-            throw new RuntimeException("Nom ou mot de passe incorrect");
-        }
-    }
-
+    
     @Override
     public void logout(Long userId) {
         // Logique de déconnexion
     }
+    @Override
+    public void login(String name, String password) {
+        Iterable<UserAccount> user = ( userRepository).findByEmailAndPassword(name, password); // A vérifier le problème
+        if (user != null && passwordEncoder.matches(name, password)) {
+            
+        } else {
+            throw new RuntimeException("Email ou mot de passe incorrect");
+        }
+    }
+
+
 
     @Override
     public List<CarpoolDTO> getCarpoolInfo(Long userId) {
@@ -86,15 +86,6 @@ public class UserAccountServiceImpl implements UserAccountService {
         return carpools.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    @Override
-    public void bookCarpool(Long carpoolId, Long userId) {
-
-    }
-
-    @Override
-    public void deleteBookingCarpool(Long carpoolId, Long userId) {
-
-    }
 
     private UserAccount convertToEntity(UserAccountDTO userDTO) {
         UserAccount user = new UserAccount();
@@ -173,4 +164,37 @@ public class UserAccountServiceImpl implements UserAccountService {
 //        addressDTO.setCountry(address.getCountry());
 //        return addressDTO;
 //    }
+        return null;
+    }
+
+   
+
+    @Override
+    public void deleteBookingCarpool(Long carpoolId, Long userId) {
+        Carpool carpool = carpoolRepository.findById(carpoolId).orElseThrow(() -> new RuntimeException("Covoiturage non trouvé"));
+        UserAccount user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        carpool.getUserAccounts().remove(user);
+        carpoolRepository.save(carpool);
+    }
+
+    @Override
+    public void updateBookingCarpool(Long carpoolId, CarpoolDTO carpoolDTO) {
+        // Mise à jour des informations de covoiturage
+    }
+
+
+
+    @Override
+    public void bookCarpool(Long carpoolId, Long userId) {
+	// TODO Auto-generated method stub
+	
+    }
+
+
+
+    @Override
+    public void logout(Long id) {
+	// TODO Auto-generated method stub
+	
+    }
 }
