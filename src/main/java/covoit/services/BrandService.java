@@ -1,6 +1,5 @@
 package covoit.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,8 @@ public class BrandService {
 	@Autowired
 	private BrandRepository brandRepository;
 
-	public List<Brand> getBookings() {
-		Iterable<Brand> iterable = brandRepository.findAll();
-		List<Brand> brands = new ArrayList<>();
-		iterable.forEach(brands::add);
-		return brands;
+	public List<Brand> findAll() {
+		return brandRepository.findAll();
 	}
 
 	/**
@@ -27,8 +23,8 @@ public class BrandService {
 	 * @param id : Id given
 	 * @return Brand
 	 */
-	public Brand getBrand(int id) {
-		return brandRepository.getById(id);
+	public Brand findById(int id) {
+		return brandRepository.findById(id);
 	}
 
 	/**
@@ -37,12 +33,15 @@ public class BrandService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String updateBrand(int id,Brand object) {
-		Brand brandDB = getBrand(id);
+	public boolean update(int id, Brand object) {
+		Brand brandDB = findById(id);
+		if (brandDB == null) {
+			return false;
+		}
 		brandDB.setName(object.getName());
 		brandDB.setVehicles(object.getVehicles());
 		brandRepository.save(brandDB);
-		return "La marque a été modifiée";
+		return true;
 	}
 
 	/**
@@ -51,9 +50,13 @@ public class BrandService {
 	 * @param Brand : the new Brand
 	 * @return A confirmation message
 	 */
-	public String createBrand(Brand object) {
+	public boolean create(Brand object) {
+		Brand brandDB = brandRepository.findByName(object.getName());
+		if (brandDB != null) {
+			return false;
+		}
 		brandRepository.save(object);
-		return "La marque a été créée";
+		return true;
 	}
 
 	/**
@@ -62,8 +65,12 @@ public class BrandService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String deleteBrand(int id) {
+	public boolean deleteBrand(int id) {
+		Brand brandDB = brandRepository.findById(id);
+		if (brandDB == null) {
+			return false;
+		}
 		brandRepository.deleteById(id);
-		return "Brand a été supprimée";
+		return true;
 	}
 }

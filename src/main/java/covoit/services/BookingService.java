@@ -1,6 +1,5 @@
 package covoit.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,8 @@ public class BookingService {
 	@Autowired
 	private BookingRepository bookingRepository;
 
-	public List<Booking> getBookings() {
-		Iterable<Booking> iterable = bookingRepository.findAll();
-		List<Booking> bookings = new ArrayList<>();
-		iterable.forEach(bookings::add);
-		return bookings;
+	public List<Booking> findAll() {
+		return bookingRepository.findAll();
 	}
 
 	/**
@@ -27,8 +23,8 @@ public class BookingService {
 	 * @param id : Id given
 	 * @return Booking
 	 */
-	public Booking getBooking(int id) {
-		return bookingRepository.getById(id);
+	public Booking findById(int id) {
+		return bookingRepository.findById(id);
 	}
 
 	/**
@@ -37,14 +33,17 @@ public class BookingService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String updateBooking(int id,Booking booking) {
-		Booking bookingDB = getBooking(id);
+	public boolean update(int id, Booking booking) {
+		Booking bookingDB = findById(id);
+		if (bookingDB == null) {
+			return false;
+		}
 		bookingDB.setDriver(booking.getDriver());
 		bookingDB.setServiceVehicle(booking.getServiceVehicle());
 		bookingDB.setStartDate(booking.getStartDate());
 		bookingDB.setEndDate(booking.getEndDate());
 		bookingRepository.save(bookingDB);
-		return "La réservation a été modifiée";
+		return true;
 	}
 
 	/**
@@ -53,9 +52,14 @@ public class BookingService {
 	 * @param Booking : the new Booking
 	 * @return A confirmation message
 	 */
-	public String createBooking(Booking admin) {
-		bookingRepository.save(admin);
-		return "La réservation a été créée";
+	public boolean create(Booking booking) {
+		Booking bookingDB = bookingRepository.findByStartDateAndEndDateAndDriver(booking.getStartDate(),
+				booking.getEndDate(), booking.getDriver());
+		if (bookingDB != null) {
+			return false;
+		}
+		bookingRepository.save(booking);
+		return true;
 	}
 
 	/**
@@ -64,8 +68,12 @@ public class BookingService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String deleteBooking(int id) {
+	public boolean deleteBooking(int id) {
+		Booking bookingDB = findById(id);
+		if (bookingDB == null) {
+			return false;
+		}
 		bookingRepository.deleteById(id);
-		return "La réservation a été supprimée";
+		return true;
 	}
 }

@@ -12,46 +12,46 @@ import covoit.entities.UserAccount;
  */
 public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
 
-    /**
-     * @param name
-     * @return String
-     */
-    UserAccount findByName(String name);
-   
-   Iterable<UserAccount> findByEmailAndPassword(String email, String password);
+	/**
+	 * @param name
+	 * @return String
+	 */
+	UserAccount findByName(String name);
 
-    void registerUser(UserAccount userAccount);
+	Iterable<UserAccount> findByEmailAndPassword(String email, String password);
 
-    void updateUser(UserAccount userAccount);
+	void registerUser(UserAccount userAccount);
 
-    Optional<UserAccount> findById(Long id);
+	void updateUser(UserAccount userAccount);
 
-    void deleteUser(Long id);
+	Optional<UserAccount> findById(Long id);
 
-    List<UserAccount> findAllUsers();
+	void deleteUser(Long id);
 
-    UserAccount authenticateUser(String name, String password);
+	List<UserAccount> findAllUsers();
 
-    void bookSV(Long userId);
+	UserAccount authenticateUser(String name, String password);
 
-    void deleteBookingSV(Long userId);
+	void bookSV(Long userId);
 
-    void updateBookingSV(Long userId);
+	void deleteBookingSV(Long userId);
 
-    void login(String name, String password);
+	void updateBookingSV(Long userId);
 
-    void logout(Long userId);
+	void login(String name, String password);
 
-    void getCarpoolInfo(Long userId);
+	void logout(Long userId);
 
-    void bookCarpool(Long userId);
+	void getCarpoolInfo(Long userId);
 
-    void deleteBookingCarpool(Long userId);
+	void bookCarpool(Long userId);
 
-    void updateBookingCarpool(Long userId);
+	void deleteBookingCarpool(Long userId);
 
+	void updateBookingCarpool(Long userId);
 
+	UserAccount findById(int id);
 
-
+	List<UserAccount> findAll();
 
 }

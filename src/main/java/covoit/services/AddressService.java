@@ -1,6 +1,5 @@
 package covoit.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,53 +20,68 @@ public class AddressService {
 	 * 
 	 * @return An iterable object including all the addresses
 	 */
-	public List<Address> getAdresses() {
-		Iterable<Address> itAddresses = repository.findAll();
-		List<Address> addresses = new ArrayList<>();
-		itAddresses.forEach(addresses::add);
-		return addresses;
+	public List<Address> findAll() {
+		return repository.findAll();
 
 	}
 
-	/**get the address corresponding to the id given
+	/**
+	 * get the address corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return The address
 	 */
-	public Address getAddress(int id) {
-		return repository.getById(id);
+	public Address findById(int id) {
+		return repository.findById(id);
 	}
 
-	/**Update the address corresponding to the id given
-	 * @param id : Id given
+	/**
+	 * Update the address corresponding to the id given
+	 * 
+	 * @param id      : Id given
 	 * @param address : modified address
 	 * @return A confirmation message
 	 */
-	public String updateAddress(int id, Address address) {
-		Address addressToChange = getAddress(id);
-		addressToChange.setDetail(address.getDetail());
-		addressToChange.setCity(address.getCity());
-		addressToChange.setCountry(address.getCountry());
-		repository.save(addressToChange);
-		return "L'adresse a été modifiée";
+	public boolean update(int id, Address address) {
+		Address addressDB = findById(id);
+		if (addressDB == null) {
+			return false;
+		}
+		addressDB.setDetail(address.getDetail());
+		addressDB.setCity(address.getCity());
+		addressDB.setCountry(address.getCountry());
+		repository.save(addressDB);
+		return true;
 	}
 
-	/**Create an address 
+	/**
+	 * Create an address
+	 * 
 	 * @param address : the new address
 	 * @return A confirmation message
 	 */
-	public String createAddress(Address address) {
-		repository.save(address);
-		return "L'adresse a été créée";
+	public boolean create(Address address) {
+		Address addressDb = repository.findByDetailAndCityAndCountry(address.getDetail(), address.getCity(),
+				address.getCountry());
+		if (addressDb == null) {
+			repository.save(address);
+			return true;
+		}
+		return false;
 	}
-	
-	/**Delete the address corresponding to the id given
-	 *  @param id : Id given
-	 * @return A confirmation message
+
+	/**
+	 * Delete the address corresponding to the id given
+	 * 
+	 * @param id : Id given
 	 */
-	public String deleteAddress(int id) {
-		repository.delete(repository.getById(id));
-		return "L'adresse a été supprimée";
+	public boolean delete(int id) {
+		Address addressDb = findById(id);
+		if (addressDb == null) {
+			return false;
+		}
+		repository.deleteById(id);
+		return true;
 
 	}
 }
