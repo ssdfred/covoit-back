@@ -1,5 +1,8 @@
 package covoit.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import covoit.entities.Address;
@@ -18,8 +21,11 @@ public class AddressService {
 	 * 
 	 * @return An iterable object including all the addresses
 	 */
-	public Iterable<Address> getAdresses() {
-		return repository.findAll();
+	public List<Address> getAdresses() {
+		Iterable<Address> itAddresses = repository.findAll();
+		List<Address> addresses = new ArrayList<>();
+		itAddresses.forEach(addresses::add);
+		return addresses;
 
 	}
 

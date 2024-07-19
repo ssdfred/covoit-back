@@ -8,4 +8,6 @@ import covoit.entities.Vehicle;
 @Repository
 public interface VehicleRepository extends CrudRepository<Vehicle, Integer> {
 
+	Vehicle getById(int id);
+
 }
