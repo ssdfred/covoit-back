@@ -31,8 +31,9 @@ public class BookingController {
 	public List<Booking> getBookings() {
 		return service.getBookings();
 	}
-	
-	/**get the Booking corresponding to the id given
+
+	/**
+	 * get the Booking corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return Booking
