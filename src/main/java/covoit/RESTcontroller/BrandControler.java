@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import covoit.entities.Booking;
 import covoit.entities.Brand;
 import covoit.services.BrandService;
 
