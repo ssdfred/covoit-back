@@ -28,8 +28,8 @@ public class BookingController {
 	 * 
 	 */
 	@GetMapping("/")
-	public List<Booking> getBookings() {
-		return service.getBookings();
+	public List<Booking> findAll() {
+		return service.findAll();
 	}
 
 	/**
@@ -39,35 +39,32 @@ public class BookingController {
 	 * @return Booking
 	 */
 	@GetMapping("/{id}")
-	public Booking getBooking(@PathVariable int id) {
-		return service.getBooking(id);
+	public Booking findById(@PathVariable int id) {
+		return service.findById(id);
 	}
 	
 	/**Update the booking corresponding to the id given
 	 * @param id : Id given
 	 * @param booking : modified booking
-	 * @return A confirmation message
 	 */
 	@PutMapping("/{id}")
-	public void updateBooking(@PathVariable int id, Booking booking) {
-		service.updateBooking(id, booking);
+	public void update(@PathVariable int id, Booking booking) {
+		service.update(id, booking);
 	}
 	
 	/**Create an booking 
 	 * @param booking : the new booking
-	 * @return A confirmation message
 	 */
 	@PostMapping
-	public void createBooking(Booking booking) {
-		service.createBooking(booking);
+	public void create(Booking booking) {
+		service.create(booking);
 	}
 	
 	/**Delete the booking corresponding to the id given
 	 *  @param id : Id given
-	 * @return A confirmation message
 	 */
 	@DeleteMapping("/{id}")
-	public void deleteBooking(int id) {
-		service.deleteBooking(id);
+	public void delete(int id) {
+		service.delete(id);
 	}
 }
