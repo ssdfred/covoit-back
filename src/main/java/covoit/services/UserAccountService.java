@@ -20,14 +20,13 @@ public class UserAccountService {
 	private PasswordEncoder passwordEncoder;
 
 
-
 	/**
 	 * Update the Brand corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public static boolean update(int id, UserAccount object) {
+	public boolean update(int id, UserAccountDto object) {
 		UserAccountDto userDB;
 	
 			userDB = findById(id);
@@ -41,27 +40,10 @@ public class UserAccountService {
 		return true;
 	}
 
-	
-
 	public static UserAccountDto findById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	/**
-	 * Create a Brand
-	 * 
-	 * @param Brand : the new Brand
-	 * @return A confirmation message
-	 */
-	public static UserAccountDto toDto(UserAccount userAccount) {
-		UserAccountDto dto = new UserAccountDto();
-		dto.setName(userAccount.getName());
-		dto.setPassword(userAccount.getPassword());
-
-		return dto;
-	}
-
 	/**
 	 * Delete the Brand corresponding to the id given
 	 * 
