@@ -3,6 +3,7 @@ package covoit.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import covoit.entities.Category;
 import covoit.repository.CategoryRepository;
@@ -11,6 +12,7 @@ import covoit.repository.CategoryRepository;
  * This class is for the methods associated with the class Category
  * 
  */
+@Service
 public class CategoryService {
 	@Autowired
 	protected CategoryRepository repository;

@@ -2,8 +2,6 @@ package covoit.entities;
 
 import java.util.Set;
 
-import org.hibernate.annotations.JoinFormula;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

@@ -3,6 +3,7 @@ package covoit.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import covoit.entities.Address;
 import covoit.repository.AddressRepository;
@@ -11,6 +12,7 @@ import covoit.repository.AddressRepository;
  * This class is for the methods associated with the class Address
  * 
  */
+@Service
 public class AddressService {
 	@Autowired
 	protected AddressRepository repository;
