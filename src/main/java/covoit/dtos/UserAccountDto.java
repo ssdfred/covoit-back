@@ -12,6 +12,7 @@ public class UserAccountDto {
 	private int id;
 	private String name;
 	private String lastName;
+	private String email;
 	private boolean driverLicence;
 	private String password;
 	private List<CarpoolDto> carpools;
@@ -25,6 +26,7 @@ public class UserAccountDto {
 	public static UserAccount toBean(UserAccountDto userDTO) {
 		UserAccount user = new UserAccount();
 		user.setId(userDTO.getId());
+		user.setEmail(userDTO.getEmail());
 		user.setName(userDTO.getName());
 		user.setLastName(userDTO.getLastName());
 		user.setDriverLicence(userDTO.isDriverLicence());
@@ -35,6 +37,7 @@ public class UserAccountDto {
 	private UserAccountDto toDto(UserAccount user) {
 		UserAccountDto userDTO = new UserAccountDto();
 		userDTO.setId(user.getId());
+		userDTO.setEmail(user.getEmail());
 		userDTO.setName(user.getName());
 		userDTO.setLastName(user.getLastName());
 		userDTO.setDriverLicence(user.isDriverLicence());
@@ -131,6 +134,12 @@ public class UserAccountDto {
 
 
 
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	@Override
 	public String toString() {
 		return "UserAccountDto [name=" + name + ", lastName=" + lastName + ", driverLicence=" + driverLicence
