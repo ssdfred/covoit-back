@@ -27,7 +27,7 @@ public class RouteController {
 	 * 
 	 */
 	@GetMapping("/")
-	public Iterable<Route> getRoutes() {
+	public Iterable<Route> findAll() {
 		return service.findAll();
 	}
 
@@ -38,8 +38,8 @@ public class RouteController {
 	 * @return The route
 	 */
 	@GetMapping("/{id}")
-	public Route getRoute(@PathVariable int id) {
-		return service.getRoute(id);
+	public Route findById(@PathVariable int id) {
+		return service.findById(id);
 	}
 	
 	/**Update the route corresponding to the id given
@@ -47,23 +47,23 @@ public class RouteController {
 	 * @param route : modified route
 	 */
 	@PutMapping("/{id}")
-	public void updateRoute(@PathVariable int id, Route route) {
-		service.updateRoute(id, route);
+	public void update(@PathVariable int id, Route route) {
+		service.update(id, route);
 	}
 	
 	/**Create a route 
 	 * @param route : the new route
 	 */
 	@PostMapping
-	public void createRoute(Route route) {
-		service.createRoute(route);
+	public void create(Route route) {
+		service.create(route);
 	}
 
 	/**Delete the route corresponding to the id given
 	 *  @param id : Id given
 	 */
 	@DeleteMapping("/{id}")
-	public void deleteRoute(int id) {
-		service.deleteRoute(id);}
+	public void delete(int id) {
+		service.delete(id);}
 	
 }
