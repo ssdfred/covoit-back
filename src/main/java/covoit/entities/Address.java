@@ -23,7 +23,7 @@ public class Address {
 	protected String city;
 	protected String country;
 	@OneToMany(mappedBy = "ADDRESS")
-	private Set<Route> route = new HashSet<>();
+	private Set<Route> routes = new HashSet<>();
 
 	/**
 	 * Constructor
@@ -107,4 +107,19 @@ public class Address {
 	public int getId() {
 		return id;
 	}
+
+	/** Getter pour routes
+	 * @return routes
+	 */
+	public Set<Route> getRoutes() {
+		return routes;
+	}
+
+	/**Setter pour routes
+	 * @param routes routes 
+	 */
+	public void setRoutes(Set<Route> routes) {
+		this.routes = routes;
+	}
+	
 }
