@@ -34,7 +34,7 @@ public class RouteService {
 	 * @param route : modified route
 	 * @return A confirmation message
 	 */
-	public boolean updateRoute(int id, Route object) {
+	public boolean update(int id, Route object) {
 		Route routeDB = findById(id);
 		if (routeDB == null) {
 			return false;
@@ -53,7 +53,7 @@ public class RouteService {
 	 * 
 	 * @param Route : the new Route
 	 */
-	public boolean createRoute(Route object) {
+	public boolean create(Route object) {
 		Route routeDB = repository.findByStartAddressAndEndAddress(object.getStartAddress(), object.getEndAddress());
 		if (routeDB != null) {
 			return false;
@@ -68,7 +68,7 @@ public class RouteService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public boolean deleteRoute(int id) {
+	public boolean delete(int id) {
 		Route routeDB = findById(id);
 		if (routeDB == null) {
 			return false;
