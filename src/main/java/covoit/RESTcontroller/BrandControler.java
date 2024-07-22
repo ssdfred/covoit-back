@@ -29,8 +29,8 @@ public class BrandControler {
 	 * 
 	 */
 	@GetMapping("/")
-	public List<Brand> getBrands() {
-		return service.getBookings();
+	public List<Brand> findAll() {
+		return service.findAll();
 	}
 
 	/**get the brand corresponding to the id given
@@ -39,8 +39,8 @@ public class BrandControler {
 	 * @return Brand
 	 */
 	@GetMapping("/{id}")
-	public Brand getBrand(@PathVariable int id) {
-		return service.getBrand(id);
+	public Brand findById(@PathVariable int id) {
+		return service.findById(id);
 	}
 
 	/**Update the brand corresponding to the id given
@@ -48,23 +48,23 @@ public class BrandControler {
 	 * @param brand : modified brand
 	 */
 	@PutMapping("/{id}")
-	public void updateBrand(@PathVariable int id, Brand brand) {
-		service.updateBrand(id, brand);
+	public void update(@PathVariable int id, Brand brand) {
+		service.update(id, brand);
 	}
 
 	/**Create a brand 
 	 * @param brand : the new brand
 	 */
 	@PostMapping
-	public void createBrand(Brand brand) {
-		service.createBrand(brand);
+	public void create(Brand brand) {
+		service.create(brand);
 	}
 
 	/**Delete the brand corresponding to the id given
 	 *  @param id : Id given
 	 */
 	@DeleteMapping("/{id}")
-	public void deleteBrand(int id) {
-		service.deleteBrand(id);
+	public void delete(int id) {
+		service.delete(id);
 	}
 }

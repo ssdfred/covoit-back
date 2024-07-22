@@ -25,8 +25,8 @@ public class AddressController {
 	 * 
 	 */
 	@GetMapping("/")
-	public Iterable<Address> getAddresses() {
-		return service.getAdresses();
+	public Iterable<Address> findAll() {
+		return service.findAll();
 	}
 	
 	/**get the address corresponding to the id given
@@ -35,35 +35,32 @@ public class AddressController {
 	 * @return The address
 	 */
 	@GetMapping("/{id}")
-	public Address getAddress(@PathVariable int id) {
-		return service.getAddress(id);
+	public Address findById(@PathVariable int id) {
+		return service.findById(id);
 	}
 	
 	/**Update the address corresponding to the id given
 	 * @param id : Id given
 	 * @param address : modified address
-	 * @return A confirmation message
 	 */
 	@PutMapping("/{id}")
-	public void updateAddress(@PathVariable int id, Address address) {
-		service.updateAddress(id, address);
+	public void update(@PathVariable int id, Address address) {
+		service.update(id, address);
 	}
 	
 	/**Create an address 
 	 * @param address : the new address
-	 * @return A confirmation message
 	 */
 	@PostMapping
-	public void createAddress(Address address) {
-		service.createAddress(address);
+	public void create(Address address) {
+		service.create(address);
 	}
 
 	/**Delete the address corresponding to the id given
 	 *  @param id : Id given
-	 * @return A confirmation message
 	 */
 	@DeleteMapping("/{id}")
-	public void deleteAddress(int id) {
-		service.deleteAddress(id);
+	public void delete(int id) {
+		service.delete(id);
 	}
 }

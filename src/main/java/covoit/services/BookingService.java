@@ -68,7 +68,7 @@ public class BookingService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public boolean deleteBooking(int id) {
+	public boolean delete(int id) {
 		Booking bookingDB = findById(id);
 		if (bookingDB == null) {
 			return false;
