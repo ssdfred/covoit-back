@@ -22,7 +22,7 @@ public class Carpool {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int availableSeat;
-    private LocalDate starDate;
+    private LocalDate startDate;
     
 
 
@@ -73,8 +73,8 @@ public class Carpool {
      * 
      * @return the start date and time of the reservation
      */
-    public LocalDate getStarDate() {
-	return starDate;
+    public LocalDate getstartDate() {
+	return startDate;
     }
 
     /**
@@ -82,8 +82,8 @@ public class Carpool {
      * 
      * @param startDateTime the start date and time of the reservation
      */
-    public void setStarDate(LocalDate starDate) {
-	this.starDate = starDate;
+    public void setstartDate(LocalDate startDate) {
+	this.startDate = startDate;
     }
 
 
