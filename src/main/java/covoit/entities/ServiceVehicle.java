@@ -17,7 +17,7 @@ public class ServiceVehicle extends Vehicle{
 	protected String picture;
 	protected String motorization;
 	protected double co2Km;
-	@OneToMany(mappedBy = "SERVICE_VEHICLE")
+	@OneToMany(mappedBy = "serviceVehicle")
 	private Set<Booking> bookings = new HashSet<>();
 	
 	/** Constructor

@@ -20,7 +20,7 @@ public class VehicleModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
 	protected String name;
-	@OneToMany(mappedBy = "MODEL")
+	@OneToMany(mappedBy = "model")
 	private Set<Vehicle> vehicles = new HashSet<>();
 	
 	/** Constructor

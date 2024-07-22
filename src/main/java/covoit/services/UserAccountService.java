@@ -18,8 +18,6 @@ public class UserAccountService {
 
 	private static UserAccountRepository userAccountRepository;
 	private PasswordEncoder passwordEncoder;
-
-
 	/**
 	 * Update the Brand corresponding to the id given
 	 * 

@@ -1,7 +1,8 @@
 package covoit.entities;
 
-import java.util.HashSet;
 import java.util.Set;
+
+import org.hibernate.annotations.JoinFormula;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,8 +23,9 @@ public class Address {
 	protected String detail;
 	protected String city;
 	protected String country;
-	@OneToMany(mappedBy = "ADDRESS")
-	private Set<Route> routes = new HashSet<>();
+	@OneToMany(mappedBy = "startAddress")
+	private Set<Route> routes;
+	
 
 	/**
 	 * Constructor

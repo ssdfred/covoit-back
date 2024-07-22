@@ -20,7 +20,7 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
 	protected String name;
-	@OneToMany(mappedBy = "CATEGORY")
+	@OneToMany(mappedBy = "category")
 	private Set<Vehicle> vehicles = new HashSet<>();
 	
 	/** Constructor

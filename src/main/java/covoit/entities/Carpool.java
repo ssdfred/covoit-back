@@ -23,8 +23,6 @@ public class Carpool {
     private Long id;
     private int availableSeat;
     private LocalDate startDate;
-    
-
 
     @ManyToOne
     private Vehicle vehicule;
