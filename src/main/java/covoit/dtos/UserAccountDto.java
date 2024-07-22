@@ -1,73 +1,93 @@
 package covoit.dtos;
 
+import java.util.List;
 
-/**
- * 
- */
-/**
- * 
- */
+import covoit.entities.UserAccount;
+
 /**
  * Data Transfer Object for User.
  */
 public class UserAccountDto {
 
-	private Long id;
+	private int id;
 	private String name;
 	private String lastName;
-	private boolean permis;
+	private boolean driverLicence;
 	private String password;
+	private List<CarpoolDto> carpools;
+
 	/**
 	 * 
 	 */
 	public UserAccountDto() {
-		
+
 	}
-	@Override
-	public String toString() {
-		return "UserAccountDto [name=" + name + ", lastName=" + lastName + ", permis=" + permis + ", password="
-				+ password + "]";
+	public static UserAccount toBean(UserAccountDto userDTO) {
+		UserAccount user = new UserAccount();
+		user.setId(userDTO.getId());
+		user.setName(userDTO.getName());
+		user.setLastName(userDTO.getLastName());
+		user.setDriverLicence(userDTO.isDriverLicence());
+		user.setPassword(userDTO.getPassword());
+		return user;
 	}
 
-    /**
-     * Gets the unique identifier of the user.
-     * 
-     * @return the unique identifier of the user
-     */
-	public Long getId() {
+	private UserAccountDto toDto(UserAccount user) {
+		UserAccountDto userDTO = new UserAccountDto();
+		userDTO.setId(user.getId());
+		userDTO.setName(user.getName());
+		userDTO.setLastName(user.getLastName());
+		userDTO.setDriverLicence(user.isDriverLicence());
+		userDTO.setPassword(user.getPassword());
+		return userDTO;
+	}
+
+
+
+	/**
+	 * Gets the unique identifier of the user.
+	 * 
+	 * @return the unique identifier of the user
+	 */
+	public int getId() {
 		return id;
 	}
-    /**
-     * Sets the unique identifier of the user.
-     * 
-     * @param id the unique identifier of the user
-     */
-	
-	public void setId(Long id) {
+
+	/**
+	 * Sets the unique identifier of the user.
+	 * 
+	 * @param id the unique identifier of the user
+	 */
+
+	public void setId(int id) {
 		this.id = id;
 	}
-	   /**
-	     * Gets the name of the user.
-	     * 
-	     * @return the name of the user
-	     */
+
+	/**
+	 * Gets the name of the user.
+	 * 
+	 * @return the name of the user
+	 */
 	public String getName() {
 		return name;
 	}
-	    /**
-	     * Sets the name of the user.
-	     * 
-	     * @param name the username of the user
-	     */
+
+	/**
+	 * Sets the name of the user.
+	 * 
+	 * @param name the username of the user
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	/**
 	 * @return
 	 */
 	public String getLastName() {
 		return lastName;
 	}
+
 	/**
 	 * @param lastName
 	 */
@@ -75,39 +95,46 @@ public class UserAccountDto {
 		this.lastName = lastName;
 	}
 
-
-
 	/**
+	 * Gets the password of the user.
 	 * 
-	 * @return boolean
+	 * @return the password of the user
 	 */
-	public boolean isPermis() {
-		return permis;
-	}
-
-
-	/**
-	 * @param permis
-	 */
-	public void setPermis(boolean permis) {
-		this.permis = permis;
-	}
-	   /**
-	     * Gets the password of the user.
-	     * 
-	     * @return the password of the user
-	     */
 	public String getPassword() {
 		return password;
 	}
-	    /**
-	     * Sets the password of the user.
-	     * 
-	     * @param password the password of the user
-	     */
+
+	/**
+	 * Sets the password of the user.
+	 * 
+	 * @param password the password of the user
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	public boolean isDriverLicence() {
+		return driverLicence;
+	}
+
+	public void setDriverLicence(boolean driverLicence) {
+		this.driverLicence = driverLicence;
+	}
+
+	public List<CarpoolDto> getCarpools() {
+		return carpools;
+	}
+
+	public void setCarpools(List<CarpoolDto> carpools) {
+		this.carpools = carpools;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "UserAccountDto [name=" + name + ", lastName=" + lastName + ", driverLicence=" + driverLicence
+				+ ", carpools=" + carpools + "]";
+	}
 
 }
