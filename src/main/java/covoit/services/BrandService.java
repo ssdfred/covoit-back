@@ -65,7 +65,7 @@ public class BrandService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public boolean deleteBrand(int id) {
+	public boolean delete(int id) {
 		Brand brandDB = brandRepository.findById(id);
 		if (brandDB == null) {
 			return false;
