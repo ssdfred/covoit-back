@@ -29,8 +29,8 @@ public class VehicleController {
 	 * 
 	 */
 	@GetMapping("/")
-	public List<Vehicle> getVehicles() {
-		return service.getVehicles();
+	public List<Vehicle> findAll() {
+		return service.findAll();
 	}
 
 	/**
@@ -40,8 +40,8 @@ public class VehicleController {
 	 * @return The vehicle
 	 */
 	@GetMapping("/{id}")
-	public Vehicle getVehicle(@PathVariable int id) {
-		return service.getVehicle(id);
+	public Vehicle findById(@PathVariable int id) {
+		return service.findById(id);
 	}
 	
 
@@ -50,23 +50,23 @@ public class VehicleController {
 	 * @param vehicle : modified vehicle
 	 */
 	@PutMapping("/{id}")
-	public void updateVehicle(@PathVariable int id, Vehicle vehicle) {
-		service.updateVehicle(id,vehicle);
+	public void update(@PathVariable int id, Vehicle vehicle) {
+		service.update(id,vehicle);
 	}
 	
 	/**Create a vehicle 
 	 * @param vehicle : the new vehicle
 	 */
 	@PostMapping
-	public void createVehicle(Vehicle vehicle) {
-		service.createVehicle(vehicle);
+	public void create(Vehicle vehicle) {
+		service.create(vehicle);
 	}
 	
 	/**Delete the vehicle corresponding to the id given
 	 *  @param id : Id given
 	 */
 	@DeleteMapping("/{id}")
-	public void deleteVehicle(int id) {
-		service.deleteVehicle(id);
+	public void delete(int id) {
+		service.delete(id);
 	}
 }
