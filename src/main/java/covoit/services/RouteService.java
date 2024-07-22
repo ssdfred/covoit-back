@@ -1,6 +1,5 @@
 package covoit.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,10 @@ import covoit.repository.RouteRepository;
 @Service
 public class RouteService {
 	@Autowired
-	private RouteRepository routeRepository;
-	
+	private RouteRepository repository;
+
 	public List<Route> findAll() {
-		return (List<Route>) routeRepository.findAll();
+		return (List<Route>) repository.findAll();
 	}
 
 	/**
@@ -24,36 +23,43 @@ public class RouteService {
 	 * @param id : Id given
 	 * @return Route
 	 */
-	public Route getRoute(int id) {
-		return routeRepository.getById(id);
+	public Route findById(int id) {
+		return repository.findById(id);
 	}
 
 	/**
 	 * Update the Route corresponding to the id given
 	 * 
-	 * @param id : Id given
+	 * @param id    : Id given
 	 * @param route : modified route
 	 * @return A confirmation message
 	 */
-	public String updateRoute(int id, Route object) {
-		Route routeToChange = getRoute(id);
-		routeToChange.setStartAddress(object.getStartAddress());;
-		routeToChange.setEndAddress(object.getEndAddress());
-		routeToChange.setKmTotal(object.getKmTotal());
-		routeToChange.setDuration(object.getDuration());
-		routeRepository.save(routeToChange);
-		return "Le trajet a été modifié";
+	public boolean updateRoute(int id, Route object) {
+		Route routeDB = findById(id);
+		if (routeDB == null) {
+			return false;
+		}
+		routeDB.setStartAddress(object.getStartAddress());
+		;
+		routeDB.setEndAddress(object.getEndAddress());
+		routeDB.setKmTotal(object.getKmTotal());
+		routeDB.setDuration(object.getDuration());
+		repository.save(routeDB);
+		return true;
 	}
 
 	/**
-	 * Create an Route
+	 * Create a Route
 	 * 
 	 * @param Route : the new Route
-	 * @return A confirmation message
 	 */
-	public String createRoute(Route object) {
-		routeRepository.save(object);
-		return "Route a été créée";
+	public boolean createRoute(Route object) {
+		Route routeDB = repository.findByStartAddressAndEndAddress(object.getStartAddress(), object.getEndAddress());
+		if (routeDB != null) {
+			return false;
+		}
+		repository.save(object);
+		return true;
 	}
 
 	/**
@@ -62,8 +68,12 @@ public class RouteService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String deleteRoute(int id) {
-		routeRepository.deleteById(id);
-		return "Route a été supprimée";
+	public boolean deleteRoute(int id) {
+		Route routeDB = findById(id);
+		if (routeDB == null) {
+			return false;
+		}
+		repository.deleteById(id);
+		return true;
 	}
 }

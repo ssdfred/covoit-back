@@ -1,7 +1,6 @@
 package covoit.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,44 +11,72 @@ import covoit.repository.ServiceVehicleRepository;
 @Service
 public class ServiceVehicleService {
 	@Autowired
-	private ServiceVehicleRepository serviceVehicleRepository;
-	
+	private ServiceVehicleRepository repository;
+
 	public List<ServiceVehicle> findAll() {
-		return (List<ServiceVehicle>) serviceVehicleRepository.findAll();
+		return repository.findAll();
 	}
-	/**get the ServiceVehicle corresponding to the id given
+
+	/**
+	 * get the ServiceVehicle corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return ServiceVehicle
 	 */
-	public Optional<ServiceVehicle> findById(int id) {
-		return serviceVehicleRepository.findById(id);
+	public ServiceVehicle findById(int id) {
+		return repository.findById(id);
 	}
 
-	/**Update the ServiceVehicle corresponding to the id given
+	/**
+	 * Update the ServiceVehicle corresponding to the id given
+	 * 
+	 * @param id : Id given
+	 */
+	public boolean update(int id, ServiceVehicle object) {
+		ServiceVehicle sVehicleDB = repository.findById(id);
+		if (sVehicleDB == null) {
+			return false;
+		}
+		sVehicleDB.setState(object.getState());
+		sVehicleDB.setRegistration(object.getRegistration());
+		sVehicleDB.setBrand(object.getBrand());
+		sVehicleDB.setModel(object.getModel());
+		sVehicleDB.setCategory(object.getCategory());
+		sVehicleDB.setCo2Km(object.getCo2Km());
+		sVehicleDB.setMotorization(object.getMotorization());
+		sVehicleDB.setPicture(object.getPicture());
+		sVehicleDB.setNbSeat(object.getNbSeat());
+		repository.save(object);
+		return true;
+	}
+
+	/**
+	 * Create a ServiceVehicle
+	 * 
+	 * @param ServiceVehicle : the new ServiceVehicle
+	 * @return boolean
+	 */
+	public boolean create(ServiceVehicle object) {
+		ServiceVehicle sVehicleDB = repository.findByRegistration(object.getRegistration());
+		if (sVehicleDB != null) {
+			return false;
+		}
+		repository.save(object);
+		return true;
+	}
+
+	/**
+	 * Delete the ServiceVehicle corresponding to the id given
+	 * 
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String update(ServiceVehicle object) {
-		serviceVehicleRepository.save(object);
-		return "ServiceVehicle a été modifiée";
-	}
-
-	/**Create an ServiceVehicle 
-	 * @param ServiceVehicle : the new ServiceVehicle
-	 * @return A confirmation message
-	 */
-	public String create(ServiceVehicle object) {
-		serviceVehicleRepository.save(object);
-		return "ServiceVehicle a été créée";
-	}
-	
-	/**Delete the ServiceVehicle corresponding to the id given
-	 *  @param id : Id given
-	 * @return A confirmation message
-	 */
-	public String delete(int id) {
-		serviceVehicleRepository.deleteById(id);
-		return "ServiceVehicle a été supprimée";
+	public boolean delete(int id) {
+		ServiceVehicle sVehicleDB = repository.findById(id);
+		if (sVehicleDB == null) {
+			return false;
+		}
+		repository.deleteById(id);
+		return true;
 	}
 }

@@ -1,7 +1,6 @@
 package covoit.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,12 +38,16 @@ public class CategoryService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public void update(int id, Category category) {
+	public boolean update(int id, Category category) {
 		Category categoryDb = repository.findById(id);
+		if(categoryDb==null) {
+			return false;
+		}
 		categoryDb.setName(category.getName());
 		categoryDb.setVehicles(category.getVehicles());
 		
 		repository.save(categoryDb);
+		return true;
 	}
 	
 	/**Create a category 

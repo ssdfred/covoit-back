@@ -1,6 +1,5 @@
 package covoit.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,8 @@ public class VehicleModelService {
 	@Autowired
 	private VehicleModelRepository vehicleModelRepository;
 
-	public List<VehicleModel> getVehicleModels() {
-		Iterable<VehicleModel> iterable = vehicleModelRepository.findAll();
-		List<VehicleModel> models = new ArrayList<>();
-		iterable.forEach(models::add);
-		return models;
+	public List<VehicleModel> findAll() {
+		return vehicleModelRepository.findAll();
 	}
 
 	/**
@@ -27,8 +23,8 @@ public class VehicleModelService {
 	 * @param id : Id given
 	 * @return VehicleModel
 	 */
-	public VehicleModel getVehicleModel(int id) {
-		return vehicleModelRepository.getById(id);
+	public VehicleModel findById(int id) {
+		return vehicleModelRepository.findById(id);
 	}
 
 	/**
@@ -37,12 +33,15 @@ public class VehicleModelService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String updateVehicleModel(int id, VehicleModel object) {
-		VehicleModel modelDB = getVehicleModel(id);
+	public boolean update(int id, VehicleModel object) {
+		VehicleModel modelDB = findById(id);
+		if (modelDB == null) {
+			return false;
+		}
 		modelDB.setName(object.getName());
 		modelDB.setVehicles(object.getVehicles());
 		vehicleModelRepository.save(modelDB);
-		return "Le modèle a été modifié";
+		return true;
 	}
 
 	/**
@@ -51,9 +50,13 @@ public class VehicleModelService {
 	 * @param VehicleModel : the new VehicleModel
 	 * @return A confirmation message
 	 */
-	public String createVehicleModel(VehicleModel object) {
+	public boolean create(VehicleModel object) {
+		VehicleModel modelDB = vehicleModelRepository.findByName(object.getName());
+		if (modelDB != null) {
+			return false;
+		}
 		vehicleModelRepository.save(object);
-		return "Le modèle a été créé";
+		return true;
 	}
 
 	/**
@@ -62,8 +65,13 @@ public class VehicleModelService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String deleteVehicleModel(int id) {
+	public boolean delete(int id) {
+		VehicleModel modelDB = findById(id);
+		if (modelDB == null) {
+			return false;
+		}
+
 		vehicleModelRepository.deleteById(id);
-		return "Le modèle a été supprimé";
+		return true;
 	}
 }

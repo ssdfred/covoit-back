@@ -1,12 +1,10 @@
 package covoit.repository;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import covoit.dtos.CarpoolDto;
 import covoit.entities.Carpool;
 
 /**
@@ -21,4 +19,7 @@ public interface CarpoolRepository extends JpaRepository<Carpool, Long> {
      * @return a list of carpools associated with the user
      */
     List<Carpool> findByUserAccounts_Id(Long userId);
+    Carpool findById(int id);
+	List<Carpool> findAll();
+	Carpool findByName(String name);
 }

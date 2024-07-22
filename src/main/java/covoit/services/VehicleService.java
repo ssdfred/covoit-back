@@ -1,6 +1,5 @@
 package covoit.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +11,10 @@ import covoit.repository.VehicleRepository;
 @Service
 public class VehicleService {
 	@Autowired
-	private VehicleRepository vehicleRepository;
+	private VehicleRepository repository;
 
-	public List<Vehicle> getVehicles() {
-		Iterable<Vehicle> iterable = vehicleRepository.findAll();
-		List<Vehicle> vehicles = new ArrayList<>();
-		iterable.forEach(vehicles::add);
-		return vehicles;
+	public List<Vehicle> findAll() {
+		return repository.findAll();
 	}
 
 	/**
@@ -27,8 +23,8 @@ public class VehicleService {
 	 * @param id : Id given
 	 * @return Vehicle
 	 */
-	public Vehicle getVehicle(int id) {
-		return vehicleRepository.getById(id);
+	public Vehicle findById(int id) {
+		return repository.findById(id);
 	}
 
 	/**
@@ -37,27 +33,34 @@ public class VehicleService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String updateVehicle(int id, Vehicle object) {
-		Vehicle vehicleDB = getVehicle(id);
+	public boolean updateVehicle(int id, Vehicle object) {
+		Vehicle vehicleDB = findById(id);
+		if(vehicleDB==null) {
+			return false;
+		}
 		vehicleDB.setBrand(object.getBrand());
 		vehicleDB.setModel(object.getModel());
 		vehicleDB.setCategory(object.getCategory());
 		vehicleDB.setRegistration(object.getRegistration());
 		vehicleDB.setNbSeat(object.getNbSeat());
 		vehicleDB.setDrivers(object.getDrivers());
-		vehicleRepository.save(vehicleDB);
-		return "Le véhicule a été modifié";
+		repository.save(vehicleDB);
+		return true;
 	}
 
 	/**
-	 * Create an Vehicle
+	 * Create a Vehicle
 	 * 
 	 * @param Vehicle : the new Vehicle
-	 * @return A confirmation message
+	 * @return boolean
 	 */
-	public String createVehicle(Vehicle object) {
-		vehicleRepository.save(object);
-		return "Le véhicule a été créé";
+	public boolean createVehicle(Vehicle object) {
+		Vehicle vehicleDB = repository.findByRegistration(object.getRegistration());
+		if(vehicleDB!=null) {
+			return false;
+		}
+		repository.save(object);
+		return true;
 	}
 
 	/**
@@ -66,8 +69,12 @@ public class VehicleService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public String deleteVehicle(int id) {
-		vehicleRepository.deleteById(id);
-		return "Le véhicule a été supprimé";
+	public boolean deleteVehicle(int id) {
+		Vehicle vehicleDB = findById(id);
+		if(vehicleDB==null) {
+			return false;
+		}
+		repository.deleteById(id);
+		return true;
 	}
 }
