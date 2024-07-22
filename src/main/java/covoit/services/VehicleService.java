@@ -33,7 +33,7 @@ public class VehicleService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public boolean updateVehicle(int id, Vehicle object) {
+	public boolean update(int id, Vehicle object) {
 		Vehicle vehicleDB = findById(id);
 		if(vehicleDB==null) {
 			return false;
@@ -54,7 +54,7 @@ public class VehicleService {
 	 * @param Vehicle : the new Vehicle
 	 * @return boolean
 	 */
-	public boolean createVehicle(Vehicle object) {
+	public boolean create(Vehicle object) {
 		Vehicle vehicleDB = repository.findByRegistration(object.getRegistration());
 		if(vehicleDB!=null) {
 			return false;
@@ -69,7 +69,7 @@ public class VehicleService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public boolean deleteVehicle(int id) {
+	public boolean delete(int id) {
 		Vehicle vehicleDB = findById(id);
 		if(vehicleDB==null) {
 			return false;
