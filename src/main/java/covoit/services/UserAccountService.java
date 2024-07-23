@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import covoit.dtos.AddressDto;
 import covoit.dtos.UserAccountDto;
+import covoit.entities.Address;
 import covoit.entities.UserAccount;
 import covoit.repository.UserAccountRepository;
 
@@ -16,8 +18,16 @@ import covoit.repository.UserAccountRepository;
 @Service
 public class UserAccountService {
 
-	private static UserAccountRepository userAccountRepository;
+	private static UserAccountRepository repository;
 	private PasswordEncoder passwordEncoder;
+	
+	public UserAccountDto findById(int id) {
+		UserAccount userAccount = repository.findById(id);
+		if(userAccount == null) {
+			return null;
+		}
+		return new UserAccountDto().toDto(userAccount);
+	}
 	/**
 	 * Update the Brand corresponding to the id given
 	 * 
@@ -25,22 +35,23 @@ public class UserAccountService {
 	 * @return A confirmation message
 	 */
 	public boolean update(int id, UserAccountDto object) {
-		UserAccountDto userDB;
-	
-			userDB = findById(id);
+		UserAccount userDB = repository.findById(id);
 		
 		if (userDB == null) {
 			return false;
 		}
-		userDB.setName(object.getName());
-		userDB.setLastName(object.getLastName());
-		userAccountRepository.save(userDB);
+		userDB = object.toBean(object);
+		repository.save(userDB);
 		return true;
 	}
 
-	public static UserAccountDto findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean create(UserAccountDto userAccountDto) {
+		UserAccount userAccount = repository.findByEmail(userAccountDto.getEmail());
+		if (userAccount == null) {
+			repository.save(userAccountDto.toBean(userAccountDto));
+			return true;
+		}
+		return false;
 	}
 	/**
 	 * Delete the Brand corresponding to the id given
@@ -48,17 +59,17 @@ public class UserAccountService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public static boolean delete(int id) {
-		Optional<UserAccount> userDB = userAccountRepository.findById(id);
+	public boolean delete(int id) {
+		UserAccount userDB = repository.findById(id);
 		if (userDB == null) {
 			return false;
 		}
-		userAccountRepository.deleteById(id);
+		repository.deleteById(id);
 		return true;
 	}
 
 	public void login(String email, String password) {
-		Iterable<UserAccount> user = (userAccountRepository).findByEmailAndPassword(email, password);
+		Iterable<UserAccount> user = repository.findByEmailAndPassword(email, password);
 		if (user != null && passwordEncoder.matches(email, password)) {
 
 		} else {
