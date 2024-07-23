@@ -6,12 +6,13 @@ import covoit.entities.Vehicle;
 import covoit.entities.VehicleModel;
 
 public class VehicleModelDto {
-	
+	private int id;
 	private String name;
 	private Set<Vehicle> vehicles;
 	
 	public VehicleModelDto toDto(VehicleModel vm) {
 		VehicleModelDto vhDto = new VehicleModelDto();
+		vhDto.setId(vm.getId());
 		vhDto.setName(vm.getName());
 		vhDto.setVehicles(vm.getVehicles());
 		return vhDto;
@@ -21,6 +22,12 @@ public class VehicleModelDto {
 		vm.setName(vmDto.getName());
 		vm.setVehicles(vmDto.getVehicles());
 		return vm;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;

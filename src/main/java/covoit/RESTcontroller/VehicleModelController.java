@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import covoit.dtos.VehicleModelDto;
 import covoit.entities.VehicleModel;
 import covoit.services.VehicleModelService;
 
@@ -29,7 +30,7 @@ public class VehicleModelController {
 	 * 
 	 */
 	@GetMapping("/")
-	public List<VehicleModel> findAll() {
+	public List<VehicleModelDto> findAll() {
 		return service.findAll();
 	}
 
@@ -40,7 +41,7 @@ public class VehicleModelController {
 	 * @return The vehicle model
 	 */
 	@GetMapping("/{id}")
-	public VehicleModel findById(@PathVariable int id) {
+	public VehicleModelDto findById(@PathVariable int id) {
 		return service.findById(id);
 	}
 
@@ -51,8 +52,8 @@ public class VehicleModelController {
 	 * @param address : modified vehicle model
 	 */
 	@PutMapping("/{id}")
-	public void update(@PathVariable int id, VehicleModel model) {
-		service.update(id, model);
+	public void update(@PathVariable int id, VehicleModelDto vehicleModelDto) {
+		service.update(id, vehicleModelDto);
 	}
 
 	/**
@@ -62,8 +63,8 @@ public class VehicleModelController {
 	 * @return A confirmation message
 	 */
 	@PostMapping
-	public void create(VehicleModel model) {
-		service.create(model);
+	public void create(VehicleModelDto vehicleModelDto) {
+		service.create(vehicleModelDto);
 	}
 
 	/**
