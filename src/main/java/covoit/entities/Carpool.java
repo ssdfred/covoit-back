@@ -25,7 +25,7 @@ public class Carpool {
 	private LocalDate startDate;
 
 	@ManyToOne
-	private Vehicle vehicule;
+	private Vehicle vehicle;
 
 	@ManyToOne
 	private Route route;
@@ -120,7 +120,7 @@ public class Carpool {
 	 * @return the vehicle associated with the reservation
 	 */
 	public Vehicle getVehicle() {
-		return vehicule;
+		return vehicle;
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class Carpool {
 	 * @param vehicle the vehicle associated with the reservation
 	 */
 	public void setVehicle(Vehicle vehicule) {
-		this.vehicule = vehicule;
+		this.vehicle = vehicule;
 	}
 
 }
