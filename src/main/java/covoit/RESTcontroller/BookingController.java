@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import covoit.entities.Booking;
+import covoit.dtos.BookingDto;
 import covoit.services.BookingService;
 
 /**
@@ -24,11 +24,12 @@ public class BookingController {
 	@Autowired
 	private BookingService service;
 
-	/* Get all bookings
+	/*
+	 * Get all bookings
 	 * 
 	 */
 	@GetMapping("/")
-	public List<Booking> findAll() {
+	public List<BookingDto> findAll() {
 		return service.findAll();
 	}
 
@@ -39,29 +40,35 @@ public class BookingController {
 	 * @return Booking
 	 */
 	@GetMapping("/{id}")
-	public Booking findById(@PathVariable int id) {
+	public BookingDto findById(@PathVariable int id) {
 		return service.findById(id);
 	}
-	
-	/**Update the booking corresponding to the id given
-	 * @param id : Id given
+
+	/**
+	 * Update the booking corresponding to the id given
+	 * 
+	 * @param id      : Id given
 	 * @param booking : modified booking
 	 */
 	@PutMapping("/{id}")
-	public void update(@PathVariable int id, Booking booking) {
+	public void update(@PathVariable int id, BookingDto booking) {
 		service.update(id, booking);
 	}
-	
-	/**Create an booking 
+
+	/**
+	 * Create an booking
+	 * 
 	 * @param booking : the new booking
 	 */
 	@PostMapping
-	public void create(Booking booking) {
+	public void create(BookingDto booking) {
 		service.create(booking);
 	}
-	
-	/**Delete the booking corresponding to the id given
-	 *  @param id : Id given
+
+	/**
+	 * Delete the booking corresponding to the id given
+	 * 
+	 * @param id : Id given
 	 */
 	@DeleteMapping("/{id}")
 	public void delete(int id) {

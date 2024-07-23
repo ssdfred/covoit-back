@@ -1,10 +1,12 @@
 package covoit.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import covoit.dtos.BookingDto;
 import covoit.entities.Booking;
 import covoit.repository.BookingRepository;
 
@@ -13,8 +15,13 @@ public class BookingService {
 	@Autowired
 	private BookingRepository bookingRepository;
 
-	public List<Booking> findAll() {
-		return bookingRepository.findAll();
+	public List<BookingDto> findAll() {
+		List<Booking> bookings = bookingRepository.findAll();
+		List<BookingDto> bookingsDto = new ArrayList<>();
+		for (Booking item : bookings) {
+			bookingsDto.add(new BookingDto().toDto(item));
+		}
+		return bookingsDto;
 	}
 
 	/**
@@ -23,8 +30,12 @@ public class BookingService {
 	 * @param id : Id given
 	 * @return Booking
 	 */
-	public Booking findById(int id) {
-		return bookingRepository.findById(id);
+	public BookingDto findById(int id) {
+		Booking booking = bookingRepository.findById(id);
+		if (booking == null) {
+			return null;
+		}
+		return new BookingDto().toDto(booking);
 	}
 
 	/**
@@ -33,15 +44,12 @@ public class BookingService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public boolean update(int id, Booking booking) {
-		Booking bookingDB = findById(id);
+	public boolean update(int id, BookingDto bookingDto) {
+		Booking bookingDB = bookingRepository.findById(id);
 		if (bookingDB == null) {
 			return false;
 		}
-		bookingDB.setDriver(booking.getDriver());
-		bookingDB.setServiceVehicle(booking.getServiceVehicle());
-		bookingDB.setStartDate(booking.getStartDate());
-		bookingDB.setEndDate(booking.getEndDate());
+		bookingDB = bookingDto.toBean(bookingDto);
 		bookingRepository.save(bookingDB);
 		return true;
 	}
@@ -52,13 +60,13 @@ public class BookingService {
 	 * @param Booking : the new Booking
 	 * @return A confirmation message
 	 */
-	public boolean create(Booking booking) {
-		Booking bookingDB = bookingRepository.findByStartDateAndEndDateAndDriver(booking.getStartDate(),
-				booking.getEndDate(), booking.getDriver());
+	public boolean create(BookingDto bookingDto) {
+		Booking bookingDB = bookingRepository.findByStartDateAndEndDateAndDriver(bookingDto.getStartDate(),
+				bookingDto.getEndDate(), bookingDto.getDriver());
 		if (bookingDB != null) {
 			return false;
 		}
-		bookingRepository.save(booking);
+		bookingRepository.save(bookingDto.toBean(bookingDto));
 		return true;
 	}
 
@@ -69,7 +77,7 @@ public class BookingService {
 	 * @return A confirmation message
 	 */
 	public boolean delete(int id) {
-		Booking bookingDB = findById(id);
+		Booking bookingDB = bookingRepository.findById(id);
 		if (bookingDB == null) {
 			return false;
 		}
