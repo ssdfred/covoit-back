@@ -1,10 +1,14 @@
 package covoit.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import covoit.dtos.AddressDto;
+import covoit.dtos.VehicleDto;
+import covoit.entities.Address;
 import covoit.entities.Vehicle;
 import covoit.repository.VehicleRepository;
 
@@ -13,8 +17,13 @@ public class VehicleService {
 	@Autowired
 	private VehicleRepository repository;
 
-	public List<Vehicle> findAll() {
-		return repository.findAll();
+	public List<VehicleDto> findAll() {
+		List<Vehicle> vehicles = repository.findAll();
+		List<VehicleDto> vehiclesDto = new ArrayList<>();
+		for(Vehicle item : vehicles) {
+			vehiclesDto.add(new VehicleDto().toDto(item));
+		}
+		return vehiclesDto;
 	}
 
 	/**
@@ -23,8 +32,12 @@ public class VehicleService {
 	 * @param id : Id given
 	 * @return Vehicle
 	 */
-	public Vehicle findById(int id) {
-		return repository.findById(id);
+	public VehicleDto findById(int id) {
+		Vehicle vehicle = repository.findById(id);
+		if(vehicle == null) {
+			return null;
+		}
+		return new VehicleDto().toDto(vehicle);
 	}
 
 	/**
@@ -33,18 +46,13 @@ public class VehicleService {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public boolean update(int id, Vehicle object) {
-		Vehicle vehicleDB = findById(id);
-		if(vehicleDB==null) {
+	public boolean update(int id, VehicleDto vehicleDto) {
+		Vehicle vehicle = repository.findById(id);
+		if (vehicle == null) {
 			return false;
 		}
-		vehicleDB.setBrand(object.getBrand());
-		vehicleDB.setModel(object.getModel());
-		vehicleDB.setCategory(object.getCategory());
-		vehicleDB.setRegistration(object.getRegistration());
-		vehicleDB.setNbSeat(object.getNbSeat());
-		vehicleDB.setDrivers(object.getDrivers());
-		repository.save(vehicleDB);
+		vehicle = vehicleDto.toBean(vehicleDto);
+		repository.save(vehicle);
 		return true;
 	}
 
@@ -54,12 +62,12 @@ public class VehicleService {
 	 * @param Vehicle : the new Vehicle
 	 * @return boolean
 	 */
-	public boolean create(Vehicle object) {
+	public boolean create(VehicleDto object) {
 		Vehicle vehicleDB = repository.findByRegistration(object.getRegistration());
 		if(vehicleDB!=null) {
 			return false;
 		}
-		repository.save(object);
+		repository.save(object.toBean(object));
 		return true;
 	}
 
@@ -70,7 +78,7 @@ public class VehicleService {
 	 * @return A confirmation message
 	 */
 	public boolean delete(int id) {
-		Vehicle vehicleDB = findById(id);
+		Vehicle vehicleDB = repository.findById(id);
 		if(vehicleDB==null) {
 			return false;
 		}
