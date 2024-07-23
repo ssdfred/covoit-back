@@ -1,10 +1,12 @@
 package covoit.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import covoit.dtos.ServiceVehicleDto;
 import covoit.entities.ServiceVehicle;
 import covoit.repository.ServiceVehicleRepository;
 
@@ -13,8 +15,13 @@ public class ServiceVehicleService {
 	@Autowired
 	private ServiceVehicleRepository repository;
 
-	public List<ServiceVehicle> findAll() {
-		return repository.findAll();
+	public List<ServiceVehicleDto> findAll() {
+		List<ServiceVehicle> sVList = repository.findAll();
+		List<ServiceVehicleDto> sVListDto = new ArrayList<>();
+		for(ServiceVehicle item : sVList) {
+			sVListDto.add(new ServiceVehicleDto().toDto(item));
+		}
+		return sVListDto;
 	}
 
 	/**
@@ -23,8 +30,12 @@ public class ServiceVehicleService {
 	 * @param id : Id given
 	 * @return ServiceVehicle
 	 */
-	public ServiceVehicle findById(int id) {
-		return repository.findById(id);
+	public ServiceVehicleDto findById(int id) {
+		ServiceVehicle sV = repository.findById(id);
+		if(sV==null) {
+			return null;
+		}
+		return new ServiceVehicleDto().toDto(sV);
 	}
 
 	/**
@@ -32,21 +43,13 @@ public class ServiceVehicleService {
 	 * 
 	 * @param id : Id given
 	 */
-	public boolean update(int id, ServiceVehicle object) {
+	public boolean update(int id, ServiceVehicleDto object) {
 		ServiceVehicle sVehicleDB = repository.findById(id);
 		if (sVehicleDB == null) {
 			return false;
 		}
-		sVehicleDB.setState(object.getState());
-		sVehicleDB.setRegistration(object.getRegistration());
-		sVehicleDB.setBrand(object.getBrand());
-		sVehicleDB.setModel(object.getModel());
-		sVehicleDB.setCategory(object.getCategory());
-		sVehicleDB.setCo2Km(object.getCo2Km());
-		sVehicleDB.setMotorization(object.getMotorization());
-		sVehicleDB.setPicture(object.getPicture());
-		sVehicleDB.setNbSeat(object.getNbSeat());
-		repository.save(object);
+		sVehicleDB= object.toBean(object);
+		repository.save(sVehicleDB);
 		return true;
 	}
 
@@ -56,12 +59,12 @@ public class ServiceVehicleService {
 	 * @param ServiceVehicle : the new ServiceVehicle
 	 * @return boolean
 	 */
-	public boolean create(ServiceVehicle object) {
+	public boolean create(ServiceVehicleDto object) {
 		ServiceVehicle sVehicleDB = repository.findByRegistration(object.getRegistration());
 		if (sVehicleDB != null) {
 			return false;
 		}
-		repository.save(object);
+		repository.save(object.toBean(object));
 		return true;
 	}
 
