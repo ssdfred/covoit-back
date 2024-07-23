@@ -6,7 +6,8 @@ import covoit.entities.Booking;
 import covoit.entities.ServiceVehicle;
 
 public class ServiceVehicleDto {
-
+	protected int id;
+	protected String registration;
 	protected String state;
 	protected String picture;
 	protected String motorization;
@@ -15,6 +16,8 @@ public class ServiceVehicleDto {
 
 	public ServiceVehicleDto toDto(ServiceVehicle sV) {
 		ServiceVehicleDto sVDto = new ServiceVehicleDto();
+		sVDto.setId(sV.getId());
+		sVDto.setRegistration(sV.getRegistration());
 		sVDto.setState(sV.getState());
 		sVDto.setPicture(sV.getPicture());
 		sVDto.setMotorization(sV.getMotorization());
@@ -25,6 +28,7 @@ public class ServiceVehicleDto {
 
 	public ServiceVehicle toBean(ServiceVehicleDto vhDto) {
 		ServiceVehicle sV = new ServiceVehicle();
+		sV.setRegistration(vhDto.getRegistration());
 		sV.setState(vhDto.getState());
 		sV.setPicture(vhDto.getPicture());
 		sV.setMotorization(vhDto.getMotorization());
@@ -72,4 +76,41 @@ public class ServiceVehicleDto {
 	public void setBookings(Set<Booking> bookings) {
 		this.bookings = bookings;
 	}
+
+	/**
+	 * Getter pour id
+	 * 
+	 * @return id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * Setter pour id
+	 * 
+	 * @param id id
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * Getter pour registration
+	 * 
+	 * @return registration
+	 */
+	public String getRegistration() {
+		return registration;
+	}
+
+	/**
+	 * Setter pour registration
+	 * 
+	 * @param registration registration
+	 */
+	public void setRegistration(String registration) {
+		this.registration = registration;
+	}
+
 }

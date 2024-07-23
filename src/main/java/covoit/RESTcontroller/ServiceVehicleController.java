@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import covoit.entities.ServiceVehicle;
+import covoit.dtos.ServiceVehicleDto;
 import covoit.exception.AnomalieException;
 import covoit.services.ServiceVehicleService;
 import jakarta.validation.Valid;
@@ -22,65 +22,75 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/servicevehicle")
 public class ServiceVehicleController {
-	
+
 	@Autowired
-	private  ServiceVehicleService service;
-	
-	/**Get all addresses
+	private ServiceVehicleService service;
+
+	/**
+	 * Get all addresses
 	 * 
 	 */
 	@GetMapping("/")
-	public List<ServiceVehicle> getAll() {
+	public List<ServiceVehicleDto> getAll() {
 		return service.findAll();
 	}
-	
-	/**get the address corresponding to the id given
+
+	/**
+	 * get the address corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return The address
 	 */
 	@GetMapping("/{id}")
-	public ServiceVehicle getById(@PathVariable int id) {
+	public ServiceVehicleDto getById(@PathVariable int id) {
 		return service.findById(id);
 	}
-	
-	/**Update the Service vehicle corresponding to the id given
-	 * @param id : Id given
+
+	/**
+	 * Update the Service vehicle corresponding to the id given
+	 * 
+	 * @param id             : Id given
 	 * @param serviceVehicle : modified Service vehicle
 	 * @return A confirmation message
 	 */
-	//TODO EXCEPTION ANOMALIE
+	// TODO EXCEPTION ANOMALIE
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updateById(@PathVariable int id, @Valid @RequestBody ServiceVehicle serviceVehicle, BindingResult result ) throws AnomalieException	 {
-		if(result.hasErrors()) {
+	public ResponseEntity<String> updateById(@PathVariable int id, @Valid @RequestBody ServiceVehicleDto serviceVehicle,
+			BindingResult result) throws AnomalieException {
+		if (result.hasErrors()) {
 			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
-		service.update(id, serviceVehicle );
+		service.update(id, serviceVehicle);
 		return ResponseEntity.ok("Service vehicle updated");
 	}
-	
-	/**Create a Service vehicle 
+
+	/**
+	 * Create a Service vehicle
+	 * 
 	 * @param serviceVehicle : the new Service vehicle
 	 * @return A confirmation message
 	 */
 	@PostMapping
-	public ResponseEntity<String> create(@Valid @RequestBody ServiceVehicle serviceVehicle, BindingResult result )throws AnomalieException {
-		if(!service.create(serviceVehicle)) {
+	public ResponseEntity<String> create(@Valid @RequestBody ServiceVehicleDto serviceVehicle, BindingResult result)
+			throws AnomalieException {
+		if (!service.create(serviceVehicle)) {
 			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
 		return ResponseEntity.ok("Service vehicle created");
 	}
 
-	/**Delete the Service vehicle corresponding to the id given
-	 *  @param id : Id given
+	/**
+	 * Delete the Service vehicle corresponding to the id given
+	 * 
+	 * @param id : Id given
 	 * @return A confirmation message
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteById(int id, BindingResult result)throws AnomalieException {
-		if(!service.delete(id)) {
+	public ResponseEntity<String> deleteById(int id, BindingResult result) throws AnomalieException {
+		if (!service.delete(id)) {
 			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
-		
+
 		return ResponseEntity.ok("Service vehicle deleted");
 	}
 
