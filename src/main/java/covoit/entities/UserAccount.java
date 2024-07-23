@@ -17,6 +17,7 @@ public class UserAccount {
 	private int id;
 	private String name;
 	private String lastName;
+	private String email;
 	private boolean driverLicence;
 	private String password;
 	
@@ -111,6 +112,13 @@ public class UserAccount {
     public void setDriverLicence(boolean driverLicence) {
         this.driverLicence = driverLicence;
     }
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 
 
 	

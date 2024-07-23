@@ -25,9 +25,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
 
 	Optional<UserAccount> findById(int id);
 
-	List<UserAccount> findAllUsers();
-
-	UserAccount authenticateUser(String name, String password);
 
 	List<UserAccount> findAll();
 

@@ -57,9 +57,9 @@ public class UserAccountService {
 		return true;
 	}
 
-	public void login(String name, String password) {
-		Iterable<UserAccount> user = (userAccountRepository).findByEmailAndPassword(name, password);
-		if (user != null && passwordEncoder.matches(name, password)) {
+	public void login(String email, String password) {
+		Iterable<UserAccount> user = (userAccountRepository).findByEmailAndPassword(email, password);
+		if (user != null && passwordEncoder.matches(email, password)) {
 
 		} else {
 			throw new RuntimeException("Email ou mot de passe incorrect");

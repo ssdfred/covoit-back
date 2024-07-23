@@ -21,5 +21,5 @@ public interface CarpoolRepository extends JpaRepository<Carpool, Integer> {
     List<Carpool> findByUserAccounts_Id(int userId);
     Carpool findById(int id);
 	List<Carpool> findAll();
-	Carpool findByName(String name);
+
 }
