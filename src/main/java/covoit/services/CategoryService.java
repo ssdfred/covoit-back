@@ -1,10 +1,12 @@
 package covoit.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import covoit.dtos.CategoryDto;
 import covoit.entities.Category;
 import covoit.repository.CategoryRepository;
 
@@ -16,62 +18,76 @@ import covoit.repository.CategoryRepository;
 public class CategoryService {
 	@Autowired
 	protected CategoryRepository repository;
-	
+
 	/**
 	 * get all the categories in base
 	 * 
 	 * @return An iterable object including all the categories
 	 */
-	public List<Category> findAll() {
-		return repository.findAll();
+	public List<CategoryDto> findAll() {
+		List<Category> categories = repository.findAll();
+		List<CategoryDto> categoriesDto = new ArrayList<>();
+		for (Category item : categories) {
+			categoriesDto.add(new CategoryDto().toDto(item));
+		}
+		return categoriesDto;
 
 	}
-	
-	/**get the category corresponding to the id given
+
+	/**
+	 * get the category corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return The category
 	 */
-	public Category findById(int id) {
-		return repository.findById(id);
+	public CategoryDto findById(int id) {
+		Category category = repository.findById(id);
+		if (category == null) {
+			return null;
+		}
+		return new CategoryDto().toDto(category);
 	}
 
-	/**Update the category corresponding to the id given
+	/**
+	 * Update the category corresponding to the id given
+	 * 
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public boolean update(int id, Category category) {
+	public boolean update(int id, CategoryDto categoryDto) {
 		Category categoryDb = repository.findById(id);
-		if(categoryDb==null) {
+		if (categoryDb == null) {
 			return false;
 		}
-		categoryDb.setName(category.getName());
-		categoryDb.setVehicles(category.getVehicles());
-		
+		categoryDb = categoryDto.toBean(categoryDto);
 		repository.save(categoryDb);
 		return true;
 	}
-	
-	/**Create a category 
+
+	/**
+	 * Create a category
+	 * 
 	 * @param category : the new category
 	 * @return A confirmation message
 	 */
-	public boolean create(Category category) {
-		Category categoryDb = repository.findByName(category.getName());
-		if(categoryDb.equals(category)) {
+	public boolean create(CategoryDto categoryDto) {
+		Category categoryDb = repository.findByName(categoryDto.getName());
+		if (categoryDb != null) {
 			return false;
 		}
-		repository.save(category);
+		repository.save(categoryDto.toBean(categoryDto));
 		return true;
 	}
 
-	/**Delete the category corresponding to the id given
-	 *  @param id : Id given
+	/**
+	 * Delete the category corresponding to the id given
+	 * 
+	 * @param id : Id given
 	 * @return A confirmation message
 	 */
 	public boolean delete(int id) {
 		Category categoryDb = repository.findById(id);
-		if(categoryDb == null) {
+		if (categoryDb == null) {
 			return false;
 		}
 		repository.deleteById(id);

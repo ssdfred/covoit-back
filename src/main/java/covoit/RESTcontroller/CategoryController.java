@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import covoit.entities.Category;
+import covoit.dtos.CategoryDto;
 import covoit.exception.AnomalieException;
 import covoit.services.CategoryService;
 import jakarta.validation.Valid;
@@ -23,63 +23,73 @@ import jakarta.validation.Valid;
 @RequestMapping("/category")
 public class CategoryController {
 	@Autowired
-	private  CategoryService service;
-	
-	/**Get all addresses
+	private CategoryService service;
+
+	/**
+	 * Get all addresses
 	 * 
 	 */
 	@GetMapping("/")
-	public List<Category> getAll() {
+	public List<CategoryDto> getAll() {
 		return service.findAll();
 	}
-	
-	/**get the address corresponding to the id given
+
+	/**
+	 * get the address corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return The address
 	 */
 	@GetMapping("/{id}")
-	public Category getById(@PathVariable int id) {
+	public CategoryDto getById(@PathVariable int id) {
 		return service.findById(id);
 	}
-	
-	/**Update the  corresponding to the id given
-	 * @param id : Id given
+
+	/**
+	 * Update the corresponding to the id given
+	 * 
+	 * @param id      : Id given
 	 * @param address : modified address
 	 * @return A confirmation message
 	 */
-	//TODO EXCEPTION ANOMALIE
+	// TODO EXCEPTION ANOMALIE
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updateById(@PathVariable int id, @Valid @RequestBody Category category, BindingResult result ) throws AnomalieException	 {
-		if(result.hasErrors()) {
+	public ResponseEntity<String> updateById(@PathVariable int id, @Valid @RequestBody CategoryDto category,
+			BindingResult result) throws AnomalieException {
+		if (result.hasErrors()) {
 			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
-		service.update(id, category );
+		service.update(id, category);
 		return ResponseEntity.ok("L'update est un succes");
 	}
-	
-	/**Create an  
+
+	/**
+	 * Create an
+	 * 
 	 * @param address : the new address
 	 * @return A confirmation message
 	 */
 	@PostMapping
-	public ResponseEntity<String> create(@Valid @RequestBody Category category, BindingResult result )throws AnomalieException {
-		if(!service.create(category)) {
+	public ResponseEntity<String> create(@Valid @RequestBody CategoryDto category, BindingResult result)
+			throws AnomalieException {
+		if (!service.create(category)) {
 			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
 		return ResponseEntity.ok("Creation reussi");
 	}
 
-	/**Delete the  corresponding to the id given
-	 *  @param id : Id given
+	/**
+	 * Delete the corresponding to the id given
+	 * 
+	 * @param id : Id given
 	 * @return A confirmation message
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteById(int id, BindingResult result)throws AnomalieException {
-		if(!service.delete(id)) {
+	public ResponseEntity<String> deleteById(int id, BindingResult result) throws AnomalieException {
+		if (!service.delete(id)) {
 			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
-		
+
 		return ResponseEntity.ok("Suppression reussi");
 	}
 }
