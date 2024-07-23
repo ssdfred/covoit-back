@@ -6,6 +6,7 @@ import covoit.entities.Vehicle;
 import covoit.entities.VehicleModel;
 
 public class VehicleDto {
+	private int id;
 	private String registration;
 	private int nbSeat;
 	private Brand brand;
@@ -14,6 +15,7 @@ public class VehicleDto {
 	
 	public VehicleDto toDto(Vehicle vh) {
 		VehicleDto vhDto = new VehicleDto();
+		vhDto.setId(vh.getId());
 		vhDto.setRegistration(vh.getRegistration());
 		vhDto.setNbSeat(vh.getNbSeat());
 		vhDto.setBrand(vh.getBrand());
@@ -29,6 +31,12 @@ public class VehicleDto {
 		vh.setModel(vhDto.getModel());
 		vh.setCategory(vhDto.getCategory());
 		return vh;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getRegistration() {
 		return registration;
