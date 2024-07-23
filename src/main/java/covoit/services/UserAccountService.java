@@ -1,14 +1,13 @@
 
 package covoit.services;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import covoit.dtos.AddressDto;
 import covoit.dtos.UserAccountDto;
-import covoit.entities.Address;
 import covoit.entities.UserAccount;
 import covoit.repository.UserAccountRepository;
 
@@ -20,14 +19,24 @@ public class UserAccountService {
 
 	private static UserAccountRepository repository;
 	private PasswordEncoder passwordEncoder;
-	
+
+	public List<UserAccountDto> findAll() {
+		List<UserAccount> users = repository.findAll();
+		List<UserAccountDto> usersDto = new ArrayList<>();
+		for (UserAccount item : users) {
+			usersDto.add(new UserAccountDto().toDto(item));
+		}
+		return usersDto;
+	}
+
 	public UserAccountDto findById(int id) {
 		UserAccount userAccount = repository.findById(id);
-		if(userAccount == null) {
+		if (userAccount == null) {
 			return null;
 		}
 		return new UserAccountDto().toDto(userAccount);
 	}
+
 	/**
 	 * Update the Brand corresponding to the id given
 	 * 
@@ -36,7 +45,7 @@ public class UserAccountService {
 	 */
 	public boolean update(int id, UserAccountDto object) {
 		UserAccount userDB = repository.findById(id);
-		
+
 		if (userDB == null) {
 			return false;
 		}
@@ -53,6 +62,7 @@ public class UserAccountService {
 		}
 		return false;
 	}
+
 	/**
 	 * Delete the Brand corresponding to the id given
 	 * 

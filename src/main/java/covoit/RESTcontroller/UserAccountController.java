@@ -1,5 +1,7 @@
 package covoit.RESTcontroller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,34 +19,40 @@ import covoit.services.UserAccountService;
 @RestController
 @RequestMapping("/user")
 public class UserAccountController {
-    @Autowired
-    private UserAccountService userAccountService;
-    
-    
-    @GetMapping("/{id}")
-    public UserAccountDto findById(@PathVariable int id) {
-        return userAccountService.findById(id);
-    }
-    @PostMapping("/register")
-    public void create(@RequestBody UserAccountDto userDto) {
-        userAccountService.create(userDto);
-    }
-    @PutMapping("/update")
-    public void update(@PathVariable int id, @RequestBody UserAccountDto userDto) {
-        userAccountService.update(id, userDto);
-    }
-    
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        userAccountService.delete(id);
-    }
+	@Autowired
+	private UserAccountService userAccountService;
 
-    @PostMapping("/login")
-    public void login(@RequestParam String email, @RequestParam String password) {
-    }
+	@GetMapping("/")
+	public List<UserAccountDto> findAll() {
+		return userAccountService.findAll();
+	}
 
-    @DeleteMapping("/{userId}/cancel-carpool")
-    public void cancelCarpool(@PathVariable int userId, @RequestParam int carpoolId) {
-     //  userAccountService.deleteBookingCarpool(carpoolId, userId);
-    }
+	@GetMapping("/{id}")
+	public UserAccountDto findById(@PathVariable int id) {
+		return userAccountService.findById(id);
+	}
+
+	@PostMapping("/register")
+	public void create(@RequestBody UserAccountDto userDto) {
+		userAccountService.create(userDto);
+	}
+
+	@PutMapping("/update")
+	public void update(@PathVariable int id, @RequestBody UserAccountDto userDto) {
+		userAccountService.update(id, userDto);
+	}
+
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable int id) {
+		userAccountService.delete(id);
+	}
+
+	@PostMapping("/login")
+	public void login(@RequestParam String email, @RequestParam String password) {
+	}
+
+	@DeleteMapping("/{userId}/cancel-carpool")
+	public void cancelCarpool(@PathVariable int userId, @RequestParam int carpoolId) {
+		// userAccountService.deleteBookingCarpool(carpoolId, userId);
+	}
 }
