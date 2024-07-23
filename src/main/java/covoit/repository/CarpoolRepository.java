@@ -1,11 +1,13 @@
 package covoit.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import covoit.entities.Carpool;
+import covoit.entities.Vehicle;
 
 /**
  * Repository for Carpool entity.
@@ -21,5 +23,6 @@ public interface CarpoolRepository extends JpaRepository<Carpool, Integer> {
     List<Carpool> findByUserAccounts_Id(int userId);
     Carpool findById(int id);
 	List<Carpool> findAll();
+	Carpool findByStartDateAndVehicle(LocalDate startDate, Vehicle vehicle);
 
 }

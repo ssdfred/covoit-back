@@ -17,12 +17,13 @@ public class CarpoolDto {
 
 	public CarpoolDto toDTO(Carpool object) {
 		CarpoolDto carpoolDTO = new CarpoolDto();
+		carpoolDTO.setId(object.getId());
 		carpoolDTO.setStartDate(object.getStartDate());
 		carpoolDTO.setRoute(object.getRoute());
 		carpoolDTO.setVehicle(object.getVehicle());
 		carpoolDTO.setAvailableSeat(object.getAvailableSeat());
-		//TODO : See how contradiction between CarpoolDTO and Carpool should be handled
-		//carpoolDTO.setUserAccounts(object.getUserAccounts());
+		// TODO : See how contradiction between CarpoolDTO and Carpool should be handled
+		// carpoolDTO.setUserAccounts(object.getUserAccounts());
 		return carpoolDTO;
 	}
 
@@ -33,8 +34,8 @@ public class CarpoolDto {
 		carpool.setVehicle(object.getVehicle());
 		carpool.setAvailableSeat(object.getAvailableSeat());
 		return carpool;
-		//TODO : See how contradiction between CarpoolDTO and Carpool should be handled
-		//carpool.setUserAccounts(object.getUserAccounts());		return null;
+		// TODO : See how contradiction between CarpoolDTO and Carpool should be handled
+		// carpool.setUserAccounts(object.getUserAccounts()); return null;
 	}
 
 	// Getters and setters
