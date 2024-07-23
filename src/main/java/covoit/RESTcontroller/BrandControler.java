@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import covoit.entities.Brand;
+import covoit.dtos.BrandDto;
 import covoit.services.BrandService;
 
 /**
@@ -24,43 +24,51 @@ public class BrandControler {
 	@Autowired
 	private BrandService service;
 
-	/* Get all brands
+	/*
+	 * Get all brands
 	 * 
 	 */
 	@GetMapping("/")
-	public List<Brand> findAll() {
+	public List<BrandDto> findAll() {
 		return service.findAll();
 	}
 
-	/**get the brand corresponding to the id given
+	/**
+	 * get the brand corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return Brand
 	 */
 	@GetMapping("/{id}")
-	public Brand findById(@PathVariable int id) {
+	public BrandDto findById(@PathVariable int id) {
 		return service.findById(id);
 	}
 
-	/**Update the brand corresponding to the id given
-	 * @param id : Id given
+	/**
+	 * Update the brand corresponding to the id given
+	 * 
+	 * @param id    : Id given
 	 * @param brand : modified brand
 	 */
 	@PutMapping("/{id}")
-	public void update(@PathVariable int id, Brand brand) {
+	public void update(@PathVariable int id, BrandDto brand) {
 		service.update(id, brand);
 	}
 
-	/**Create a brand 
+	/**
+	 * Create a brand
+	 * 
 	 * @param brand : the new brand
 	 */
 	@PostMapping
-	public void create(Brand brand) {
+	public void create(BrandDto brand) {
 		service.create(brand);
 	}
 
-	/**Delete the brand corresponding to the id given
-	 *  @param id : Id given
+	/**
+	 * Delete the brand corresponding to the id given
+	 * 
+	 * @param id : Id given
 	 */
 	@DeleteMapping("/{id}")
 	public void delete(int id) {
