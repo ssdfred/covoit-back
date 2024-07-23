@@ -15,6 +15,7 @@ public class AddressDto {
 	
 	public AddressDto toDTO(Address object){
 		AddressDto addressDTO = new AddressDto();
+		addressDTO.setId(object.getId());
 		addressDTO.setCity(object.getCity());
 		addressDTO.setCountry(object.getCountry());
 		addressDTO.setDetail(object.getDetail());
@@ -23,6 +24,7 @@ public class AddressDto {
 	}
 	
 	public Address toBean(AddressDto object) {
+		
 		Address address = new Address();
 		address.setCity(object.getCity());
 		address.setCountry(object.getCountry());
@@ -31,6 +33,15 @@ public class AddressDto {
 		return address;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	/** Getter pour id
+	 * @return id
+	 */
+	public int getId() {
+		return id;
+	}
 	/** Getter pour detail
 	 * @return detail
 	 */
@@ -79,10 +90,5 @@ public class AddressDto {
 	public void setRoutes(Set<Route> routes) {
 		this.routes = routes;
 	}
-	/** Getter pour id
-	 * @return id
-	 */
-	public int getId() {
-		return id;
-	}
+
 }

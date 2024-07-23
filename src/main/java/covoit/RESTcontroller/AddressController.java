@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import covoit.dtos.AddressDto;
 import covoit.entities.Address;
 import covoit.services.AddressService;
 
@@ -25,7 +26,7 @@ public class AddressController {
 	 * 
 	 */
 	@GetMapping("/")
-	public Iterable<Address> findAll() {
+	public Iterable<AddressDto> findAll() {
 		return service.findAll();
 	}
 	
@@ -35,7 +36,7 @@ public class AddressController {
 	 * @return The address
 	 */
 	@GetMapping("/{id}")
-	public Address findById(@PathVariable int id) {
+	public AddressDto findById(@PathVariable int id) {
 		return service.findById(id);
 	}
 	
@@ -44,16 +45,16 @@ public class AddressController {
 	 * @param address : modified address
 	 */
 	@PutMapping("/{id}")
-	public void update(@PathVariable int id, Address address) {
-		service.update(id, address);
+	public void update(@PathVariable int id, AddressDto addressDto) {
+		service.update(id, addressDto);
 	}
 	
 	/**Create an address 
 	 * @param address : the new address
 	 */
 	@PostMapping
-	public void create(Address address) {
-		service.create(address);
+	public void create(AddressDto addressDto) {
+		service.create(addressDto);
 	}
 
 	/**Delete the address corresponding to the id given

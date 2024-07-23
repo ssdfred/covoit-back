@@ -1,10 +1,12 @@
 package covoit.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import covoit.dtos.AddressDto;
 import covoit.entities.Address;
 import covoit.repository.AddressRepository;
 
@@ -22,8 +24,14 @@ public class AddressService {
 	 * 
 	 * @return An iterable object including all the addresses
 	 */
-	public List<Address> findAll() {
-		return repository.findAll();
+	public List<AddressDto> findAll() {
+		List<Address> address = repository.findAll();
+		List<AddressDto> addressDto = new ArrayList<>();
+		for(Address item : address) {
+			addressDto.add(new AddressDto().toDTO(item));
+		}
+		
+		return addressDto;
 
 	}
 
@@ -33,8 +41,12 @@ public class AddressService {
 	 * @param id : Id given
 	 * @return The address
 	 */
-	public Address findById(int id) {
-		return repository.findById(id);
+	public AddressDto findById(int id) {
+		Address address = repository.findById(id);
+		if(address == null) {
+			return null;
+		}
+		return new AddressDto().toDTO(address);
 	}
 
 	/**
@@ -44,14 +56,12 @@ public class AddressService {
 	 * @param address : modified address
 	 * @return A confirmation message
 	 */
-	public boolean update(int id, Address address) {
-		Address addressDB = findById(id);
+	public boolean update(int id, AddressDto addressDto) {
+		Address addressDB = repository.findById(id);
 		if (addressDB == null) {
 			return false;
 		}
-		addressDB.setDetail(address.getDetail());
-		addressDB.setCity(address.getCity());
-		addressDB.setCountry(address.getCountry());
+		addressDB = addressDto.toBean(addressDto);
 		repository.save(addressDB);
 		return true;
 	}
@@ -62,11 +72,11 @@ public class AddressService {
 	 * @param address : the new address
 	 * @return A confirmation message
 	 */
-	public boolean create(Address address) {
-		Address addressDb = repository.findByDetailAndCityAndCountry(address.getDetail(), address.getCity(),
-				address.getCountry());
+	public boolean create(AddressDto addressDto) {
+		Address addressDb = repository.findByDetailAndCityAndCountry(addressDto.getDetail(), addressDto.getCity(),
+				addressDto.getCountry());
 		if (addressDb == null) {
-			repository.save(address);
+			repository.save(addressDto.toBean(addressDto));
 			return true;
 		}
 		return false;
@@ -78,7 +88,7 @@ public class AddressService {
 	 * @param id : Id given
 	 */
 	public boolean delete(int id) {
-		Address addressDb = findById(id);
+		Address addressDb = repository.findById(id);
 		if (addressDb == null) {
 			return false;
 		}
