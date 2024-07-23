@@ -9,5 +9,4 @@ public class ConvoitBackApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ConvoitBackApplication.class, args);
 	}
-
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import covoit.entities.Booking;
 import covoit.entities.UserAccount;
+
 @Repository
 public interface BookingRepository extends CrudRepository<Booking, Integer> {
 	Booking findById(int id);
