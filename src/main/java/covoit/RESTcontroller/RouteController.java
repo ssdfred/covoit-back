@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import covoit.entities.Route;
+import covoit.dtos.RouteDto;
 import covoit.services.RouteService;
 
 /**
@@ -27,7 +27,7 @@ public class RouteController {
 	 * 
 	 */
 	@GetMapping("/")
-	public Iterable<Route> findAll() {
+	public Iterable<RouteDto> findAll() {
 		return service.findAll();
 	}
 
@@ -38,32 +38,39 @@ public class RouteController {
 	 * @return The route
 	 */
 	@GetMapping("/{id}")
-	public Route findById(@PathVariable int id) {
+	public RouteDto findById(@PathVariable int id) {
 		return service.findById(id);
 	}
-	
-	/**Update the route corresponding to the id given
-	 * @param id : Id given
+
+	/**
+	 * Update the route corresponding to the id given
+	 * 
+	 * @param id    : Id given
 	 * @param route : modified route
 	 */
 	@PutMapping("/{id}")
-	public void update(@PathVariable int id, Route route) {
+	public void update(@PathVariable int id, RouteDto route) {
 		service.update(id, route);
 	}
-	
-	/**Create a route 
+
+	/**
+	 * Create a route
+	 * 
 	 * @param route : the new route
 	 */
 	@PostMapping
-	public void create(Route route) {
+	public void create(RouteDto route) {
 		service.create(route);
 	}
 
-	/**Delete the route corresponding to the id given
-	 *  @param id : Id given
+	/**
+	 * Delete the route corresponding to the id given
+	 * 
+	 * @param id : Id given
 	 */
 	@DeleteMapping("/{id}")
 	public void delete(int id) {
-		service.delete(id);}
-	
+		service.delete(id);
+	}
+
 }

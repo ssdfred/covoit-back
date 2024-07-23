@@ -1,10 +1,12 @@
 package covoit.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import covoit.dtos.RouteDto;
 import covoit.entities.Route;
 import covoit.repository.RouteRepository;
 
@@ -13,8 +15,13 @@ public class RouteService {
 	@Autowired
 	private RouteRepository repository;
 
-	public List<Route> findAll() {
-		return (List<Route>) repository.findAll();
+	public List<RouteDto> findAll() {
+		List<Route> routes = repository.findAll();
+		List<RouteDto> routesDto = new ArrayList<>();
+		for(Route item :routes) {
+			routesDto.add(new RouteDto().toDto(item));
+		}
+		return routesDto;
 	}
 
 	/**
@@ -23,8 +30,12 @@ public class RouteService {
 	 * @param id : Id given
 	 * @return Route
 	 */
-	public Route findById(int id) {
-		return repository.findById(id);
+	public RouteDto findById(int id) {
+		Route route = repository.findById(id);
+		if (route == null) {
+			return null;
+		}
+		return new RouteDto().toDto(route);
 	}
 
 	/**
@@ -34,16 +45,12 @@ public class RouteService {
 	 * @param route : modified route
 	 * @return A confirmation message
 	 */
-	public boolean update(int id, Route object) {
-		Route routeDB = findById(id);
+	public boolean update(int id, RouteDto object) {
+		Route routeDB = repository.findById(id);
 		if (routeDB == null) {
 			return false;
 		}
-		routeDB.setStartAddress(object.getStartAddress());
-		;
-		routeDB.setEndAddress(object.getEndAddress());
-		routeDB.setKmTotal(object.getKmTotal());
-		routeDB.setDuration(object.getDuration());
+		routeDB=object.toBean(object);
 		repository.save(routeDB);
 		return true;
 	}
@@ -53,12 +60,12 @@ public class RouteService {
 	 * 
 	 * @param Route : the new Route
 	 */
-	public boolean create(Route object) {
+	public boolean create(RouteDto object) {
 		Route routeDB = repository.findByStartAddressAndEndAddress(object.getStartAddress(), object.getEndAddress());
 		if (routeDB != null) {
 			return false;
 		}
-		repository.save(object);
+		repository.save(object.toBean(object));
 		return true;
 	}
 
@@ -69,7 +76,7 @@ public class RouteService {
 	 * @return A confirmation message
 	 */
 	public boolean delete(int id) {
-		Route routeDB = findById(id);
+		Route routeDB = repository.findById(id);
 		if (routeDB == null) {
 			return false;
 		}
