@@ -20,23 +20,24 @@ public class UserAccountController {
     @Autowired
     private UserAccountService userAccountService;
     
-    @PostMapping("/register")
-    public void registerUser(@RequestBody UserAccountDto userDto) {
-        //userAccountService.registerUser(userDTO);
-    }
-    @PutMapping("/update")
-    public void updateUser(@PathVariable int id, @RequestBody UserAccountDto userDto) {
-        userAccountService.update(id, userDto);
-    }
+    
     @GetMapping("/{id}")
     public UserAccountDto findById(@PathVariable int id) {
         return userAccountService.findById(id);
     }
+    @PostMapping("/register")
+    public void create(@RequestBody UserAccountDto userDto) {
+        userAccountService.create(userDto);
+    }
+    @PutMapping("/update")
+    public void update(@PathVariable int id, @RequestBody UserAccountDto userDto) {
+        userAccountService.update(id, userDto);
+    }
+    
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable int id) {
+    public void delete(@PathVariable int id) {
         userAccountService.delete(id);
     }
-
 
     @PostMapping("/login")
     public void login(@RequestParam String email, @RequestParam String password) {

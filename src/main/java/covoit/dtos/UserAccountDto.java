@@ -17,24 +17,8 @@ public class UserAccountDto {
 	private String password;
 	private List<CarpoolDto> carpools;
 
-	/**
-	 * 
-	 */
-	public UserAccountDto() {
-
-	}
-	public static UserAccount toBean(UserAccountDto userDTO) {
-		UserAccount user = new UserAccount();
-		user.setId(userDTO.getId());
-		user.setEmail(userDTO.getEmail());
-		user.setName(userDTO.getName());
-		user.setLastName(userDTO.getLastName());
-		user.setDriverLicence(userDTO.isDriverLicence());
-		user.setPassword(userDTO.getPassword());
-		return user;
-	}
-
-	private UserAccountDto toDto(UserAccount user) {
+	
+	public UserAccountDto toDto(UserAccount user) {
 		UserAccountDto userDTO = new UserAccountDto();
 		userDTO.setId(user.getId());
 		userDTO.setEmail(user.getEmail());
@@ -44,8 +28,15 @@ public class UserAccountDto {
 		userDTO.setPassword(user.getPassword());
 		return userDTO;
 	}
-
-
+	public UserAccount toBean(UserAccountDto userDTO) {
+		UserAccount user = new UserAccount();
+		user.setEmail(userDTO.getEmail());
+		user.setName(userDTO.getName());
+		user.setLastName(userDTO.getLastName());
+		user.setDriverLicence(userDTO.isDriverLicence());
+		user.setPassword(userDTO.getPassword());
+		return user;
+	}
 
 	/**
 	 * Gets the unique identifier of the user.
