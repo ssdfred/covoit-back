@@ -50,7 +50,11 @@ public class RouteService {
 		if (routeDB == null) {
 			return false;
 		}
-		routeDB=object.toBean(object);
+		Route change =object.toBean(object);
+		routeDB.setDuration(change.getDuration());
+		routeDB.setEndAddress(change.getEndAddress());
+		routeDB.setKmTotal(change.getKmTotal());
+		routeDB.setStartAddress(change.getStartAddress());
 		repository.save(routeDB);
 		return true;
 	}
