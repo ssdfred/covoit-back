@@ -2,11 +2,16 @@ package covoit.entities;
 
 import java.util.List;
 
+import jakarta.persistence.ElementCollection;
+
+
+import java.util.ArrayList;
+
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,45 +22,37 @@ import jakarta.persistence.Id;
 /**
  * Represents a user account in the carpooling system.
  */
+
+
 @Entity
 public class UserAccount {
-	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String name;
-	private String lastName;
-	private String email;
-	private boolean driverLicence;
-	private String password;
-	
-	/** Constructor
-	 * @param name
-	 * @param lastName
-	 * @param driverLicence
-	 * @param password
-	 */
-	public UserAccount(String name, String lastName, boolean driverLicence, String password) {
-		super();
-		this.name = name;
-		this.lastName = lastName;
-		this.driverLicence = driverLicence;
-		this.password = password;
-	}
-	/**Constructor jpa
-     * 
-     */
-	 @ElementCollection(fetch = FetchType.EAGER)
-	    private List<GrantedAuthority> authorities;
-	public UserAccount() {
-		
-	}
-	
-    /**
-     * Gets the unique identifier of the user.
-     * 
-     * @return the unique identifier of the user
-     */
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String username;
+    private String lastName;
+    private String password;
+    private String email;
+    private boolean driverLicence;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<GrantedAuthority> authorities;
+    public UserAccount() {}
+    public UserAccount(String username, String password, String role) {
+        super();
+        this.username = username;
+        this.password = password;
+        GrantedAuthority roleAuthority = new SimpleGrantedAuthority(role);
+        this.authorities = new ArrayList<>();
+        this.authorities.add(roleAuthority);
+    }
+
+    public UserDetails asUserDetails() {
+        return new User(username, password, authorities);
+    }
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -73,7 +70,7 @@ public class UserAccount {
      * @return the first name of the user
      */
 	public String getName() {
-		return name;
+		return username;
 	}
     /**
      * Sets the first name of the user.
@@ -81,7 +78,7 @@ public class UserAccount {
      * @param name the first name of the user
      */
 	public void setName(String name) {
-		this.name = name;
+		this.username = name;
 	}
     /**
      * Sets the last name of the user.
@@ -129,11 +126,6 @@ public class UserAccount {
 		this.email = email;
 	}
 
-
-	 public UserDetails asUserDetails() {
-	        return new User(name, password, authorities);
-	    }
-	
 
 	
 
