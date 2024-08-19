@@ -29,7 +29,7 @@ public class UserAccount {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String username;
+    private String userName;
     private String lastName;
     private String password;
     private String email;
@@ -38,9 +38,9 @@ public class UserAccount {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<GrantedAuthority> authorities;
     public UserAccount() {}
-    public UserAccount(String username, String password, String role) {
+    public UserAccount(String userName, String password, String role) {
         super();
-        this.username = username;
+        this.userName = userName;
         this.password = password;
         GrantedAuthority roleAuthority = new SimpleGrantedAuthority(role);
         this.authorities = new ArrayList<>();
@@ -48,7 +48,7 @@ public class UserAccount {
     }
 
     public UserDetails asUserDetails() {
-        return new User(username, password, authorities);
+        return new User(userName, password, authorities);
     }
 
 
@@ -70,7 +70,7 @@ public class UserAccount {
      * @return the first name of the user
      */
 	public String getName() {
-		return username;
+		return userName;
 	}
     /**
      * Sets the first name of the user.
@@ -78,7 +78,7 @@ public class UserAccount {
      * @param name the first name of the user
      */
 	public void setName(String name) {
-		this.username = name;
+		this.userName = name;
 	}
     /**
      * Sets the last name of the user.
