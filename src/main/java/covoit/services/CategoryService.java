@@ -59,13 +59,12 @@ public class CategoryService {
 	 */
 	public boolean update(int id, CategoryDto categoryDto) {
 		Category categoryDb = repository.findById(id);
-		
 		if (categoryDb == null) {
 			return false;
 		}
-		System.out.println(categoryDb.getId());
-		categoryDb.setName(categoryDto.getName()); 
-		categoryDb.setVehicles(categoryDto.getVehicles());
+		Category change = categoryDto.toBean(categoryDto);
+		categoryDb.setName(change.getName()); 
+		categoryDb.setVehicles(change.getVehicles());
 		repository.save(categoryDb);
 		return true;
 	}
