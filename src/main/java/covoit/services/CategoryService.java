@@ -62,7 +62,9 @@ public class CategoryService {
 		if (categoryDb == null) {
 			return false;
 		}
-		categoryDb = categoryDto.toBean(categoryDto);
+		Category change = categoryDto.toBean(categoryDto);
+		categoryDb.setName(change.getName()); 
+		categoryDb.setVehicles(change.getVehicles());
 		repository.save(categoryDb);
 		return true;
 	}
