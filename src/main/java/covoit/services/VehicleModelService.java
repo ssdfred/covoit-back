@@ -50,7 +50,9 @@ public class VehicleModelService {
 		if (modelDB == null) {
 			return false;
 		}
-		modelDB = object.toBean(object);
+		VehicleModel change = object.toBean(object);
+		modelDB.setName(change.getName());
+		modelDB.setVehicles(change.getVehicles());
 		vehicleModelRepository.save(modelDB);
 		return true;
 	}
