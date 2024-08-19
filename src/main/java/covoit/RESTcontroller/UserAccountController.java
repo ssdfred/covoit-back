@@ -1,5 +1,7 @@
 package covoit.RESTcontroller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,10 @@ public class UserAccountController {
     @Autowired
     private UserAccountService userAccountService;
     
-    
+    @GetMapping("/")
+    public List< UserAccountDto> findAll(){
+    	return userAccountService.findAll();
+    }
     @GetMapping("/{id}")
     public UserAccountDto findById(@PathVariable int id) {
         return userAccountService.findById(id);
@@ -39,9 +44,9 @@ public class UserAccountController {
         userAccountService.delete(id);
     }
 
-    @PostMapping("/login")
-    public void login(@RequestParam String email, @RequestParam String password) {
-    }
+//    @PostMapping("/login")
+//    public void login(@RequestParam String name, @RequestParam String password) {
+//    }
 
     @DeleteMapping("/{userId}/cancel-carpool")
     public void cancelCarpool(@PathVariable int userId, @RequestParam int carpoolId) {

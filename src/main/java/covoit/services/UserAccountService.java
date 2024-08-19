@@ -1,6 +1,8 @@
 
 package covoit.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +30,15 @@ public class UserAccountService {
 		}
 		return new UserAccountDto().toDto(userAccount);
 	}
+	 public List<UserAccountDto> findAll() {
+		 List<UserAccount> users= repository.findAll();
+		 List<UserAccountDto> usersDto = new ArrayList<>();
+		 for (UserAccount user: users) {
+			 usersDto.add(new UserAccountDto().toDto(user));
+		 }
+		 return usersDto;
+	 }
+	
 	/**
 	 * Update the Brand corresponding to the id given
 	 * 

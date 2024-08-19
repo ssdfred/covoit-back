@@ -1,48 +1,58 @@
 package covoit.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import covoit.entities.UserAccount;
+import covoit.repository.UserAccountRepository;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-                // Permettre l'accès sans authentification aux routes de création et de connexion des utilisateurs
-                .antMatchers("/api/user/register", "/api/user/login").permitAll()
-                // Toutes les autres routes nécessitent une authentification
-                .anyRequest().authenticated()
-                .and()
-            .formLogin() // Utilise le formulaire de connexion par défaut de Spring Security
-                .permitAll()
-                .and()
-            .logout()
-                .permitAll()
-                .and()
-            .csrf().disable(); // Désactive la protection CSRF pour simplifier les appels d'API REST
+	 @Bean
+	    public PasswordEncoder passwordEncoder() {
+	        return new BCryptPasswordEncoder();
+	    }
+	    @Bean
+	    public UserDetailsService userDetailsService(UserAccountRepository userAccountRepository) {
+	        return username ->{System.out.println(username);
+	       
+	        UserAccount useraccount  = userAccountRepository.findByName(username);
+	        System.out.println(useraccount);
+	        return useraccount.asUserDetails();
+	        };
+	       
+	        
+	    }
 
-        return http.build();
-    }
+	    @Bean
+	    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	        http.csrf(csrf -> csrf.disable());
+	        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        // Crée un utilisateur en mémoire pour les tests
-        UserDetails user = User.withDefaultPasswordEncoder()
-            .username("user")
-            .password("password")
-            .roles("USER")
-            .build();
+	        http.authorizeHttpRequests(request -> request
+	                .requestMatchers("/", "/login").permitAll()
+	                .requestMatchers("/logout").authenticated()
+	                .requestMatchers("/user", "/register").authenticated()
+	                .requestMatchers("/h2-console", "/h2-console/**").hasRole("ADMIN")
+	                .anyRequest().denyAll())
+	                .httpBasic(Customizer.withDefaults())
+	                .formLogin(Customizer.withDefaults());
 
-        return new InMemoryUserDetailsManager(user);
-    }
+	        return http.build();
+	    }
+
+ 
 }
