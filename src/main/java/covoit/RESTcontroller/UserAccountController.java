@@ -19,6 +19,7 @@ import covoit.services.UserAccountService;
 @RestController
 @RequestMapping("/user")
 public class UserAccountController {
+
     @Autowired
     private UserAccountService userAccountService;
     

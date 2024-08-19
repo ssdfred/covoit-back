@@ -26,11 +26,14 @@ public class CategoryService {
 	 */
 	public List<CategoryDto> findAll() {
 		List<Category> categories = repository.findAll();
-		List<CategoryDto> categoriesDto = new ArrayList<>();
-		for (Category item : categories) {
-			categoriesDto.add(new CategoryDto().toDto(item));
+		if(categories.size()>0) {
+			List<CategoryDto> categoriesDto = new ArrayList<>();
+			for (Category item : categories) {
+				categoriesDto.add(new CategoryDto().toDto(item));
+			}
+			return categoriesDto;
 		}
-		return categoriesDto;
+		return null;
 
 	}
 
@@ -59,7 +62,9 @@ public class CategoryService {
 		if (categoryDb == null) {
 			return false;
 		}
-		categoryDb = categoryDto.toBean(categoryDto);
+		Category change = categoryDto.toBean(categoryDto);
+		categoryDb.setName(change.getName()); 
+		categoryDb.setVehicles(change.getVehicles());
 		repository.save(categoryDb);
 		return true;
 	}
