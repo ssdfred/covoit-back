@@ -86,12 +86,9 @@ public class ServiceVehicleController {
 	 * @return A confirmation message
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteById(int id, BindingResult result) throws AnomalieException {
-		if (!service.delete(id)) {
-			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
-		}
-
-		return ResponseEntity.ok("Service vehicle deleted");
+	public ResponseEntity<String> deleteById(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.ok("Suppression reussie");
 	}
 
 }
