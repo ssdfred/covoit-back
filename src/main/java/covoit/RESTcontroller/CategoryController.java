@@ -64,9 +64,9 @@ public class CategoryController {
 	}
 
 	/**
-	 * Create an
+	 * Create a new category
 	 * 
-	 * @param address : the new address
+	 * @param category : the new category
 	 * @return A confirmation message
 	 */
 	@PostMapping
@@ -85,11 +85,8 @@ public class CategoryController {
 	 * @return A confirmation message
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteById(int id, BindingResult result) throws AnomalieException {
-		if (!service.delete(id)) {
-			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
-		}
-
-		return ResponseEntity.ok("Suppression reussi");
+	public ResponseEntity<String> deleteById(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.ok("Suppression reussie");
 	}
 }
