@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import covoit.dtos.AddressDto;
 import covoit.dtos.VehicleDto;
-import covoit.entities.Address;
 import covoit.entities.Vehicle;
 import covoit.repository.VehicleRepository;
 
@@ -20,7 +18,7 @@ public class VehicleService {
 	public List<VehicleDto> findAll() {
 		List<Vehicle> vehicles = repository.findAll();
 		List<VehicleDto> vehiclesDto = new ArrayList<>();
-		for(Vehicle item : vehicles) {
+		for (Vehicle item : vehicles) {
 			vehiclesDto.add(new VehicleDto().toDto(item));
 		}
 		return vehiclesDto;
@@ -34,7 +32,7 @@ public class VehicleService {
 	 */
 	public VehicleDto findById(int id) {
 		Vehicle vehicle = repository.findById(id);
-		if(vehicle == null) {
+		if (vehicle == null) {
 			return null;
 		}
 		return new VehicleDto().toDto(vehicle);
@@ -51,7 +49,13 @@ public class VehicleService {
 		if (vehicle == null) {
 			return false;
 		}
-		vehicle = vehicleDto.toBean(vehicleDto);
+		Vehicle change = vehicleDto.toBean(vehicleDto);
+		vehicle.setBrand(change.getBrand());
+		vehicle.setCategory(change.getCategory());
+		vehicle.setDrivers(change.getDrivers());
+		vehicle.setModel(change.getModel());
+		vehicle.setNbSeat(change.getNbSeat());
+		vehicle.setRegistration(change.getRegistration());
 		repository.save(vehicle);
 		return true;
 	}
@@ -64,7 +68,7 @@ public class VehicleService {
 	 */
 	public boolean create(VehicleDto object) {
 		Vehicle vehicleDB = repository.findByRegistration(object.getRegistration());
-		if(vehicleDB!=null) {
+		if (vehicleDB != null) {
 			return false;
 		}
 		repository.save(object.toBean(object));
@@ -79,7 +83,7 @@ public class VehicleService {
 	 */
 	public boolean delete(int id) {
 		Vehicle vehicleDB = repository.findById(id);
-		if(vehicleDB==null) {
+		if (vehicleDB == null) {
 			return false;
 		}
 		repository.deleteById(id);
