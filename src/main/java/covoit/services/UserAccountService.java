@@ -4,7 +4,6 @@ package covoit.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import covoit.dtos.UserAccountDto;
@@ -18,7 +17,7 @@ import covoit.repository.UserAccountRepository;
 public class UserAccountService {
 
 	private static UserAccountRepository repository;
-	private PasswordEncoder passwordEncoder;
+//	private PasswordEncoder passwordEncoder;
 
 	public List<UserAccountDto> findAll() {
 		List<UserAccount> users = repository.findAll();
@@ -78,13 +77,13 @@ public class UserAccountService {
 		return true;
 	}
 
-	public void login(String email, String password) {
-		Iterable<UserAccount> user = repository.findByEmailAndPassword(email, password);
-		if (user != null && passwordEncoder.matches(email, password)) {
-
-		} else {
-			throw new RuntimeException("Email ou mot de passe incorrect");
-		}
-	}
+//	public void login(String email, String password) {
+//		Iterable<UserAccount> user = repository.findByEmailAndPassword(email, password);
+//		if (user != null && passwordEncoder.matches(email, password)) {
+//
+//		} else {
+//			throw new RuntimeException("Email ou mot de passe incorrect");
+//		}
+//	}
 
 }

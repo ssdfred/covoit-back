@@ -56,10 +56,11 @@ public class CategoryController {
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateById(@PathVariable int id, @Valid @RequestBody CategoryDto category,
 			BindingResult result) throws AnomalieException {
+		service.update(id, category);
+
 		if (result.hasErrors()) {
 			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
 		}
-		service.update(id, category);
 		return ResponseEntity.ok("L'update est un succes");
 	}
 
