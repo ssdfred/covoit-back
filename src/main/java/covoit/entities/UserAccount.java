@@ -1,6 +1,14 @@
 package covoit.entities;
 
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,6 +45,8 @@ public class UserAccount {
 	/**Constructor jpa
      * 
      */
+	 @ElementCollection(fetch = FetchType.EAGER)
+	    private List<GrantedAuthority> authorities;
 	public UserAccount() {
 		
 	}
@@ -120,7 +130,9 @@ public class UserAccount {
 	}
 
 
-
+	 public UserDetails asUserDetails() {
+	        return new User(name, password, authorities);
+	    }
 	
 
 	
