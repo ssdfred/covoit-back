@@ -81,12 +81,8 @@ public class CarpoolController {
 	 *         the carpool is not found.
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteCarpool(@PathVariable int id) {
-		boolean deleted = carpoolService.delete(id);
-		if (deleted) {
-			return ResponseEntity.noContent().build();
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<String> deleteCarpool(@PathVariable Integer id) {
+		carpoolService.delete(id);
+		return ResponseEntity.ok("Suppression reussie");
 	}
 }
