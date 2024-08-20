@@ -56,7 +56,7 @@ public class UserAccountService {
 	}
 
 	public boolean create(UserAccountDto userAccountDto) {
-		UserAccount userAccount = repository.findByEmail(userAccountDto.getEmail());
+		Optional<UserAccount> userAccount = repository.findByUserName(userAccountDto.getUserName());
 		if (userAccount == null) {
 			repository.save(userAccountDto.toBean(userAccountDto));
 			return true;

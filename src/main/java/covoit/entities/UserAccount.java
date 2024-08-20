@@ -69,7 +69,7 @@ public class UserAccount {
      * 
      * @return the first name of the user
      */
-	public String getName() {
+	public String getUserName() {
 		return userName;
 	}
     /**
@@ -77,8 +77,8 @@ public class UserAccount {
      * 
      * @param name the first name of the user
      */
-	public void setName(String name) {
-		this.userName = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
     /**
      * Sets the last name of the user.

@@ -10,7 +10,7 @@ import covoit.entities.UserAccount;
 public class UserAccountDto {
 
 	private int id;
-	private String name;
+	private String userName;
 	private String lastName;
 	private String email;
 	private boolean driverLicence;
@@ -22,7 +22,7 @@ public class UserAccountDto {
 		UserAccountDto userDTO = new UserAccountDto();
 		userDTO.setId(user.getId());
 		userDTO.setEmail(user.getEmail());
-		userDTO.setName(user.getName());
+		userDTO.setUserName(user.getUserName());
 		userDTO.setLastName(user.getLastName());
 		userDTO.setDriverLicence(user.isDriverLicence());
 		userDTO.setPassword(user.getPassword());
@@ -31,7 +31,7 @@ public class UserAccountDto {
 	public UserAccount toBean(UserAccountDto userDTO) {
 		UserAccount user = new UserAccount();
 		user.setEmail(userDTO.getEmail());
-		user.setName(userDTO.getName());
+		user.setUserName(userDTO.getUserName());
 		user.setLastName(userDTO.getLastName());
 		user.setDriverLicence(userDTO.isDriverLicence());
 		user.setPassword(userDTO.getPassword());
@@ -58,21 +58,21 @@ public class UserAccountDto {
 	}
 
 	/**
-	 * Gets the name of the user.
+	 * Gets the userName of the user.
 	 * 
-	 * @return the name of the user
+	 * @return the userName of the user
 	 */
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
 
 	/**
-	 * Sets the name of the user.
+	 * Sets the userName of the user.
 	 * 
-	 * @param name the username of the user
+	 * @param userName the username of the user
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	/**
@@ -131,10 +131,6 @@ public class UserAccountDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@Override
-	public String toString() {
-		return "UserAccountDto [name=" + name + ", lastName=" + lastName + ", driverLicence=" + driverLicence
-				+ ", carpools=" + carpools + "]";
-	}
+
 
 }
