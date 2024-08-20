@@ -48,7 +48,18 @@ public class ServiceVehicleService {
 		if (sVehicleDB == null) {
 			return false;
 		}
-		sVehicleDB= object.toBean(object);
+		ServiceVehicle change= object.toBean(object);
+		sVehicleDB.setBookings(change.getBookings());
+		sVehicleDB.setBrand(change.getBrand());
+		sVehicleDB.setCategory(change.getCategory());
+		sVehicleDB.setCo2Km(change.getCo2Km());
+		sVehicleDB.setDrivers(change.getDrivers());
+		sVehicleDB.setModel(change.getModel());
+		sVehicleDB.setMotorization(change.getMotorization());
+		sVehicleDB.setNbSeat(change.getNbSeat());
+		sVehicleDB.setPicture(change.getPicture());
+		sVehicleDB.setRegistration(change.getRegistration());
+		sVehicleDB.setState(change.getState());
 		repository.save(sVehicleDB);
 		return true;
 	}
