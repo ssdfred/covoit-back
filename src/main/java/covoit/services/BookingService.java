@@ -49,7 +49,11 @@ public class BookingService {
 		if (bookingDB == null) {
 			return false;
 		}
-		bookingDB = bookingDto.toBean(bookingDto);
+		Booking change =  bookingDto.toBean(bookingDto);
+		bookingDB.setDriver(change.getDriver());
+		bookingDB.setEndDate(change.getEndDate());
+		bookingDB.setServiceVehicle(change.getServiceVehicle());
+		bookingDB.setStartDate(change.getStartDate());
 		bookingRepository.save(bookingDB);
 		return true;
 	}
