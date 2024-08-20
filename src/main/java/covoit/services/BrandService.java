@@ -49,7 +49,9 @@ public class BrandService {
 		if (brandDB == null) {
 			return false;
 		}
-		brandDB = object.toBean(object);
+		Brand change = object.toBean(object);
+		brandDB.setName(change.getName());
+		brandDB.setVehicles(change.getVehicles());
 		brandRepository.save(brandDB);
 		return true;
 	}
