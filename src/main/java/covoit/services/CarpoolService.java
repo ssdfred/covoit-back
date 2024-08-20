@@ -52,12 +52,17 @@ public class CarpoolService {
 	 */
 	public boolean update(int id, CarpoolDto carpool) {
 		Carpool carpoolDb = repository.findById(id);
-		if (carpoolDb != null) {
-			carpoolDb = carpool.toBean(carpool);
-			repository.save(carpoolDb);
-			return true;
+		if (carpoolDb == null) {
+			return false;
 		}
-		return false;
+		Carpool change = carpool.toBean(carpool);
+		carpoolDb.setAvailableSeat(change.getAvailableSeat());
+		carpoolDb.setRoute(change.getRoute());
+		carpoolDb.setStartDate(change.getStartDate());
+		carpoolDb.setUserAccounts(change.getUserAccounts());
+		carpoolDb.setVehicle(change.getVehicle());
+		repository.save(carpoolDb);
+		return true;
 	}
 
 	/**
