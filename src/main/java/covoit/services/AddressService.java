@@ -61,7 +61,11 @@ public class AddressService {
 		if (addressDB == null) {
 			return false;
 		}
-		addressDB = addressDto.toBean(addressDto);
+		Address change = addressDto.toBean(addressDto);
+		addressDB.setCity(change.getCity());
+		addressDB.setCountry(change.getCountry());
+		addressDB.setDetail(change.getDetail());
+		addressDB.setRoutes(change.getRoutes());
 		repository.save(addressDB);
 		return true;
 	}
