@@ -55,14 +55,13 @@ public class UserAccountService {
 		return true;
 	}
 
-	public boolean create(UserAccountDto userAccountDto) {
-		Optional<UserAccount> userAccount = repository.findByUserName(userAccountDto.getUserName());
-		if (userAccount == null) {
-			repository.save(userAccountDto.toBean(userAccountDto));
-			return true;
-		}
-		return false;
-	}
+	  public void create(UserAccount userAccount) {
+	        // Logique pour créer un utilisateur
+	        if (repository.findByUserName(userAccount.getUserName()).isPresent()) {
+	            throw new RuntimeException("User already exists");
+	        }
+	        repository.save(userAccount);
+	    }
 
 	/**
 	 * Delete the Brand corresponding to the id given

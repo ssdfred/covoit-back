@@ -3,6 +3,7 @@ package covoit.RESTcontroller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import covoit.dtos.UserAccountDto;
+import covoit.entities.UserAccount;
 import covoit.services.UserAccountService;
 
 @RestController
@@ -32,10 +34,15 @@ public class UserAccountController {
         return userAccountService.findById(id);
     }
     @PostMapping("/register")
-    public void create(@RequestBody UserAccountDto userDto) {
-        userAccountService.create(userDto);
+    public ResponseEntity<String> create(@RequestBody UserAccountDto userAccountDto) {
+        // Convertir UserAccountDto en UserAccount
+        UserAccount userAccount = userAccountDto.toBean(userAccountDto);
+        
+        // Appeler la méthode create avec l'entité UserAccount
+        userAccountService.create(userAccount);
+        return ResponseEntity.ok("User created successfully");
     }
-    @PutMapping("/update")
+    @PostMapping("/update")
     public void update(@PathVariable int id, @RequestBody UserAccountDto userDto) {
         userAccountService.update(id, userDto);
     }
