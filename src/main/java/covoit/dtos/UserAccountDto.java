@@ -2,6 +2,8 @@ package covoit.dtos;
 
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import covoit.entities.UserAccount;
 
 /**
@@ -16,28 +18,37 @@ public class UserAccountDto {
 	private boolean driverLicence;
 	private String password;
 	private List<CarpoolDto> carpools;
+	private String role;
 
 	
 	public UserAccountDto toDto(UserAccount user) {
-		UserAccountDto userDTO = new UserAccountDto();
-		userDTO.setId(user.getId());
-		userDTO.setEmail(user.getEmail());
-		userDTO.setUserName(user.getUserName());
-		userDTO.setLastName(user.getLastName());
-		userDTO.setDriverLicence(user.isDriverLicence());
-		userDTO.setPassword(user.getPassword());
-		return userDTO;
+		UserAccountDto userDto = new UserAccountDto();
+		userDto.setId(user.getId());
+		userDto.setEmail(user.getEmail());
+		userDto.setUserName(user.getUserName());
+		userDto.setLastName(user.getLastName());
+		userDto.setDriverLicence(user.isDriverLicence());
+		userDto.setPassword(user.getPassword());
+		userDto.setRole(user.getAuthorities().toString());
+		return userDto;
 	}
-	public UserAccount toBean(UserAccountDto userDTO) {
+	public UserAccount toBean(UserAccountDto userDto) {
 		UserAccount user = new UserAccount();
-		user.setEmail(userDTO.getEmail());
-		user.setUserName(userDTO.getUserName());
-		user.setLastName(userDTO.getLastName());
-		user.setDriverLicence(userDTO.isDriverLicence());
-		user.setPassword(userDTO.getPassword());
+		user.setEmail(userDto.getEmail());
+		user.setUserName(userDto.getUserName());
+		user.setLastName(userDto.getLastName());
+		user.setDriverLicence(userDto.isDriverLicence());
+		user.setPassword(userDto.getPassword());
+		user.addAuthorities(userDto.getRole());
 		return user;
 	}
 
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	/**
 	 * Gets the unique identifier of the user.
 	 * 
@@ -130,6 +141,12 @@ public class UserAccountDto {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	@Override
+	public String toString() {
+		return "UserAccountDto [id=" + id + ", userName=" + userName + ", lastName=" + lastName + ", email=" + email
+				+ ", driverLicence=" + driverLicence + ", password=" + password + ", carpools=" + carpools + ", role="
+				+ role + "]";
 	}
 
 

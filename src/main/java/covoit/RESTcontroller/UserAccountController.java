@@ -19,7 +19,7 @@ import covoit.entities.UserAccount;
 import covoit.services.UserAccountService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = "/user", produces = "application/json")
 public class UserAccountController {
 
     @Autowired
@@ -35,9 +35,8 @@ public class UserAccountController {
     }
     @PostMapping("/register")
     public ResponseEntity<String> create(@RequestBody UserAccountDto userAccountDto) {
-        // Convertir UserAccountDto en UserAccount
+        // Convertir UserAccountDto en UserAccount	
         UserAccount userAccount = userAccountDto.toBean(userAccountDto);
-        
         // Appeler la méthode create avec l'entité UserAccount
         userAccountService.create(userAccount);
         return ResponseEntity.ok("User created successfully");
@@ -47,7 +46,7 @@ public class UserAccountController {
         userAccountService.update(id, userDto);
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable int id) {
         userAccountService.delete(id);
     }

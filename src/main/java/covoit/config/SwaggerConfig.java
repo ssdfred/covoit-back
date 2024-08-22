@@ -13,8 +13,8 @@ public class SwaggerConfig {
 
 	@Bean
 	public OpenAPI customOpenAPI() {
-		return new OpenAPI().info(new Info().title("API Recensement des villes").version("1.0")
-				.description("Cette API fournit des données de recensement de population pour la France.")
+		return new OpenAPI().info(new Info().title("API").version("1.0")
+				.description("Cette API ")
 				.termsOfService("OPEN DATA")
 				.contact(new Contact().name("Smée Frédéric").email("ssdfred@yahoo.fr").url("URL du contact"))
 				.license(new License().name("Nom Frédéric").url("URL de la licence")));

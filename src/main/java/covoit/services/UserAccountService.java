@@ -3,9 +3,9 @@ package covoit.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import covoit.dtos.UserAccountDto;
@@ -18,11 +18,18 @@ import covoit.repository.UserAccountRepository;
 @Service
 public class UserAccountService {
 
-	private static UserAccountRepository repository;
+	@Autowired
+	private UserAccountRepository repository;
 //	private PasswordEncoder passwordEncoder;
 
+
 	public List<UserAccountDto> findAll() {
-		List<UserAccount> users = repository.findAll();
+		List<UserAccount> users = new ArrayList<>();
+		if(repository.findAll() != null) {
+			users = repository.findAll();
+		}else {
+			System.out.println("Rien trouver");
+		}
 		List<UserAccountDto> usersDto = new ArrayList<>();
 		for (UserAccount item : users) {
 			usersDto.add(new UserAccountDto().toDto(item));
@@ -57,9 +64,10 @@ public class UserAccountService {
 
 	  public void create(UserAccount userAccount) {
 	        // Logique pour créer un utilisateur
-	        if (repository.findByUserName(userAccount.getUserName()).isPresent()) {
+	        if (repository.findByUserName(userAccount.getUserName()) != null) {
 	            throw new RuntimeException("User already exists");
 	        }
+	        userAccount.setPassword(new BCryptPasswordEncoder().encode(userAccount.getPassword()));
 	        repository.save(userAccount);
 	    }
 

@@ -36,23 +36,35 @@ public class UserAccount {
     private boolean driverLicence;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<GrantedAuthority> authorities;
-    public UserAccount() {}
-    public UserAccount(String userName, String password, String role) {
+    private List<GrantedAuthority> authorities= new ArrayList<>();
+    
+    public UserAccount(String userName,String lastName, String password, String role, String email, boolean driverLicence) {
         super();
         this.userName = userName;
+        this.lastName = lastName;
         this.password = password;
         GrantedAuthority roleAuthority = new SimpleGrantedAuthority(role);
-        this.authorities = new ArrayList<>();
         this.authorities.add(roleAuthority);
+        this.email = email;
+        this.driverLicence = driverLicence;
     }
-
+    public UserAccount() {}
     public UserDetails asUserDetails() {
         return new User(userName, password, authorities);
     }
 
 
-
+    public void addAuthorities(String role) {
+    	GrantedAuthority roleAuthority = new SimpleGrantedAuthority(role);
+    	this.authorities.add(roleAuthority);
+    }
+    
+	public List<GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
+	public void setAuthorities(List<GrantedAuthority> authorities) {
+		this.authorities = authorities;
+	}
 	public int getId() {
 		return id;
 	}
@@ -124,6 +136,11 @@ public class UserAccount {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	@Override
+	public String toString() {
+		return "UserAccount [id=" + id + ", userName=" + userName + ", lastName=" + lastName + ", password=" + password
+				+ ", email=" + email + ", driverLicence=" + driverLicence + ", authorities=" + authorities + "]";
 	}
 
 
