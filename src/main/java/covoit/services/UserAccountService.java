@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import covoit.dtos.UserAccountDto;
 import covoit.entities.UserAccount;
+import covoit.exception.AnomalieException;
 import covoit.repository.UserAccountRepository;
 
 /**
@@ -20,7 +22,7 @@ public class UserAccountService {
 
 	@Autowired
 	private UserAccountRepository repository;
-//	private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 
 	public List<UserAccountDto> findAll() {
@@ -86,13 +88,27 @@ public class UserAccountService {
 		return true;
 	}
 
-//	public void login(String email, String password) {
-//		Iterable<UserAccount> user = repository.findByEmailAndPassword(email, password);
-//		if (user != null && passwordEncoder.matches(email, password)) {
-//
-//		} else {
-//			throw new RuntimeException("Email ou mot de passe incorrect");
-//		}
-//	}
+	public UserAccountService(UserAccountRepository repository, PasswordEncoder passwordEncoder) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-}
+    public UserAccount login(String username, String rawPassword) throws AnomalieException {
+        // Rechercher l'utilisateur
+        UserAccount user = repository.findByUserName(username);
+        
+        // Vérifier si l'utilisateur existe
+        if (user == null) {
+            throw new AnomalieException("Nom d'utilisateur ou mot de passe incorrect");
+        }
+
+        // Vérifier le mot de passe
+        if (passwordEncoder.matches(rawPassword, user.getPassword())) {
+            return user; // Authentification réussie
+        } else {
+            throw new AnomalieException("Nom d'utilisateur ou mot de passe incorrect");
+        }
+    }
+    }
+
+
