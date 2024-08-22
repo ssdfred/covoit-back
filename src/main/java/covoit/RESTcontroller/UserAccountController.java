@@ -26,8 +26,7 @@ public class UserAccountController {
 
     @Autowired
     private UserAccountService userAccountService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+ 
     @GetMapping("/")
     public List< UserAccountDto> findAll(){
     	return userAccountService.findAll();

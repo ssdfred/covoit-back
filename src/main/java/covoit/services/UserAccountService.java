@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import covoit.dtos.UserAccountDto;
@@ -22,7 +21,8 @@ public class UserAccountService {
 
 	@Autowired
 	private UserAccountRepository repository;
-	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
 	public List<UserAccountDto> findAll() {
@@ -88,10 +88,7 @@ public class UserAccountService {
 		return true;
 	}
 
-	public UserAccountService(UserAccountRepository repository, PasswordEncoder passwordEncoder) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-    }
+
 
     public UserAccount login(String username, String rawPassword) throws AnomalieException {
         // Rechercher l'utilisateur
@@ -103,7 +100,7 @@ public class UserAccountService {
         }
 
         // Vérifier le mot de passe
-        if (passwordEncoder.matches(rawPassword, user.getPassword())) {
+        if (bCryptPasswordEncoder.matches(rawPassword, user.getPassword())) {
             return user; // Authentification réussie
         } else {
             throw new AnomalieException("Nom d'utilisateur ou mot de passe incorrect");
