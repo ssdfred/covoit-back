@@ -16,7 +16,7 @@ public class SwaggerConfig {
 		return new OpenAPI().info(new Info().title("API").version("1.0")
 				.description("Cette API ")
 				.termsOfService("OPEN DATA")
-				.contact(new Contact().name("Smée Frédéric").email("ssdfred@yahoo.fr").url("URL du contact"))
-				.license(new License().name("Nom Frédéric").url("URL de la licence")));
+				.contact(new Contact().name("Frédéric , Noémie, Mohamed").email("").url("URL du contact"))
+				.license(new License().name(" Frédéric, Noémie, Mohamed").url("URL de la licence")));
 	}
 }
