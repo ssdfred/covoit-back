@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import covoit.dtos.UserAccountDto;
 import covoit.entities.UserAccount;
+import covoit.exception.AnomalieException;
 import covoit.services.UserAccountService;
 
 @RestController
@@ -24,7 +26,7 @@ public class UserAccountController {
 
     @Autowired
     private UserAccountService userAccountService;
-    
+ 
     @GetMapping("/")
     public List< UserAccountDto> findAll(){
     	return userAccountService.findAll();
@@ -51,9 +53,6 @@ public class UserAccountController {
         userAccountService.delete(id);
     }
 
-//    @PostMapping("/login")
-//    public void login(@RequestParam String name, @RequestParam String password) {
-//    }
 
     @DeleteMapping("/{userId}/cancel-carpool")
     public void cancelCarpool(@PathVariable int userId, @RequestParam int carpoolId) {
