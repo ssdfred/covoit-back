@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import covoit.dtos.UserAccountDto;
 import covoit.entities.UserAccount;
+import covoit.exception.AnomalieException;
 import covoit.repository.UserAccountRepository;
 
 /**
@@ -20,7 +21,8 @@ public class UserAccountService {
 
 	@Autowired
 	private UserAccountRepository repository;
-//	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
 	public List<UserAccountDto> findAll() {
@@ -86,13 +88,24 @@ public class UserAccountService {
 		return true;
 	}
 
-//	public void login(String email, String password) {
-//		Iterable<UserAccount> user = repository.findByEmailAndPassword(email, password);
-//		if (user != null && passwordEncoder.matches(email, password)) {
-//
-//		} else {
-//			throw new RuntimeException("Email ou mot de passe incorrect");
-//		}
-//	}
 
-}
+
+    public UserAccount login(String username, String rawPassword) throws AnomalieException {
+        // Rechercher l'utilisateur
+        UserAccount user = repository.findByUserName(username);
+        
+        // Vérifier si l'utilisateur existe
+        if (user == null) {
+            throw new AnomalieException("Nom d'utilisateur ou mot de passe incorrect");
+        }
+
+        // Vérifier le mot de passe
+        if (bCryptPasswordEncoder.matches(rawPassword, user.getPassword())) {
+            return user; // Authentification réussie
+        } else {
+            throw new AnomalieException("Nom d'utilisateur ou mot de passe incorrect");
+        }
+    }
+    }
+
+
