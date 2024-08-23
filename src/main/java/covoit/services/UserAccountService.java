@@ -67,6 +67,7 @@ public class UserAccountService {
 	        if (repository.findByUserName(userAccount.getUserName()) != null) {
 	            throw new RuntimeException("User already exists");
 	        }
+	        System.out.println(userAccount);
 	        userAccount.setPassword(new BCryptPasswordEncoder().encode(userAccount.getPassword()));
 	        repository.save(userAccount);
 	    }
