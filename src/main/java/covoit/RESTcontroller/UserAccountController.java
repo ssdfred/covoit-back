@@ -21,6 +21,7 @@ import covoit.entities.UserAccount;
 import covoit.exception.AnomalieException;
 import covoit.services.UserAccountService;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = "/user", produces = "application/json")
 public class UserAccountController {
@@ -28,17 +29,15 @@ public class UserAccountController {
     @Autowired
     private UserAccountService userAccountService;
  
-    @CrossOrigin("http://localhost:4200")
     @GetMapping("/")
     public List< UserAccountDto> findAll(){
     	return userAccountService.findAll();
     }
-    @CrossOrigin("http://localhost:4200")
     @GetMapping("/{id}")
     public UserAccountDto findById(@PathVariable int id) {
         return userAccountService.findById(id);
     }
-    @CrossOrigin("http://localhost:4200")
+
     @PostMapping("/register")
     public ResponseEntity<String> create(@RequestBody UserAccountDto userAccountDto) {
         // Convertir UserAccountDto en UserAccount	
@@ -47,19 +46,19 @@ public class UserAccountController {
         userAccountService.create(userAccount);
         return ResponseEntity.ok("User created successfully");
     }
-    @CrossOrigin("http://localhost:4200")
+
     @PostMapping("/update")
     public void update(@PathVariable int id, @RequestBody UserAccountDto userDto) {
         userAccountService.update(id, userDto);
     }
     
-    @CrossOrigin("http://localhost:4200")
+
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable int id) {
         userAccountService.delete(id);
     }
 
-    @CrossOrigin("http://localhost:4200")
+ 
     @DeleteMapping("/{userId}/cancel-carpool")
     public void cancelCarpool(@PathVariable int userId, @RequestParam int carpoolId) {
      //  userAccountService.deleteBookingCarpool(carpoolId, userId);

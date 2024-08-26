@@ -17,6 +17,7 @@ import covoit.services.AddressService;
 /**Define routes linked to Addresses
  * 
  */
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/addresses")
 public class AddressController {
@@ -26,7 +27,6 @@ public class AddressController {
 	/**Get all addresses
 	 * 
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/")
 	public Iterable<AddressDto> findAll() {
 		return service.findAll();
@@ -37,7 +37,6 @@ public class AddressController {
 	 * @param id : Id given
 	 * @return The address
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/{id}")
 	public AddressDto findById(@PathVariable int id) {
 		return service.findById(id);
@@ -47,7 +46,6 @@ public class AddressController {
 	 * @param id : Id given
 	 * @param address : modified address
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@PutMapping("/{id}")
 	public void update(@PathVariable int id, AddressDto addressDto) {
 		service.update(id, addressDto);
@@ -56,7 +54,6 @@ public class AddressController {
 	/**Create an address 
 	 * @param address : the new address
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@PostMapping
 	public void create(AddressDto addressDto) {
 		service.create(addressDto);
@@ -65,7 +62,6 @@ public class AddressController {
 	/**Delete the address corresponding to the id given
 	 *  @param id : Id given
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable Integer id) {
 		service.delete(id);

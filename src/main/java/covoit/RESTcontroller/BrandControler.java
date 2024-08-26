@@ -20,6 +20,7 @@ import covoit.services.BrandService;
  * Define routes linked to booking
  * 
  */
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/brands")
 public class BrandControler {
@@ -30,7 +31,6 @@ public class BrandControler {
 	 * Get all brands
 	 * 
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/")
 	public List<BrandDto> findAll() {
 		return service.findAll();
@@ -42,7 +42,6 @@ public class BrandControler {
 	 * @param id : Id given
 	 * @return Brand
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/{id}")
 	public BrandDto findById(@PathVariable int id) {
 		return service.findById(id);
@@ -54,7 +53,6 @@ public class BrandControler {
 	 * @param id    : Id given
 	 * @param brand : modified brand
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@PutMapping("/{id}")
 	public void update(@PathVariable int id, BrandDto brand) {
 		service.update(id, brand);
@@ -65,7 +63,6 @@ public class BrandControler {
 	 * 
 	 * @param brand : the new brand
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@PostMapping
 	public void create(BrandDto brand) {
 		service.create(brand);
@@ -76,7 +73,6 @@ public class BrandControler {
 	 * 
 	 * @param id : Id given
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable Integer id) {
 		service.delete(id);

@@ -20,6 +20,7 @@ import covoit.exception.AnomalieException;
 import covoit.services.ServiceVehicleService;
 import jakarta.validation.Valid;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/servicevehicle")
 public class ServiceVehicleController {
@@ -31,7 +32,6 @@ public class ServiceVehicleController {
 	 * Get all addresses
 	 * 
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/")
 	public List<ServiceVehicleDto> getAll() {
 		return service.findAll();
@@ -43,7 +43,6 @@ public class ServiceVehicleController {
 	 * @param id : Id given
 	 * @return The address
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/{id}")
 	public ServiceVehicleDto getById(@PathVariable int id) {
 		return service.findById(id);
@@ -57,7 +56,6 @@ public class ServiceVehicleController {
 	 * @return A confirmation message
 	 */
 	// TODO EXCEPTION ANOMALIE
-	@CrossOrigin("http://localhost:4200")
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateById(@PathVariable int id, @Valid @RequestBody ServiceVehicleDto serviceVehicle,
 			BindingResult result) throws AnomalieException {
@@ -74,7 +72,6 @@ public class ServiceVehicleController {
 	 * @param serviceVehicle : the new Service vehicle
 	 * @return A confirmation message
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@PostMapping
 	public ResponseEntity<String> create(@Valid @RequestBody ServiceVehicleDto serviceVehicle, BindingResult result)
 			throws AnomalieException {
@@ -90,7 +87,6 @@ public class ServiceVehicleController {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteById(@PathVariable Integer id) {
 		service.delete(id);

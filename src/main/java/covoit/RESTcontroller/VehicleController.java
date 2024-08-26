@@ -20,6 +20,7 @@ import covoit.services.VehicleService;
  * Define routes linked to Addresses
  * 
  */
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/vehicles")
 public class VehicleController {
@@ -30,7 +31,6 @@ public class VehicleController {
 	 * Get all vehicles
 	 * 
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/")
 	public List<VehicleDto> findAll() {
 		return service.findAll();
@@ -42,7 +42,6 @@ public class VehicleController {
 	 * @param id : Id given
 	 * @return The vehicle
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/{id}")
 	public VehicleDto findById(@PathVariable int id) {
 		return service.findById(id);
@@ -53,7 +52,6 @@ public class VehicleController {
 	 * @param id : Id given
 	 * @param vehicle : modified vehicle
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@PutMapping("/{id}")
 	public void update(@PathVariable int id, VehicleDto vehicleDto) {
 		service.update(id,vehicleDto);
@@ -62,7 +60,6 @@ public class VehicleController {
 	/**Create a vehicle 
 	 * @param vehicle : the new vehicle
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@PostMapping
 	public void create(VehicleDto vehicleDto) {
 		service.create(vehicleDto);
@@ -71,7 +68,6 @@ public class VehicleController {
 	/**Delete the vehicle corresponding to the id given
 	 *  @param id : Id given
 	 */
-	@CrossOrigin("http://localhost:4200")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable Integer id) {
 		service.delete(id);
