@@ -20,6 +20,7 @@ public class AuthController {
         this.userAccountService = userAccountService;
     }
 
+    @CrossOrigin("http://localhost:4200")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
         try {
