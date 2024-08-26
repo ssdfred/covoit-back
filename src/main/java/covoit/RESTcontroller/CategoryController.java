@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class CategoryController {
 	 * Get all addresses
 	 * 
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/")
 	public List<CategoryDto> getAll() {
 		return service.findAll();
@@ -40,6 +42,7 @@ public class CategoryController {
 	 * @param id : Id given
 	 * @return The address
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/{id}")
 	public CategoryDto getById(@PathVariable int id) {
 		return service.findById(id);
@@ -53,6 +56,7 @@ public class CategoryController {
 	 * @return A confirmation message
 	 */
 	// TODO EXCEPTION ANOMALIE
+	@CrossOrigin("http://localhost:4200")
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateById(@PathVariable int id, @Valid @RequestBody CategoryDto category,
 			BindingResult result) throws AnomalieException {
@@ -70,6 +74,7 @@ public class CategoryController {
 	 * @param category : the new category
 	 * @return A confirmation message
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@PostMapping
 	public ResponseEntity<String> create(@Valid @RequestBody CategoryDto category, BindingResult result)
 			throws AnomalieException {
@@ -85,6 +90,7 @@ public class CategoryController {
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteById(@PathVariable Integer id) {
 		service.delete(id);

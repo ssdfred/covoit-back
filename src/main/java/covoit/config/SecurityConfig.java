@@ -20,7 +20,7 @@ import covoit.repository.UserAccountRepository;
 public class SecurityConfig implements WebMvcConfigurer  {
 	@Bean
 	public SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((request) -> request.requestMatchers("/user/", "/user/register", "/**").permitAll()
+		http.authorizeHttpRequests((request) -> request.requestMatchers("/user/", "/user/register", "auth/login").permitAll()
 				.requestMatchers("/user/{id}").hasRole("USER").requestMatchers("/user/delete/**").hasRole("ADMIN")
 				.anyRequest().authenticated()).httpBasic(Customizer.withDefaults());
 

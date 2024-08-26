@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class CarpoolController {
 	 *
 	 * @return A list of all carpools.
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@GetMapping
 	public List<CarpoolDto> getAllCarpools() {
 		return carpoolService.findAll();
@@ -39,6 +41,7 @@ public class CarpoolController {
 	 * @param id The ID of the carpool to retrieve.
 	 * @return The carpool if found, or a 404 status if not found.
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/{id}")
 	public CarpoolDto getCarpoolById(@PathVariable int id) {
 		return carpoolService.findById(id);
@@ -49,6 +52,7 @@ public class CarpoolController {
 	 *
 	 * @param carpool The carpool to create.
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@PostMapping
 	public void create(@RequestBody CarpoolDto carpool) {
 		carpoolService.create(carpool);
@@ -63,6 +67,7 @@ public class CarpoolController {
 	 * @return A response entity with a 204 status if successful, or a 404 status if
 	 *         the carpool is not found.
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> updateCarpool(@PathVariable int id, @RequestBody CarpoolDto carpool) {
 		boolean updated = carpoolService.update(id, carpool);
@@ -80,6 +85,7 @@ public class CarpoolController {
 	 * @return A response entity with a 204 status if successful, or a 404 status if
 	 *         the carpool is not found.
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteCarpool(@PathVariable Integer id) {
 		carpoolService.delete(id);

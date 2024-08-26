@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class VehicleModelController {
 	 * Get all vehicle models
 	 * 
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/")
 	public List<VehicleModelDto> findAll() {
 		return service.findAll();
@@ -40,6 +42,7 @@ public class VehicleModelController {
 	 * @param id : Id given
 	 * @return The vehicle model
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/{id}")
 	public VehicleModelDto findById(@PathVariable int id) {
 		return service.findById(id);
@@ -51,6 +54,7 @@ public class VehicleModelController {
 	 * @param id      : Id given
 	 * @param address : modified vehicle model
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@PutMapping("/{id}")
 	public void update(@PathVariable int id, VehicleModelDto vehicleModelDto) {
 		service.update(id, vehicleModelDto);
@@ -62,6 +66,7 @@ public class VehicleModelController {
 	 * @param vehicle model : the new vehicle model
 	 * @return A confirmation message
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@PostMapping
 	public void create(VehicleModelDto vehicleModelDto) {
 		service.create(vehicleModelDto);
@@ -72,6 +77,7 @@ public class VehicleModelController {
 	 * 
 	 * @param id : Id given
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable Integer id) {
 		service.delete(id);

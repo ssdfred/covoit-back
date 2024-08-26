@@ -2,6 +2,7 @@ package covoit.RESTcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ public class RouteController {
 	 * Get all routes
 	 * 
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/")
 	public Iterable<RouteDto> findAll() {
 		return service.findAll();
@@ -38,6 +40,7 @@ public class RouteController {
 	 * @param id : Id given
 	 * @return The route
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/{id}")
 	public RouteDto findById(@PathVariable int id) {
 		return service.findById(id);
@@ -49,6 +52,7 @@ public class RouteController {
 	 * @param id    : Id given
 	 * @param route : modified route
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@PutMapping("/{id}")
 	public void update(@PathVariable int id, RouteDto route) {
 		service.update(id, route);
@@ -59,6 +63,7 @@ public class RouteController {
 	 * 
 	 * @param route : the new route
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@PostMapping
 	public void create(RouteDto route) {
 		service.create(route);
@@ -69,6 +74,7 @@ public class RouteController {
 	 * 
 	 * @param id : Id given
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@DeleteMapping("/{id}")
 	public  ResponseEntity<String> delete(@PathVariable Integer id) {
 		service.delete(id);

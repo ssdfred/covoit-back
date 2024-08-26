@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class BookingController {
 	 * Get all bookings
 	 * 
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/")
 	public List<BookingDto> findAll() {
 		return service.findAll();
@@ -40,6 +42,7 @@ public class BookingController {
 	 * @param id : Id given
 	 * @return Booking
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@GetMapping("/{id}")
 	public BookingDto findById(@PathVariable int id) {
 		return service.findById(id);
@@ -51,6 +54,7 @@ public class BookingController {
 	 * @param id      : Id given
 	 * @param booking : modified booking
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@PutMapping("/{id}")
 	public void update(@PathVariable int id, BookingDto booking) {
 		service.update(id, booking);
@@ -61,6 +65,7 @@ public class BookingController {
 	 * 
 	 * @param booking : the new booking
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@PostMapping
 	public void create(BookingDto booking) {
 		service.create(booking);
@@ -71,6 +76,7 @@ public class BookingController {
 	 * 
 	 * @param id : Id given
 	 */
+	@CrossOrigin("http://localhost:4200")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable Integer id) {
 		service.delete(id);
