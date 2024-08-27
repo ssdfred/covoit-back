@@ -4,17 +4,22 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import covoit.dtos.BrandDto;
+import covoit.dtos.CategoryDto;
+import covoit.exception.AnomalieException;
 import covoit.services.BrandService;
+import jakarta.validation.Valid;
 
 /**
  * Define routes linked to booking
@@ -22,7 +27,7 @@ import covoit.services.BrandService;
  */
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping("/brands")
+@RequestMapping(value = "/brands", produces = "application/json")
 public class BrandControler {
 	@Autowired
 	private BrandService service;
@@ -31,7 +36,7 @@ public class BrandControler {
 	 * Get all brands
 	 * 
 	 */
-	@GetMapping("/")
+	@GetMapping
 	public List<BrandDto> findAll() {
 		return service.findAll();
 	}
@@ -64,10 +69,13 @@ public class BrandControler {
 	 * @param brand : the new brand
 	 */
 	@PostMapping
-	public void create(BrandDto brand) {
-		service.create(brand);
+	public ResponseEntity<String> create(@Valid @RequestBody BrandDto brand, BindingResult result)
+			throws AnomalieException {
+		if (!service.create(brand)) {
+			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
+		}
+		return ResponseEntity.ok("Creation reussi");
 	}
-
 	/**
 	 * Delete the brand corresponding to the id given
 	 * 
