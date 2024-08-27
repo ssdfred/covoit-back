@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ch.qos.logback.core.Context;
 import covoit.repository.UserAccountRepository;
 
+
 @Configuration
 public class SecurityConfig implements WebMvcConfigurer  {
 	@Bean
@@ -31,6 +32,7 @@ public class SecurityConfig implements WebMvcConfigurer  {
 		http.csrf(csrf -> csrf.disable());
 		return http.build();
 	}
+	
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 	    return new WebMvcConfigurer() {
