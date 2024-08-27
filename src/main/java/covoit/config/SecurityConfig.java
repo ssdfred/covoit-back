@@ -11,21 +11,35 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import covoit.repository.UserAccountRepository;
 
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer  {
 	@Bean
 	public SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((request) -> request.requestMatchers("/user/", "/user/register", "/**").permitAll()
+		http.authorizeHttpRequests((request) -> request.requestMatchers("/user/", "/user/register", "auth/login").permitAll()
 				.requestMatchers("/user/{id}").hasRole("USER").requestMatchers("/user/delete/**").hasRole("ADMIN")
 				.anyRequest().authenticated()).httpBasic(Customizer.withDefaults());
 
 		http.csrf(csrf -> csrf.disable());
 		return http.build();
 	}
-
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+	    return new WebMvcConfigurer() {
+	        @Override
+	        public void addCorsMappings(CorsRegistry registry) {
+	            registry.addMapping("/**")
+	                    .allowedOrigins("http://localhost:4200")
+	                    .allowedMethods("GET", "POST", "PUT", "DELETE")
+	                    .allowedHeaders("*")
+	                    .allowCredentials(true);
+	        }
+	    };
+	}
 	//Creation UserDetail temporaire
 //	@Bean
 //	public InMemoryUserDetailsManager userDetailsService() {

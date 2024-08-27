@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import covoit.entities.UserAccount;
 import covoit.exception.AnomalieException;
 import covoit.services.UserAccountService;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = "/user", produces = "application/json")
 public class UserAccountController {
@@ -35,6 +37,7 @@ public class UserAccountController {
     public UserAccountDto findById(@PathVariable int id) {
         return userAccountService.findById(id);
     }
+
     @PostMapping("/register")
     public ResponseEntity<String> create(@RequestBody UserAccountDto userAccountDto) {
         // Convertir UserAccountDto en UserAccount	
@@ -43,17 +46,19 @@ public class UserAccountController {
         userAccountService.create(userAccount);
         return ResponseEntity.ok("User created successfully");
     }
+
     @PutMapping("/update/{id}")
     public void update(@PathVariable int id, @RequestBody UserAccountDto userDto) {
         userAccountService.update(id, userDto);
     }
     
+
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable int id) {
         userAccountService.delete(id);
     }
 
-
+ 
     @DeleteMapping("/{userId}/cancel-carpool")
     public void cancelCarpool(@PathVariable int userId, @RequestParam int carpoolId) {
      //  userAccountService.deleteBookingCarpool(carpoolId, userId);
