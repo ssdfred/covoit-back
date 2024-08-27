@@ -47,7 +47,7 @@ public class UserAccountController {
         return ResponseEntity.ok("User created successfully");
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update/{id}")
     public void update(@PathVariable int id, @RequestBody UserAccountDto userDto) {
         userAccountService.update(id, userDto);
     }

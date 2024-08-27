@@ -48,19 +48,28 @@ public class UserAccountService {
 	}
 
 	/**
-	 * Update the Brand corresponding to the id given
+	 * Update the User corresponding to the id given
 	 * 
 	 * @param id : Id given
 	 * @return A confirmation message
 	 */
-	public boolean update(int id, UserAccountDto object) {
+	public boolean update(int id, UserAccountDto userDto) {
 		UserAccount userDB = repository.findById(id);
 
 		if (userDB == null) {
 			return false;
 		}
-		userDB = object.toBean(object);
-		repository.save(userDB);
+		
+		// Mettre à jour uniquement les nécessaires
+		UserAccount change = userDto.toBean(userDto);
+		userDB.setUserName(change.getUserName());
+		userDB.setLastName(change.getLastName());
+		userDB.setEmail(change.getEmail());
+		userDB.setDriverLicence(change.isDriverLicence());
+		userDB.setPassword(change.getPassword());
+		userDB.setAuthorities(change.getAuthorities());
+		
+		repository.save(userDB); 
 		return true;
 	}
 
