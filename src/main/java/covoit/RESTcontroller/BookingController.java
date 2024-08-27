@@ -31,7 +31,7 @@ public class BookingController {
 	 * Get all bookings
 	 * 
 	 */
-	@GetMapping("/")
+	@GetMapping
 	public List<BookingDto> findAll() {
 		return service.findAll();
 	}
