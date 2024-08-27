@@ -2,17 +2,22 @@ package covoit.RESTcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import covoit.dtos.CarpoolDto;
 import covoit.dtos.RouteDto;
+import covoit.exception.AnomalieException;
 import covoit.services.RouteService;
+import jakarta.validation.Valid;
 
 /**
  * Define routes linked to Addresses
@@ -62,10 +67,13 @@ public class RouteController {
 	 * @param route : the new route
 	 */
 	@PostMapping
-	public void create(RouteDto route) {
-		service.create(route);
+	public ResponseEntity<String> create(@Valid @RequestBody RouteDto route, BindingResult result)
+			throws AnomalieException {
+		if (!service.create(route)) {
+			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
+		}
+		return ResponseEntity.ok("Creation reussi");
 	}
-
 	/**
 	 * Delete the route corresponding to the id given
 	 * 

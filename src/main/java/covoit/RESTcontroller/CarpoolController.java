@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import covoit.dtos.BrandDto;
 import covoit.dtos.CarpoolDto;
+import covoit.exception.AnomalieException;
 import covoit.services.CarpoolService;
+import jakarta.validation.Valid;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
@@ -23,7 +27,7 @@ import covoit.services.CarpoolService;
 public class CarpoolController {
 
 	@Autowired
-	private CarpoolService carpoolService;
+	private CarpoolService service;
 
 	/**
 	 * Get all carpools.
@@ -32,7 +36,7 @@ public class CarpoolController {
 	 */
 	@GetMapping
 	public List<CarpoolDto> getAllCarpools() {
-		return carpoolService.findAll();
+		return service.findAll();
 	}
 
 	/**
@@ -43,7 +47,7 @@ public class CarpoolController {
 	 */
 	@GetMapping("/{id}")
 	public CarpoolDto getCarpoolById(@PathVariable int id) {
-		return carpoolService.findById(id);
+		return service.findById(id);
 	}
 
 	/**
@@ -52,11 +56,13 @@ public class CarpoolController {
 	 * @param carpool The carpool to create.
 	 */
 	@PostMapping
-	public void create(@RequestBody CarpoolDto carpool) {
-		carpoolService.create(carpool);
-
+	public ResponseEntity<String> create(@Valid @RequestBody CarpoolDto carpool, BindingResult result)
+			throws AnomalieException {
+		if (!service.create(carpool)) {
+			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
+		}
+		return ResponseEntity.ok("Creation reussi");
 	}
-
 	/**
 	 * Update an existing carpool.
 	 *
@@ -67,7 +73,7 @@ public class CarpoolController {
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> updateCarpool(@PathVariable int id, @RequestBody CarpoolDto carpool) {
-		boolean updated = carpoolService.update(id, carpool);
+		boolean updated = service.update(id, carpool);
 		if (updated) {
 			return ResponseEntity.noContent().build();
 		} else {
@@ -84,7 +90,7 @@ public class CarpoolController {
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteCarpool(@PathVariable Integer id) {
-		carpoolService.delete(id);
+		service.delete(id);
 		return ResponseEntity.ok("Suppression reussie");
 	}
 }

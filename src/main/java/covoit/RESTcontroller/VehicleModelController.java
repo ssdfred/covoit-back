@@ -4,17 +4,22 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import covoit.dtos.VehicleDto;
 import covoit.dtos.VehicleModelDto;
+import covoit.exception.AnomalieException;
 import covoit.services.VehicleModelService;
+import jakarta.validation.Valid;
 
 /**
  * Define routes linked to VehicleModels
@@ -65,10 +70,13 @@ public class VehicleModelController {
 	 * @return A confirmation message
 	 */
 	@PostMapping
-	public void create(VehicleModelDto vehicleModelDto) {
-		service.create(vehicleModelDto);
+	public ResponseEntity<String> create(@Valid @RequestBody VehicleModelDto vehicleModelDto, BindingResult result)
+			throws AnomalieException {
+		if (!service.create(vehicleModelDto)) {
+			throw new AnomalieException(result.getAllErrors().get(0).getDefaultMessage());
+		}
+		return ResponseEntity.ok("Creation reussi");
 	}
-
 	/**
 	 * Delete the VehicleModel corresponding to the id given
 	 * 
