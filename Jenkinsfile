@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/ssdfred/covoit-back.git'
+                git 'https://github.com/ssdfred/covoit-back'
             }
         }
         stage('Build') {
