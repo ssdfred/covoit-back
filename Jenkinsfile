@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Projet-Fil-Rouge-FMN/covoit-back'
+                git 'https://github.com/ssdfred/covoit-back.git'
             }
         }
         stage('Build') {
