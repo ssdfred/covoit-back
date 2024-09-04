@@ -53,7 +53,7 @@ pipeline {
 				 def mvnHome = tool 'Maven 3.9.9' 
 				 withSonarQubeEnv('SonarQ') {
 					 sh "${mvnHome}/bin/mvn clean verify sonar:sonar -
-					Dsonar.projectKey=Vulnado -Dsonar.projectName='Vulnado'"
+					Dsonar.projectKey=covoit -Dsonar.projectName='covoit'"
 				 }
  			}
 		 }
