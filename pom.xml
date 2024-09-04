@@ -130,6 +130,11 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                             <configuration>
+                     <reports>
+                       <xml>target/site/jacoco/jacoco.xml</xml>
+                     </reports>
+                   </configuration>
                     </execution>
                 </executions>
             </plugin>
