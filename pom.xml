@@ -125,6 +125,14 @@
 			<version>5.14.0.18788</version>
 			<scope>test</scope>
 		</dependency>
+		<!--
+		https://mvnrepository.com/artifact/org.sonarsource.scanner.gradle/sonarqube-gradle-plugin -->
+		<dependency>
+			<groupId>org.sonarsource.scanner.gradle</groupId>
+			<artifactId>sonarqube-gradle-plugin</artifactId>
+			<version>3.3</version>
+			<scope>runtime</scope>
+		</dependency>
 
 
 	</dependencies>
