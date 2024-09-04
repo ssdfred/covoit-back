@@ -108,6 +108,13 @@
 			<artifactId>jjwt-api</artifactId>
 			<version>0.12.6</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jacoco/org.jacoco.agent -->
+		<dependency>
+		    <groupId>org.jacoco</groupId>
+		    <artifactId>org.jacoco.agent</artifactId>
+		    <version>0.8.12</version>
+		    <scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
