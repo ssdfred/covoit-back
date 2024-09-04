@@ -37,7 +37,8 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!--Permet de garder le serveur lancer -->
+		<!--Permet
+		de garder le serveur lancer -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -110,11 +111,12 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.jacoco/org.jacoco.agent -->
 		<dependency>
-		    <groupId>org.jacoco</groupId>
-		    <artifactId>org.jacoco.agent</artifactId>
-		    <version>0.8.12</version>
-		    <scope>test</scope>
+			<groupId>org.jacoco</groupId>
+			<artifactId>org.jacoco.agent</artifactId>
+			<version>0.8.12</version>
+			<scope>test</scope>
 		</dependency>
+
 
 	</dependencies>
 
@@ -126,6 +128,17 @@
 				<configuration>
 					<encoding>UTF-8</encoding>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jenkins-ci.tools</groupId>
+				<artifactId>maven-hpi-plugin</artifactId>
+				<version>3.58-SNAPSHOT</version>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.jenkins-ci.tools</groupId>
+				<artifactId>maven-hpi-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
