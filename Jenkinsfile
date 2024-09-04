@@ -51,7 +51,7 @@ pipeline {
 			steps {
 				script {
 				def mvnHome = tool 'Maven 3.9.9' 
-				withSonarQubeEnv('SonarQ') {
+				withSonarQubeEnv('SonarQC') {
 					sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=covoit -Dsonar.projectName='covoit'"
 				}
  			}
