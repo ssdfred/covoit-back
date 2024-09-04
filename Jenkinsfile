@@ -47,15 +47,17 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQubeServer') {
-                    // Running SonarQube analysis with Maven.
-                    sh 'mvn sonar:sonar'
-                }
-            }
-        }
-    }
+    	 stage('SonarQube Analysis') {
+			 steps {
+				 script {
+				 def mvnHome = tool 'Maven 3.9.9' 
+				 withSonarQubeEnv('SonarQ') {
+					 sh "${mvnHome}/bin/mvn clean verify sonar:sonar -
+					Dsonar.projectKey=Vulnado -Dsonar.projectName='Vulnado'"
+				 }
+ 			}
+		 }
+ 	}
 
     post {
         success {
