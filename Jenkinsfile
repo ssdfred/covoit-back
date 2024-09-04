@@ -42,7 +42,7 @@ pipeline {
             post {
                 always {
                     // Archiving the code coverage report.
-                    jacoco execPattern: '**/target/jacoco.exec'
+                    Jacoco execPattern: '**/target/jacoco.exec'
                 }
             }
         }
