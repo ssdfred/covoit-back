@@ -34,7 +34,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 				.securityContext((context -> context.securityContextRepository(repo)));
 		// Configurer CSRF avec CookieCsrfTokenRepository et HttpOnly désactivé
         http.csrf(csrf -> csrf
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnly(true)));
 
 
 		//http.csrf(csrf -> csrf.disable());
