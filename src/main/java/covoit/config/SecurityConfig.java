@@ -47,7 +47,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 				http.headers(headers -> headers
 					.contentSecurityPolicy("default-src 'self'") // CSP pour bloquer les scripts non autorisés
 					.frameOptions().deny() // Protection contre le clickjacking
-					.httpStrictTransportSecurity()) // Forcer HTTPS à long terme
+					.httpStrictTransportSecurity()); // Forcer HTTPS à long terme
 
 		//http.csrf(csrf -> csrf.disable());
 		return http.build();
