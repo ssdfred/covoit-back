@@ -32,7 +32,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 				.securityContext((context -> context.securityContextRepository(repo))); // Utiliser le dépôt de contexte
 				// Configurer la protection CSRF avec un cookie sécurisé (HttpOnly est activé par défaut)
 				http.csrf(csrf -> csrf
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnly())); // Désactive HttpOnly uniquement si nécessaire
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyTrue())); // Désactive HttpOnly uniquement si nécessaire
 
 
 
