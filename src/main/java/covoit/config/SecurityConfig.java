@@ -40,8 +40,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 				http.csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())); // Désactive HttpOnly uniquement si nécessaire
 
-				// Utiliser requiresSecure() à la place de requiresChannel()
-				http.requiresSecure(); // Forcer HTTPS
+//				// Utiliser requiresSecure() à la place de requiresChannel()
+//				http.requiresSecure(); // Forcer HTTPS
 
 				// Ajouter des en-têtes de sécurité supplémentaires sans xssProtection()
 				http.headers(headers -> headers
