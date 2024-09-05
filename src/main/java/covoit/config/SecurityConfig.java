@@ -16,7 +16,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import jakarta.servlet.http.Cookie; 
+import javax.servlet.http.Cookie; 
 import ch.qos.logback.core.Context;
 import covoit.entities.UserAccount;
 import covoit.repository.UserAccountRepository;
@@ -29,8 +29,8 @@ public class SecurityConfig implements WebMvcConfigurer {
     HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
     
     // Créer un cookie sécurisé (HttpOnly)
-    Cookie xsrfCookie = new Cookie("XSRF-TOKEN", "XSRF-TOKEN");
-    xsrfCookie.setHttpOnly(true); // Le cookie est uniquement accessible par le serveur
+    Cookie xsrfCookie = new Cookie(xsrfCookieName, senstivedata);
+    xsrfCookie.setSecure(false); // Le cookie est uniquement accessible par le serveur
 
 		http.authorizeHttpRequests(
 				(request) -> request.requestMatchers("/user/", "/user/register", "auth/login", "/**", "/swagger-ui/")
