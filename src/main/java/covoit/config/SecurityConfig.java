@@ -16,7 +16,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
+import org.springframework.security.authentication.BadCredentialsException;
 import ch.qos.logback.core.Context;
 import covoit.entities.UserAccount;
 import covoit.repository.UserAccountRepository;
@@ -68,7 +68,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 		return username -> {
 			UserAccount userAccount = userAccountRepository.findByUserName(username);
 			if (userAccount == null) {
-				throw new UsernameNotFoundException("User not found");
+				throw new BadCredentialsException("Wrong user or password");
 			}
 			return userAccount.asUserDetails(); // Assuming `asUserDetails()` converts `UserAccount` to `UserDetails`
 		};
