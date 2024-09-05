@@ -16,7 +16,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
+import javax.servlet.http.Cookie; 
 import ch.qos.logback.core.Context;
 import covoit.entities.UserAccount;
 import covoit.repository.UserAccountRepository;
