@@ -26,6 +26,8 @@ public class SecurityConfig implements WebMvcConfigurer {
 	@Bean
 	public SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
 		HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
+		Cookie C = new Cookie("XSRF-TOKEN", "XSRF-TOKEN");
+		C.setHttpOnly(true);
 		http.authorizeHttpRequests(
 				(request) -> request.requestMatchers("/user/", "/user/register", "auth/login", "/**", "/swagger-ui/")
 						.permitAll().requestMatchers("/user/{id}").hasRole("USER")
@@ -34,7 +36,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 				.securityContext((context -> context.securityContextRepository(repo)));
 		// Configurer CSRF avec CookieCsrfTokenRepository et HttpOnly désactivé
         http.csrf(csrf -> csrf
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnly(true)));
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnly()));
 
 
 		//http.csrf(csrf -> csrf.disable());
