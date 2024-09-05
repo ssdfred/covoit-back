@@ -29,8 +29,8 @@ public class SecurityConfig implements WebMvcConfigurer {
     HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
     
     // Créer un cookie sécurisé (HttpOnly)
-    Cookie xsrfCookie = new Cookie(xsrfCookieName, senstivedata);
-    xsrfCookie.setSecure(false); // Le cookie est uniquement accessible par le serveur
+    Cookie xsrfCookie = new Cookie("XSRF-TOKEN", "XSRF-TOKEN");
+    xsrfCookie.setHttpOnly(true); // Le cookie est uniquement accessible par le serveur
 
 		http.authorizeHttpRequests(
 				(request) -> request.requestMatchers("/user/", "/user/register", "auth/login", "/**", "/swagger-ui/")
@@ -38,11 +38,19 @@ public class SecurityConfig implements WebMvcConfigurer {
 						.requestMatchers("/**", "/user/delete/**").hasRole("ADMIN").anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())
 				.securityContext((context -> context.securityContextRepository(repo))); // Utiliser le dépôt de contexte
-
-				// Configurer la protection CSRF avec un cookie sans HttpOnly
+				// Configurer la protection CSRF avec un cookie sécurisé (HttpOnly et Secure)
 				http.csrf(csrf -> csrf
-						.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyTrue())
+				.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/**")))
+				.requiresChannel().anyRequest().requiresSecure(); // Forcer HTTPS
 
+				// Ajouter des en-têtes de sécurité supplémentaires
+				http.headers(headers -> headers
+				.contentSecurityPolicy("script-src 'self'")
+				.xssProtection(xss -> xss.block(true))
+				.frameOptions().deny()
+				.httpStrictTransportSecurity()
+				.xContentTypeOptions());
 
 		//http.csrf(csrf -> csrf.disable());
 		return http.build();
