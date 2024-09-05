@@ -9,15 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import javax.servlet.http.Cookie; 
-import ch.qos.logback.core.Context;
 import covoit.entities.UserAccount;
 import covoit.repository.UserAccountRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -39,10 +35,6 @@ public class SecurityConfig implements WebMvcConfigurer {
 				// Configurer la protection CSRF avec un cookie sécurisé (HttpOnly est activé par défaut)
 				http.csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())); // Désactive HttpOnly uniquement si nécessaire
-
-//				// Utiliser requiresSecure() à la place de requiresChannel()
-//				http.requiresSecure(); // Forcer HTTPS
-
 
 
 		//http.csrf(csrf -> csrf.disable());
