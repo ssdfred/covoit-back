@@ -20,25 +20,30 @@ import org.springframework.security.authentication.BadCredentialsException;
 import ch.qos.logback.core.Context;
 import covoit.entities.UserAccount;
 import covoit.repository.UserAccountRepository;
-
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 @Configuration
 public class SecurityConfig implements WebMvcConfigurer {
 	@Bean
 	public SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
-		HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
-		http.authorizeHttpRequests(
-				(request) -> request.requestMatchers("/user/", "/user/register", "auth/login", "/**", "/swagger-ui/")
-						.permitAll().requestMatchers("/user/{id}").hasRole("USER")
-						.requestMatchers("/**", "/user/delete/**").hasRole("ADMIN").anyRequest().authenticated())
-				.httpBasic(Customizer.withDefaults())
-				.securityContext((context -> context.securityContextRepository(repo)));
-		// Configurer CSRF avec CookieCsrfTokenRepository et HttpOnly désactivé
-        http.csrf(csrf -> csrf
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyTrue()));
-
-
-		//http.csrf(csrf -> csrf.disable());
+		http.sessionManagement(session -> session
+				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Créer une session seulement si nécessaire
+				.maximumSessions(2) // Limite à 2 sessions par utilisateur
+				.maxSessionsPreventsLogin(true)) // Empêche la connexion si la limite est atteinte
+			.authorizeHttpRequests(requests -> requests
+				.requestMatchers("/user/", "/user/register", "auth/login", "/**", "/swagger-ui/").permitAll()
+				.requestMatchers("/user/{id}").hasRole("USER")
+				.requestMatchers("/user/delete/**").hasRole("ADMIN")
+				.anyRequest().authenticated())
+			.httpBasic(Customizer.withDefaults())
+			.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())) // Désactiver CSRF pour REST
+			.headers(headers -> headers.contentSecurityPolicy("default-src 'self'").frameOptions().deny());
+		
 		return http.build();
+	}
+	
+	@Bean
+	public HttpSessionEventPublisher httpSessionEventPublisher() {
+		return new HttpSessionEventPublisher();
 	}
 
 	@Bean
