@@ -38,7 +38,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 				.anyRequest().authenticated())
 			.httpBasic(Customizer.withDefaults())
 			.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())) // Désactiver CSRF pour REST
-			.headers(headers -> headers.contentSecurityPolicy("default-src 'self'").frameOptions().deny());
+			.headers(headers -> headers.contentSecurityPolicy("default-src 'self'"));
 		
 		return http.build();
 	}
