@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import covoit.entities.UserAccount;
 import covoit.repository.UserAccountRepository;
-
+import javax.servlet.http.Cookie;
 @Configuration
 public class SecurityConfig implements WebMvcConfigurer {
 	@Bean
