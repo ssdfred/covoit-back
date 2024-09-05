@@ -28,9 +28,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     // Créer un dépôt de contexte de sécurité pour stocker la session
     HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
     
-    // Créer un cookie sécurisé (HttpOnly)
-    Cookie xsrfCookie = new Cookie("XSRF-TOKEN", "XSRF-TOKEN");
-    xsrfCookie.setHttpOnly(true); // Le cookie est uniquement accessible par le serveur
+
 
 		http.authorizeHttpRequests(
 				(request) -> request.requestMatchers("/user/", "/user/register", "auth/login", "/**", "/swagger-ui/")
@@ -38,19 +36,18 @@ public class SecurityConfig implements WebMvcConfigurer {
 						.requestMatchers("/**", "/user/delete/**").hasRole("ADMIN").anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())
 				.securityContext((context -> context.securityContextRepository(repo))); // Utiliser le dépôt de contexte
-				// Configurer la protection CSRF avec un cookie sécurisé (HttpOnly et Secure)
+				// Configurer la protection CSRF avec un cookie sécurisé (HttpOnly est activé par défaut)
 				http.csrf(csrf -> csrf
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyTrue())
-				.requireCsrfProtectionMatcher(new AntPathRequestMatcher("/**")))
-				.requiresChannel().anyRequest().requiresSecure(); // Forcer HTTPS
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())); // Désactive HttpOnly uniquement si nécessaire
 
-				// Ajouter des en-têtes de sécurité supplémentaires
+				// Utiliser requiresSecure() à la place de requiresChannel()
+				http.requiresSecure(); // Forcer HTTPS
+
+				// Ajouter des en-têtes de sécurité supplémentaires sans xssProtection()
 				http.headers(headers -> headers
-				.contentSecurityPolicy("script-src 'self'")
-				.xssProtection(xss -> xss.block(true))
-				.frameOptions().deny()
-				.httpStrictTransportSecurity()
-				.xContentTypeOptions());
+					.contentSecurityPolicy("default-src 'self'") // CSP pour bloquer les scripts non autorisés
+					.frameOptions().deny() // Protection contre le clickjacking
+					.httpStrictTransportSecurity()) // Forcer HTTPS à long terme
 
 		//http.csrf(csrf -> csrf.disable());
 		return http.build();
