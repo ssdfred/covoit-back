@@ -68,7 +68,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 		return username -> {
 			UserAccount userAccount = userAccountRepository.findByUserName(username);
 			if (userAccount == null) {
-				throw new UsernameNotFoundException("User not found");
+				throw new UsernameNotFoundException ("Utisateur ou mot de passe incorrect");
 			}
 			return userAccount.asUserDetails(); // Assuming `asUserDetails()` converts `UserAccount` to `UserDetails`
 		};
