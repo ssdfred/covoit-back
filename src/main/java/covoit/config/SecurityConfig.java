@@ -37,7 +37,11 @@ public class SecurityConfig implements WebMvcConfigurer {
 				.requestMatchers("/user/delete/**").hasRole("ADMIN")
 				.anyRequest().authenticated())
 			.httpBasic(Customizer.withDefaults())
-			.csrf(csrf -> csrf.csrfTokenRepository()) 
+			.csrf(csrf -> {
+				CookieCsrfTokenRepository csrfTokenRepository = new CookieCsrfTokenRepository();
+				csrfTokenRepository.setCookieHttpOnly(false); // Désactiver HttpOnly si nécessaire
+				csrf.csrfTokenRepository(csrfTokenRepository); // Configurer le repository CSRF
+			})
 			.headers(headers -> headers.contentSecurityPolicy("default-src 'self'"));
 		
 		return http.build();
