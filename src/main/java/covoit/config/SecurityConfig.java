@@ -38,7 +38,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 			.csrf(csrf -> {
 				CookieCsrfTokenRepository csrfTokenRepository = new CookieCsrfTokenRepository();
 				csrf.csrfTokenRepository(csrfTokenRepository); // Configurer le repository CSRF
-			})
+			});
 			
 		
 		return http.build();
