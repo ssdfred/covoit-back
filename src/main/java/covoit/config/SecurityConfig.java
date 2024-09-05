@@ -25,18 +25,23 @@ import covoit.repository.UserAccountRepository;
 public class SecurityConfig implements WebMvcConfigurer {
 	@Bean
 	public SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
-		HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
-		Cookie C = new Cookie("XSRF-TOKEN", "XSRF-TOKEN");
-		C.setHttpOnly(true);
+    // Créer un dépôt de contexte de sécurité pour stocker la session
+    HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
+    
+    // Créer un cookie sécurisé (HttpOnly)
+    Cookie xsrfCookie = new Cookie("XSRF-TOKEN", "XSRF-TOKEN");
+    xsrfCookie.setHttpOnly(true); // Le cookie est uniquement accessible par le serveur
+
 		http.authorizeHttpRequests(
 				(request) -> request.requestMatchers("/user/", "/user/register", "auth/login", "/**", "/swagger-ui/")
 						.permitAll().requestMatchers("/user/{id}").hasRole("USER")
 						.requestMatchers("/**", "/user/delete/**").hasRole("ADMIN").anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())
-				.securityContext((context -> context.securityContextRepository(repo)));
-		// Configurer CSRF avec CookieCsrfTokenRepository et HttpOnly désactivé
-        http.csrf(csrf -> csrf
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnly()));
+				.securityContext((context -> context.securityContextRepository(repo))); // Utiliser le dépôt de contexte
+
+				// Configurer la protection CSRF avec un cookie sans HttpOnly
+				http.csrf(csrf -> csrf
+						.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
 
 
 		//http.csrf(csrf -> csrf.disable());
