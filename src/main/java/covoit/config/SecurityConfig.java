@@ -20,7 +20,7 @@ import javax.servlet.http.Cookie;
 import ch.qos.logback.core.Context;
 import covoit.entities.UserAccount;
 import covoit.repository.UserAccountRepository;
-
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig implements WebMvcConfigurer {
 	@Bean
