@@ -23,9 +23,9 @@ public class SecurityConfig implements WebMvcConfigurer {
     // Créer un dépôt de contexte de sécurité pour stocker la session
     HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
     
-	Cookie  c  =  nouveau  Cookie (repo, "XSRF-TOKEN", "csrf", "Strict-Transport-Security", "max-age=31536000 ; includeSubDomains");
+	Cookie  c  =  new  Cookie (repo, "XSRF-TOKEN", "csrf", "Strict-Transport-Security", "max-age=31536000 ; includeSubDomains");
 		c.setSecure( true );
-	c.setHttpOnly( true );
+		c.setHttpOnly( true );
 
 		http.authorizeHttpRequests(
 				(request) -> request.requestMatchers("/user/", "/user/register", "auth/login", "/**", "/swagger-ui/")
