@@ -2,6 +2,7 @@ package covoit.dtos;
 
 import java.util.List;
 
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.core.GrantedAuthority;
 
 import covoit.entities.UserAccount;
@@ -22,15 +23,15 @@ public class UserAccountDto {
 
 	
 	public UserAccountDto toDto(UserAccount user) {
-		UserAccountDto userDto = new UserAccountDto();
-		userDto.setId(user.getId());
-		userDto.setEmail(user.getEmail());
-		userDto.setUserName(user.getUserName());
-		userDto.setLastName(user.getLastName());
-		userDto.setDriverLicence(user.isDriverLicence());
-		userDto.setPassword(user.getPassword());
-		userDto.setRole(user.getAuthorities().toString());
-		return userDto;
+	    UserAccountDto userDto = new UserAccountDto();
+	    userDto.setId(user.getId());
+	    userDto.setEmail(user.getEmail());
+	    userDto.setUserName(user.getUserName());
+	    userDto.setLastName(user.getLastName());
+	    userDto.setDriverLicence(user.isDriverLicence());
+	    userDto.setPassword(user.getPassword());
+	    userDto.setRole(getRole()); // Assurez-vous d'utiliser le rôle principal
+	    return userDto;
 	}
 	public UserAccount toBean(UserAccountDto userDto) {
 		UserAccount user = new UserAccount();

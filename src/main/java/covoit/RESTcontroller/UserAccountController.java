@@ -61,6 +61,6 @@ public class UserAccountController {
  
     @DeleteMapping("/{userId}/cancel-carpool")
     public void cancelCarpool(@PathVariable int userId, @RequestParam int carpoolId) {
-     //  userAccountService.deleteBookingCarpool(carpoolId, userId);
+      //userAccountService.delete(carpoolId, userId);
     }
 }

@@ -3,13 +3,19 @@ package covoit.RESTcontroller;
 import covoit.dtos.LoginRequestDto;
 import covoit.entities.UserAccount;
 import covoit.exception.AnomalieException;
+import covoit.services.JwtService;
 import covoit.services.UserAccountService;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
@@ -17,7 +23,7 @@ import jakarta.servlet.http.HttpSession;
 public class AuthController {
 
     private final UserAccountService userAccountService;
-
+    private JwtService jwtService;
     public AuthController(UserAccountService userAccountService) {
         this.userAccountService = userAccountService;
     }
@@ -29,11 +35,16 @@ public class AuthController {
             UserAccount user = userAccountService.login(loginRequest.getUsername(), loginRequest.getPassword());
             HttpSession session = request.getSession();
             session.setAttribute("user", user); // Stocker l'utilisateur dans la session
-            return ResponseEntity.ok(user);
+            return ResponseEntity.ok().body(user); // Assurez-vous de renvoyer une réponse appropriée
         } catch (AnomalieException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        } catch (Exception e) {
+            // Attraper d'autres exceptions et renvoyer une réponse appropriée
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
         }
-    }
+    }	
+
+
 
 
     @GetMapping("/logout")
