@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -69,6 +70,7 @@ public class VehicleModelController {
 	 * @param vehicle model : the new vehicle model
 	 * @return A confirmation message
 	 */
+	 @PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<String> create(@Valid @RequestBody VehicleModelDto vehicleModelDto, BindingResult result)
 			throws AnomalieException {
