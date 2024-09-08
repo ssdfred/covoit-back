@@ -25,11 +25,11 @@ Ce projet utilise Jenkins pour gérer le pipeline CI/CD. Voici un aperçu de not
 
 2. **Déploiement Continu (CD)** :
     - Après la validation des tests, le code est automatiquement déployé sur notre environnement de staging.
-    - Une fois validé en staging, le déploiement en production est effectué.
-    - Nous utilisons Docker et Kubernetes pour la gestion des conteneurs et le déploiement.
+    - Une fois validé en staging, le déploiement en production sera effectué.
+    - Nous utiliserons Docker et Kubernetes pour la gestion des conteneurs et le déploiement.
 
 3. **Surveillance et Logging** :
-    - Nous utilisons Prometheus et Grafana pour surveiller les performances et les logs de l'application.
+    - Nous utiliserons Prometheus et Grafana pour surveiller les performances et les logs de l'application.
     - Les alertes sont configurées pour notifier l'équipe en cas de problème.
 
 
