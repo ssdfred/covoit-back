@@ -1,82 +1,71 @@
 package covoit.RESTcontroller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import covoit.dtos.LoginRequestDto;
+import covoit.dtos.LoginResponse;
 import covoit.entities.UserAccount;
 import covoit.exception.AnomalieException;
 import covoit.services.JwtService;
 import covoit.services.UserAccountService;
-
-import java.util.Map;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
     private final UserAccountService userAccountService;
-    private final JwtService jwtService;
-
-    // Injection via le constructeur
-    public AuthController(UserAccountService userAccountService, JwtService jwtService) {
-        this.userAccountService = userAccountService;
+	private JwtService jwtService;
+    // Injection des services
+	@Autowired
+    public AuthController(UserAccountService authService, JwtService jwtService) {
+        this.userAccountService = authService; 
         this.jwtService = jwtService;
     }
+ 
+
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequest, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto) {
         try {
-            // Authentifie l'utilisateur
-            UserAccount user = userAccountService.login(loginRequest.getUsername(), loginRequest.getPassword());
+            // Authentifier l'utilisateur
+            UserAccount user = userAccountService.authenticate(loginRequestDto.getUsername(), loginRequestDto.getPassword());
 
-            // Création de la session utilisateur
-            HttpSession session = request.getSession(true);
-            session.setAttribute("user", user);
+            // Générer le token
+            String token = jwtService.generateToken(user.asUserDetails());
 
-            // Optionnel : Générer un JWT si tu utilises des tokens pour l'authentification
-            String jwtToken = jwtService.generate("username");
-
-            // Ajouter le JWT dans un cookie
-            Cookie cookie = new Cookie("authToken", jwtToken);
-            cookie.setHttpOnly(true);  // Pour des raisons de sécurité, on marque le cookie comme HttpOnly
-            cookie.setSecure(true);    // Assurez-vous que ce cookie est envoyé uniquement via HTTPS
-            cookie.setPath("/");
-            cookie.setMaxAge(24 * 60 * 60); // Expire après 24 heures
-            response.addCookie(cookie);  // Ajoute le cookie à la réponse
-
-            // Construction de la réponse incluant les données de l'utilisateur
-            return ResponseEntity.ok().body(user);  // Renvoie les données de l'utilisateur
-
+            // Retourner la réponse avec le token
+            return ResponseEntity.ok()
+                                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                                 .body(new LoginResponse("Login successful"));
         } catch (AnomalieException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());  // 401 Unauthorized si login échoue
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur interne du serveur");  // 500 Internal Server Error
+            // Retourner une erreur 401 Unauthorized si l'authentification échoue
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                 .body(new LoginResponse(e.getMessage()));
         }
     }
+
+
 
     @GetMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.invalidate();  // Invalide la session
+            session.invalidate(); // Invalider la session
         }
-
-        // Supprimer le cookie JWT
-        Cookie cookie = new Cookie("authToken", null);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(0); // Expiration immédiate pour supprimer le cookie
-        response.addCookie(cookie);
-
-        return ResponseEntity.ok("Déconnecté avec succès");  // Réponse 200 OK avec un message de confirmation
+        return ResponseEntity.ok("Déconnecté");
     }
+
+   
 }

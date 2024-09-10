@@ -3,8 +3,18 @@ package covoit.dtos;
 public class LoginRequestDto {
     private String username;
     private String password;
+  
+    public LoginRequestDto() {
+	
+	}
 
-    // Getters et Setters
+    // Constructeur avec paramètres
+    public LoginRequestDto(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+	// Getters et Setters
     public String getUsername() {
         return username;
     }
